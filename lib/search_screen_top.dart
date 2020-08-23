@@ -6,10 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 class SearchScreenTop extends StatelessWidget {
 
   double size;
-<<<<<<< HEAD
-=======
   var searchText= TextEditingController();
->>>>>>> 5007258102c24133ccb7fd550fdb3092be6cbfda
 
   SearchScreenTop( double sizeValue )
   {
@@ -66,10 +63,7 @@ class SearchScreenTop extends StatelessWidget {
                   Container(
                     width: screenwidth*0.7,
                     child: TextField(
-<<<<<<< HEAD
-=======
                       controller: searchText,
->>>>>>> 5007258102c24133ccb7fd550fdb3092be6cbfda
                       onChanged: (value) {},
                       decoration: InputDecoration(
                         hintText: "Destination, property or address",
