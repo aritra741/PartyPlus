@@ -1,5 +1,9 @@
 name: partyplus
+<<<<<<< HEAD
 description: A new Flutter application.
+=======
+description: PartyPlus with Flutter
+>>>>>>> 5007258102c24133ccb7fd550fdb3092be6cbfda
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -30,7 +34,11 @@ dependencies:
   cupertino_icons: ^0.1.3
   google_fonts: ^1.1.0
   intl: ^0.16.1
+<<<<<<< HEAD
   flutter_svg: ^0.18.0
+=======
+  flutter_svg: ^0.17.4
+>>>>>>> 5007258102c24133ccb7fd550fdb3092be6cbfda
   firebase_core: ^0.4.0+9
   firebase_analytics: ^5.0.2
   firebase_auth: ^0.14.0+5
