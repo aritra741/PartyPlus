@@ -7,7 +7,7 @@ class SearchScreenTop extends StatelessWidget {
 
   double size;
   var searchText= TextEditingController();
-
+  static String searchstring = TextEditingController().text;
   SearchScreenTop( double sizeValue )
   {
     size= sizeValue;

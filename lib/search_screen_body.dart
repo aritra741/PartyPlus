@@ -15,6 +15,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
 //import 'package:flutterModule/navigation_drawer.dart';
+import 'searchresultgenerator.dart';
 
 class SearchScreenBody extends StatefulWidget {
   @override
@@ -102,7 +103,10 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                         height: 50,
                         child: RaisedButton(
                           elevation: 5.0,
-                          onPressed: (){},
+                          onPressed: (){
+                            Navigator.push(context,MaterialPageRoute(builder: (context)=>SearchResultGenerator()),
+                            );
+                          },
                           padding: EdgeInsets.all(15.0),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30.0),
