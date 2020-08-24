@@ -3,15 +3,22 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'constants_for_search_screen_top.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class SearchScreenTop extends StatelessWidget {
+class SearchScreenTop extends StatefulWidget {
 
   double size;
-  var searchText= TextEditingController();
-  static String searchstring = TextEditingController().text;
+
   SearchScreenTop( double sizeValue )
   {
     size= sizeValue;
   }
+
+  @override
+  _SearchScreenTopState createState() => _SearchScreenTopState();
+}
+
+class _SearchScreenTopState extends State<SearchScreenTop> {
+
+  TextEditingController searchText= TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +27,7 @@ class SearchScreenTop extends StatelessWidget {
     return new Scaffold(
       body: new Container(
         margin: EdgeInsets.only(bottom: kDefaultPadding * 2.5, top: kDefaultPadding * 3),
-        height: size*0.2+27,
+        height: widget.size*0.2+27,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
