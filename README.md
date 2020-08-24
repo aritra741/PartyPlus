@@ -1,3 +1,2 @@
 # partyplus
 
-PartyPlus with Flutter

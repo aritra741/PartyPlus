@@ -38,7 +38,7 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
+        // TODO: Specify your own unique Application ID (https://d...content-available-to-author-only...d.com/studio/build/application-id.html).
         applicationId "com.example.partyplus"
         minSdkVersion 16
         targetSdkVersion 28
