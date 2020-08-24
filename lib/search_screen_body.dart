@@ -28,6 +28,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
   int currentIndex= 0;
   DateTime selectedDate= DateTime.now();
   TextEditingController searchText= TextEditingController();
+  //String value = searchText.text;
 
   var authHandler = new Auth();
 
@@ -106,8 +107,10 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                         child: RaisedButton(
                           elevation: 5.0,
                           onPressed: (){
-                            Navigator.push(context,MaterialPageRoute(builder: (context)=>SearchResultGenerator()),
-                            );
+                            setState((){
+                              Navigator.push(context,MaterialPageRoute(builder: (context)=>SearchResultGenerator(searchstring: searchText.text)),
+                              );
+                            });
                           },
                           padding: EdgeInsets.all(15.0),
                           shape: RoundedRectangleBorder(
@@ -169,9 +172,9 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
             setState(() {
               currentIndex= 1;
             });
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => RegisterScreen()),);
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => RegisterScreen()),);
           }
           else if( index==2 )
           {

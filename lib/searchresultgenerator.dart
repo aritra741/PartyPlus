@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'search_screen_top.dart';
+import 'search_screen_body.dart';
 class SearchResultGenerator extends StatelessWidget {
+  String searchstring;
+  SearchResultGenerator({this.searchstring});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -10,11 +12,12 @@ class SearchResultGenerator extends StatelessWidget {
       ),
         body: Center(
           child: Text(
-            SearchScreenTop.searchstring,
+            searchstring,
           ),
         ),
     );
 
 
   }
+ // List<conventionHall> list = [];
 }
