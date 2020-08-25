@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:partyplus/login_screen.dart';
 import 'package:partyplus/navigation_drawer.dart';
 import 'package:partyplus/register_screen.dart';
-import 'package:partyplus/search_screen_top.dart';
 import 'constants_for_search_screen_top.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'auth.dart';
 import 'login_screen.dart';
 import 'register_screen.dart';
-import 'search_screen_top.dart';
 import 'package:firebase_core/firebase_core.dart';
 //import 'package:flutterModule/utilities/constants_for_search_screen_body.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -27,10 +25,16 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
   String showDay, showMonth, showYear;
   int currentIndex= 0;
   DateTime selectedDate= DateTime.now();
-  TextEditingController searchText= TextEditingController();
+  String searchString;
+  var searchText= TextEditingController();
   //String value = searchText.text;
 
   var authHandler = new Auth();
+
+  void dispose() {
+    searchText.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +42,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
     showDay = DateFormat('EEEE').format(now);
     showMonth = DateFormat('MMMM').format(now);
     showYear = DateFormat('y').format(now);
+
     return new Scaffold(
       appBar: AppBar(
         elevation: 0.0,
@@ -51,7 +56,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
           child: Column(
             children: <Widget>[
               Expanded(
-                child: SearchScreenTop(MediaQuery.of(context).size.height),
+                child: searchScreenTop(),
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.1,
@@ -107,10 +112,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                         child: RaisedButton(
                           elevation: 5.0,
                           onPressed: (){
-                            setState((){
-                              Navigator.push(context,MaterialPageRoute(builder: (context)=>SearchResultGenerator(searchstring: searchText.text)),
-                              );
-                            });
+                            searchQuery();
                           },
                           padding: EdgeInsets.all(15.0),
                           shape: RoundedRectangleBorder(
@@ -253,8 +255,9 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
     );
   }
 
-  Widget searchScreenTop( double size )
+  Widget searchScreenTop()
   {
+    double size= MediaQuery.of(context).size.height;
     double screenHeight= MediaQuery.of(context).size.height;
     double screenwidth= MediaQuery.of(context).size.width;
     return new Scaffold(
@@ -304,7 +307,6 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                     width: screenwidth*0.7,
                     child: TextField(
                       controller: searchText,
-                      onChanged: (value) {},
                       decoration: InputDecoration(
                         hintText: "Destination, property or address",
                         hintStyle: TextStyle(
@@ -312,10 +314,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                         ),
                         enabledBorder: InputBorder.none,
                         focusedBorder: InputBorder.none,
-                        // surffix isn't working properly  with SVG
-                        // thats why we use row
-                        // suffixIcon: SvgPicture.asset("assets/icons/search.svg"),
-                      ),
+                        ),
                     ),
                   ),
                   SvgPicture.asset("assets/icons/search.svg"),
@@ -338,5 +337,13 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
       setState(() {
         selectedDate = picked;
       });
+  }
+
+  void searchQuery()
+  {
+    String searchString= searchText.text;
+    print(searchString);
+    Navigator.push(context,MaterialPageRoute(builder: (context)=>SearchResultGenerator(searchstring: searchString)),
+    );
   }
 }

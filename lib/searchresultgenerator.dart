@@ -5,6 +5,7 @@ class SearchResultGenerator extends StatelessWidget {
   SearchResultGenerator({this.searchstring});
   @override
   Widget build(BuildContext context) {
+    print("eikhane paisi"+searchstring);
     return Scaffold(
       appBar: AppBar(
         title: Text("PartyPlus"),
