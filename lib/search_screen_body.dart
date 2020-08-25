@@ -108,7 +108,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                           elevation: 5.0,
                           onPressed: (){
                             setState((){
-                              Navigator.push(context,MaterialPageRoute(builder: (context)=>SearchResultGenerator(searchstring: searchText.text)),
+                              Navigator.push(context,MaterialPageRoute(builder: (context)=>SearchResultGenerator(searchstring: "ashche")),
                               );
                             });
                           },
