@@ -223,7 +223,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
               children: <Widget>[
                 Text(
                   showMonth + ' ' + showYear,
-                  style: GoogleFonts.overpass(fontSize: 16),
+                  style: GoogleFonts.overpass(fontSize: 12),
                 ),
                 Text(
                   showDay,

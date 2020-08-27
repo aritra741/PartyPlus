@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:partyplus/user_profile.dart';
 
 class NavigationDrawer extends StatelessWidget {
   @override
@@ -12,6 +13,8 @@ class NavigationDrawer extends StatelessWidget {
             color: Color(0xFF004b55),
           ),
           ListTile(
+            onTap: ()=> Navigator.push(context,
+              MaterialPageRoute(builder: (context) => UserProfile())),
             leading: Icon(Icons.person),
             title: Text("Profile", style: TextStyle(fontSize: 18),),
           ),
