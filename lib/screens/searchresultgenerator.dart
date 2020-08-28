@@ -2,7 +2,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'search_screen_body.dart';
 import 'conventionHall.dart';
-import 'conventionHallDetails.dart';
 /*class SearchResultGenerator extends StatelessWidget {
   String searchstring;
   SearchResultGenerator({this.searchstring});
@@ -47,7 +46,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
         title: Text("PartyPlus"),
         backgroundColor: Color(0xFF005e6a),
       ),
-    /*  body: Center(
+      /*body: Center(
         child: Text(
           searchstring,
         ),
@@ -56,7 +55,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
         child: list.length==0?new Text("No result found") : new ListView.builder(
         itemCount: list.length,
         itemBuilder: (_,index){
-          return conventionUI(list[index].image, list[index].Name, list[index].City, list[index].street,list[index]);
+          return conventionUI(list[index].image, list[index].Name, list[index].City, list[index].street);
         }
       ),
       ),
@@ -107,16 +106,13 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
     });
   }
 
-  Widget conventionUI(String image,String name,String city,String street,conventionHall convention)
+  Widget conventionUI(String image,String name,String city,String street)
   {
     return new Card(
       elevation: 10.0,
       margin: EdgeInsets.all(15.0),
-      child: new InkWell(
-        onTap: () {
-          Navigator.push(context,MaterialPageRoute(builder: (context)=>conventionHallDetails(convention: convention)));
-        },
-        child: new Container(
+      
+      child: new Container(
         padding: new EdgeInsets.all(14.0),
         child: new Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -148,7 +144,6 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
           ],
         ),
       ),
-    ),
     );
   }
 }

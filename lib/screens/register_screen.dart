@@ -1,32 +1,143 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:partyplus/register_screen.dart';
-//import 'package:flutterModule/register_screen.dart';
-import 'search_screen_body.dart';
-import 'auth.dart';
-import 'constants_for_login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'login_screen.dart';
+import 'search_screen_body.dart';
+import 'package:firebase_database/firebase_database.dart';
+import '../constants/constants_for_login.dart';
+import '../providers/auth.dart';
+import 'package:flutter_svg/svg.dart';
 
-class LoginScreen extends StatefulWidget {
-
+class RegisterScreen extends StatefulWidget {
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _RegisterScreenState createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   bool _rememberMe = false;
-  int currentIndex= 2;
+  int currentIndex= 3;
+
+  final dbRef= FirebaseDatabase.instance.reference();
 
   var authHandler= new Auth();
   var userEmail= TextEditingController();
-  var userpassword= TextEditingController();
+  var userPassword= TextEditingController();
+  var userPhone= TextEditingController();
+  var userName= TextEditingController();
 
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
     userEmail.dispose();
-    userpassword.dispose();
+    userPassword.dispose();
     super.dispose();
+  }
+
+  Widget _buildFirstNameTF() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          'Full Name',
+          style: kLabelStyle,
+        ),
+        SizedBox(height: 10.0),
+        Container(
+          alignment: Alignment.centerLeft,
+          decoration: kBoxDecorationStyle,
+          height: 60.0,
+          child: TextField(
+            controller: userName,
+            keyboardType: TextInputType.text,
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'OpenSans',
+            ),
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(top: 14.0),
+              prefixIcon: Icon(
+                Icons.person,
+                color: Colors.white,
+              ),
+              hintText: 'Enter your full name',
+              hintStyle: kHintTextStyle,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildLastNameTF() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          'Last Name',
+          style: kLabelStyle,
+        ),
+        SizedBox(height: 10.0),
+        Container(
+          alignment: Alignment.centerLeft,
+          decoration: kBoxDecorationStyle,
+          height: 60.0,
+          child: TextField(
+            keyboardType: TextInputType.text,
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'OpenSans',
+            ),
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(top: 14.0),
+              prefixIcon: Icon(
+                Icons.person,
+                color: Colors.white,
+              ),
+              hintText: 'Enter your last name',
+              hintStyle: kHintTextStyle,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPhoneNumberTF() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          'Phone Number',
+          style: kLabelStyle,
+        ),
+        SizedBox(height: 10.0),
+        Container(
+          alignment: Alignment.centerLeft,
+          decoration: kBoxDecorationStyle,
+          height: 60.0,
+          child: TextField(
+            controller: userPhone,
+            keyboardType: TextInputType.phone,
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'OpenSans',
+            ),
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(top: 14.0),
+              prefixIcon: Icon(
+                Icons.local_phone,
+                color: Colors.white,
+              ),
+              hintText: 'Enter your Phone Number',
+              hintStyle: kHintTextStyle,
+            ),
+          ),
+        ),
+      ],
+    );
   }
 
   Widget _buildEmailTF() {
@@ -79,7 +190,7 @@ class _LoginScreenState extends State<LoginScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
-            controller: userpassword,
+            controller: userPassword,
             obscureText: true,
             style: TextStyle(
               color: Colors.white,
@@ -101,66 +212,26 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildForgotPasswordBtn() {
-    return Container(
-      alignment: Alignment.centerRight,
-      child: FlatButton(
-        onPressed: () => print('Forgot Password Button Pressed'),
-        padding: EdgeInsets.only(right: 0.0),
-        child: Text(
-          'Forgot Password?',
-          style: kLabelStyle,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildRememberMeCheckbox() {
-    return Container(
-      height: 20.0,
-      child: Row(
-        children: <Widget>[
-          Theme(
-            data: ThemeData(unselectedWidgetColor: Colors.white),
-            child: Checkbox(
-              value: _rememberMe,
-              checkColor: Colors.green,
-              activeColor: Colors.white,
-              onChanged: (value) {
-                setState(() {
-                  _rememberMe = value;
-                });
-              },
-            ),
-          ),
-          Text(
-            'Remember me',
-            style: kLabelStyle,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildLoginBtn() {
+  Widget _buildRegitserBtn() {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 25.0),
       width: double.infinity,
       child: RaisedButton(
         elevation: 5.0,
         onPressed: () {
-          authHandler.handleSignInEmail(userEmail.text, userpassword.text)
+          authHandler.handleSignUp(userEmail.text, userPassword.text)
               .then((FirebaseUser user) {
-            print("Login SuccessFull");
+                print("Registration Susccessful");
+                writeUserData(user.uid);
           }).catchError((e) => print(e));
-        },
+        } ,
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
         ),
         color: Colors.white,
         child: Text(
-          'LOGIN',
+          'REGISTER',
           style: TextStyle(
             color: Color(0xFF527DAA),
             letterSpacing: 1.5,
@@ -175,13 +246,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildSignupBtn() {
     return GestureDetector(
-      onTap: () => Navigator.push(context,
-        MaterialPageRoute(builder: (context) => RegisterScreen()),),
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => LoginScreen()),),
       child: RichText(
         text: TextSpan(
           children: [
             TextSpan(
-              text: 'Don\'t have an Account? ',
+              text: 'Have an Account? ',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 18.0,
@@ -189,7 +261,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             TextSpan(
-              text: 'Sign Up',
+              text: 'Sign In',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 18.0,
@@ -234,13 +306,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   physics: AlwaysScrollableScrollPhysics(),
                   padding: EdgeInsets.symmetric(
                     horizontal: 40.0,
-                    vertical: 120.0,
+                    vertical: 60.0,
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        'Sign In',
+                        'Sign Up',
                         style: TextStyle(
                           color: Colors.white,
                           fontFamily: 'OpenSans',
@@ -248,15 +320,17 @@ class _LoginScreenState extends State<LoginScreen> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 30.0),
+                      SizedBox(height: 8.0),
+                      _buildFirstNameTF(),
+                      SizedBox(height: 8.0),
                       _buildEmailTF(),
+                      SizedBox(height: 8.0),
+                      _buildPhoneNumberTF(),
                       SizedBox(
-                        height: 30.0,
+                        height: 8.0,
                       ),
                       _buildPasswordTF(),
-                      _buildForgotPasswordBtn(),
-                      _buildRememberMeCheckbox(),
-                      _buildLoginBtn(),
+                      _buildRegitserBtn(),
                       _buildSignupBtn(),
                     ],
                   ),
@@ -266,6 +340,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       ),
+
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
         items: [
@@ -313,18 +388,46 @@ class _LoginScreenState extends State<LoginScreen> {
             setState(() {
               currentIndex= 2;
             });
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => LoginScreen()),);
+
           }
           else
           {
             setState(() {
               currentIndex= 3;
             });
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => RegisterScreen()),);
+//            Navigator.push(
+//              context,
+//              MaterialPageRoute(builder: (context) => RegisterScreen()),);
           }
         },
       ),
+    );
+  }
+
+  void writeUserData(String uid)
+  {
+    String userFullName= userName.text;
+    var nameList= userFullName.split(' ');
+
+    String firstName='';
+
+    for( int i=0;i<nameList.length-1;i++ )
+    {
+        if(i>0)
+          firstName+= ' ';
+        firstName+= nameList[i];
+    }
+
+    dbRef.child("Users").child(uid).set(
+      {
+        'email': userEmail.text,
+        'firstName': firstName,
+        'lastName': nameList[nameList.length-1],
+        'phone': userPhone.text,
+      }
     );
   }
 }
