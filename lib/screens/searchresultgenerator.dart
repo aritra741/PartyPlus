@@ -2,6 +2,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'search_screen_body.dart';
 import 'package:partyplus/providers/conventionHall.dart';
+import 'package:partyplus/conventionHallDetails.dart';
 /*class SearchResultGenerator extends StatelessWidget {
   String searchstring;
   SearchResultGenerator({this.searchstring});
@@ -55,7 +56,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
         child: list.length==0?new Text("No result found") : new ListView.builder(
         itemCount: list.length,
         itemBuilder: (_,index){
-          return conventionUI(list[index].image, list[index].Name, list[index].City, list[index].street);
+          return conventionUI(list[index].image, list[index].Name, list[index].City, list[index].street,list[index]);
         }
       ),
       ),
@@ -106,42 +107,46 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
     });
   }
 
-  Widget conventionUI(String image,String name,String city,String street)
+  Widget conventionUI(String image,String name,String city,String street,conventionHall convention)
   {
     return new Card(
       elevation: 10.0,
       margin: EdgeInsets.all(15.0),
-      
-      child: new Container(
-        padding: new EdgeInsets.all(14.0),
-        child: new Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-           new Row(
-             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-             children: <Widget>[
-               new Text(
-                 name,
-                 style: Theme.of(context).textTheme.subtitle1,
-                 textAlign: TextAlign.center,
-               ),
-               new Text(
-                 city,
-                 style: Theme.of(context).textTheme.subtitle1,
-                 textAlign: TextAlign.center,
-               )
-             ],
-           ),
-            SizedBox(height: 10.0,),
-            new Image.network(image,fit: BoxFit.cover),
-            SizedBox(height: 10.0,),
-            new Text(
-              street,
-              style: Theme.of(context).textTheme.subtitle1,
-              textAlign: TextAlign.center,
-            ),
 
-          ],
+      child: new InkWell(
+        onTap: () {
+          Navigator.push(context,MaterialPageRoute(builder: (context)=>conventionHallDetails(convention: convention)));
+        },
+        child: new Container(
+          padding: new EdgeInsets.all(14.0),
+          child: new Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              new Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  new Text(
+                    name,
+                    style: Theme.of(context).textTheme.subtitle1,
+                    textAlign: TextAlign.center,
+                  ),
+                  new Text(
+                    city,
+                    style: Theme.of(context).textTheme.subtitle1,
+                    textAlign: TextAlign.center,
+                  )
+                ],
+              ),
+              SizedBox(height: 10.0,),
+              new Image.network(image,fit: BoxFit.cover),
+              SizedBox(height: 10.0,),
+              new Text(
+                street,
+                style: Theme.of(context).textTheme.subtitle1,
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
         ),
       ),
     );
