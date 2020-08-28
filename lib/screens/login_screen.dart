@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'file:///C:/PartyPlus_Flutter/partyplus/lib/screens/register_screen.dart';
+import 'package:partyplus/screens/register_screen.dart';
 //import 'package:flutterModule/register_screen.dart';
 import 'search_screen_body.dart';
 import '../providers/auth.dart';

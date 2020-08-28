@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'file:///C:/PartyPlus_Flutter/partyplus/lib/screens/login_screen.dart';
-import 'file:///C:/PartyPlus_Flutter/partyplus/lib/screens/register_screen.dart';
-import 'file:///C:/PartyPlus_Flutter/partyplus/lib/screens/search_screen_body.dart';
+import 'package:partyplus/screens/login_screen.dart';
+import 'package:partyplus/screens/register_screen.dart';
+import 'package:partyplus/screens/search_screen_body.dart';
 import '../constants/constants_for_user_profile.dart';
 import 'package:google_fonts/google_fonts.dart';
 
