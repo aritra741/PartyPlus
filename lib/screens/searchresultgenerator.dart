@@ -1,7 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'search_screen_body.dart';
-import 'conventionHall.dart';
+import 'package:partyplus/providers/conventionHall.dart';
 /*class SearchResultGenerator extends StatelessWidget {
   String searchstring;
   SearchResultGenerator({this.searchstring});
