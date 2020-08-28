@@ -26,7 +26,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
         title: Text("PartyPlus"),
         backgroundColor: Color(0xFF005e6a),
       ),
-     /*  body: Center(
+    /*  body: Center(
         child: Text(
           convention.Name,
         ),
@@ -51,6 +51,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
 
           StaggeredTile.count(1, 1),
             StaggeredTile.count(1, 1),
+            StaggeredTile.count(4, 1),
 
           ],
 
@@ -61,10 +62,12 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
             myPhotoList("https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/Khan's%20Palace%2Fimage4.jpg?alt=media&token=3cdb57db-ec30-433c-b508-acbf70a0df51"),
             myPhotoList("https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/Khan's%20Palace%2Fimage5.jpg?alt=media&token=d59484f1-2ee8-4a63-8787-8c9a0c9f13db"),
             myPhotoList("https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/Khan's%20Palace%2Fimage1.jpg?alt=media&token=fb301e5b-3c2b-4cce-83ab-dae21de6f6c3"),
-
+            Details(),
           ],
 
+
         ),
+
 
       ),
 
@@ -72,6 +75,35 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
     ),
     );
   }
+
+  Widget Details() {
+    return Padding(
+      padding: const EdgeInsets.all(1.0),
+      child: Container(
+        child: Column(
+          children: <Widget>[
+            SizedBox(height:20.0),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Container(
+                child: Text(convention.Name,
+                  style: TextStyle(color: Colors.black, fontSize: 30.0,fontWeight: FontWeight.bold),),
+              ),
+            ),
+            /*Align(
+              alignment: Alignment.centerLeft,
+              child: Container(
+                child: Text(subText,
+                  style: TextStyle(color: Colors.blueGrey, fontSize: 16.0),),
+              ),
+            ),*/
+          ],
+        ),
+      ),
+    );
+  }
+
+
   Widget myPhotoList(String img){
     return Container(
       decoration: BoxDecoration(
