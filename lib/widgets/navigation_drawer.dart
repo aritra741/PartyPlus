@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:partyplus/user_profile.dart';
+import 'file:///C:/PartyPlus_Flutter/partyplus/lib/screens/user_profile.dart';
 
 class NavigationDrawer extends StatelessWidget {
   @override

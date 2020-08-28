@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:partyplus/login_screen.dart';
-import 'package:partyplus/register_screen.dart';
-import 'package:partyplus/search_screen_body.dart';
-import 'constants_for_user_profile.dart';
+import 'file:///C:/PartyPlus_Flutter/partyplus/lib/screens/login_screen.dart';
+import 'file:///C:/PartyPlus_Flutter/partyplus/lib/screens/register_screen.dart';
+import 'file:///C:/PartyPlus_Flutter/partyplus/lib/screens/search_screen_body.dart';
+import '../constants/constants_for_user_profile.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class UserProfile extends StatefulWidget {

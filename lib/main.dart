@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:partyplus/map_view.dart';
-import 'package:partyplus/search_screen_body.dart';
-import 'package:partyplus/user_profile.dart';
-import 'search_screen_top.dart';
+import 'package:partyplus/screens/search_screen_body.dart';
+import 'package:partyplus/screens/user_profile.dart';
 
 void main() {
   runApp(MyApp());
