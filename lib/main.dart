@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:partyplus/map_view.dart';
 import 'package:partyplus/search_screen_body.dart';
 import 'package:partyplus/user_profile.dart';
 import 'search_screen_top.dart';
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: UserProfile(),
+      home: SearchScreenBody(),
     );
   }
 }
