@@ -12,9 +12,15 @@ class conventionHallDetails extends StatefulWidget {
 class _conventionHallDetailsState extends State<conventionHallDetails> {
   conventionHall convention ;
   _conventionHallDetailsState(this.convention);
- // String str = convention.Name;
+  String str;
+
   @override
   Widget build(BuildContext context) {
+
+    setState(() {
+      str= convention.Name;
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: Text("PartyPlus"),

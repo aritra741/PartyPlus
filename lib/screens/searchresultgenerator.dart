@@ -40,6 +40,7 @@ class SearchResultGenerator extends StatefulWidget {
 class _SearchResultGeneratorState extends State<SearchResultGenerator> {
   String searchstring;
   _SearchResultGeneratorState(this.searchstring);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -115,6 +116,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
 
       child: new InkWell(
         onTap: () {
+          print("naam holo "+convention.Name);
           Navigator.push(context,MaterialPageRoute(builder: (context)=>conventionHallDetails(convention: convention)));
         },
         child: new Container(
