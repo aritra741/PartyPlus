@@ -69,7 +69,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
 
           StaggeredTile.count(1, 1),
             StaggeredTile.count(1, 1),
-            StaggeredTile.count(4, 3),
+            StaggeredTile.count(4, 4),
 
           ],
 
@@ -130,13 +130,33 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
                       onMapCreated: _onMapCreated
                   )
               ),
-            )
+            ),
+            Row(
+                children: <Widget>[
+                  //Text("Hi"),
+                  Icon(Icons.location_on),
+                  Text( convention.street+"," + convention.City,
+                    style: TextStyle(color: Colors.black, fontSize: 16.0),),
+                ]
+            ),
+           /* Row(
+                children: <Widget>[
+                //  String str;
+                  //Text("Hi"),
+                  Icon(Icons.location_on),
+                  Text( convention.street+"," + convention.City,
+                    style: TextStyle(color: Colors.black, fontSize: 16.0),),
+                ]
+            ),*/
             /*Align(
               alignment: Alignment.centerLeft,
-              child: Container(
-                child: Text(subText,
-                  style: TextStyle(color: Colors.blueGrey, fontSize: 16.0),),
-              ),
+
+
+              /*child: Container(
+
+                /*child: Text( convention.street+"," + convention.City,
+                  style: TextStyle(color: Colors.black, fontSize: 16.0),),*/
+              ),*/
             ),*/
           ],
         ),
@@ -153,6 +173,11 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
       ),
     );
   }
+  /*String Facility(String str){
+    String ret;
+    if(str[0]=='1')
+
+  }*/
 }
 
 /*class conventionHallDetails extends StatelessWidget {
