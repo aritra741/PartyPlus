@@ -52,6 +52,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
    body: Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
+        height: 1500,
         decoration: BoxDecoration(
           color: Colors.white,
         ),
@@ -68,7 +69,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
 
           StaggeredTile.count(1, 1),
             StaggeredTile.count(1, 1),
-            StaggeredTile.count(4, 1),
+            StaggeredTile.count(4, 3),
 
           ],
 
@@ -114,18 +115,21 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
               ),
             ),
 
-            SizedBox(
-              height: 1000,
-              width: 400,
-              child: GoogleMap(
-                  initialCameraPosition: CameraPosition(
-                    target: LatLng(24.887635,91.874310),
-                    zoom: 9.0,
-                  ),
-                  mapType: MapType.normal,
-                  markers: Set<Marker>.of(locations),
-                  onMapCreated: _onMapCreated
-              )
+            Align(
+              alignment: Alignment.center,
+              child: SizedBox(
+                  height: 300,
+                  width: 400,
+                  child: GoogleMap(
+                      initialCameraPosition: CameraPosition(
+                        target: LatLng(24.887635,91.874310),
+                        zoom: 11.0,
+                      ),
+                      mapType: MapType.normal,
+                      markers: Set<Marker>.of(locations),
+                      onMapCreated: _onMapCreated
+                  )
+              ),
             )
             /*Align(
               alignment: Alignment.centerLeft,
