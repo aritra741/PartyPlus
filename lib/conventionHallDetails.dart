@@ -72,7 +72,6 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
       ),
 
 
-
     ),
     );
   }
@@ -91,13 +90,13 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
                   style: TextStyle(color: Colors.black, fontSize: 30.0,fontWeight: FontWeight.bold),),
               ),
             ),
-            Align(
+            /*Align(
               alignment: Alignment.centerLeft,
               child: Container(
-                child: Text(convention.street + "," + convention.City ,
-                  style: TextStyle(color: Colors.black, fontSize: 16.0),),
+                child: Text(subText,
+                  style: TextStyle(color: Colors.blueGrey, fontSize: 16.0),),
               ),
-            ),
+            ),*/
           ],
         ),
       ),
