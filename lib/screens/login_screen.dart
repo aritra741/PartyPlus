@@ -152,6 +152,9 @@ class _LoginScreenState extends State<LoginScreen> {
           authHandler.handleSignInEmail(userEmail.text, userpassword.text)
               .then((FirebaseUser user) {
             print("Login SuccessFull");
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SearchScreenBody()),);
           }).catchError((e) => print(e));
         },
         padding: EdgeInsets.all(15.0),

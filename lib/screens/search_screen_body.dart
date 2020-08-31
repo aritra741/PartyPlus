@@ -171,10 +171,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
             setState(() {
               currentIndex= 1;
             });
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => RegisterScreen()),);
-          }
+            }
           else if( index==2 )
           {
             setState(() {

@@ -222,6 +222,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
           authHandler.handleSignUp(userEmail.text, userPassword.text)
               .then((FirebaseUser user) {
                 print("Registration Susccessful");
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SearchScreenBody()),);
+
                 writeUserData(user.uid);
           }).catchError((e) => print(e));
         } ,
