@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:partyplus/providers/conventionHall.dart';
+import 'ImageList.dart';
 
 class conventionHallDetails extends StatefulWidget {
   conventionHall convention ;
@@ -56,26 +57,22 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
         //padding: const EdgeInsets.all(8.0),
         child: Container(
           //color: Colors.black12,
-          height: 1500,
+         // height: 1500,
           decoration: BoxDecoration(
             color: Colors.black12,
           ),
           child: StaggeredGridView.count(
-            crossAxisCount: 4,
-            mainAxisSpacing: 3.0,
-            crossAxisSpacing: 3.0,
+            crossAxisCount: 6,
+            mainAxisSpacing: 1.0,
+            crossAxisSpacing: 1.0,
             staggeredTiles: [
-              StaggeredTile.count(2, 1),
-              StaggeredTile.count(2, 1),
+              StaggeredTile.count(3, 2),
+              StaggeredTile.count(3, 2),
 
-              StaggeredTile.count(1, 1),
-              StaggeredTile.count(1, 1),
-
-              StaggeredTile.count(1, 1),
-              StaggeredTile.count(1, 1),
-              StaggeredTile.count(4, 7),
-             // StaggeredTile.count(4, 5),
-            //  StaggeredTile.count(4, 5),
+              StaggeredTile.count(2, 1.8),
+              StaggeredTile.count(2, 1.8),
+              StaggeredTile.count(2, 1.8),
+              StaggeredTile.count(6, 7),
 
             ],
 
@@ -88,74 +85,54 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
                   "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/Khan's%20Palace%2Fimage3.jpg?alt=media&token=3aec3f2b-2e1d-4fa8-920d-1b0bd6cbacf1"),
               myPhotoList(
                   "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/Khan's%20Palace%2Fimage4.jpg?alt=media&token=3cdb57db-ec30-433c-b508-acbf70a0df51"),
-              myPhotoList(
-                  "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/Khan's%20Palace%2Fimage5.jpg?alt=media&token=d59484f1-2ee8-4a63-8787-8c9a0c9f13db"),
-              myPhotoList(
-                  "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/Khan's%20Palace%2Fimage1.jpg?alt=media&token=fb301e5b-3c2b-4cce-83ab-dae21de6f6c3"),
+              Stack(
+                children: <Widget>[
+                  myPhotoList(
+                      "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/Khan's%20Palace%2Fimage5.jpg?alt=media&token=d59484f1-2ee8-4a63-8787-8c9a0c9f13db"),
+
+                  Container(
+                    child: new GestureDetector(
+                        onTap: () {
+                          //print("naam holo "+convention.Name);
+                          Navigator.push(context,MaterialPageRoute(builder: (context)=>ImageList(convention: convention)));
+                        },
+                    ),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          const Color(0xCC000000),
+                          const Color(0x00000000),
+                          const Color(0x00000000),
+                          const Color(0xCC000000),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                      alignment: Alignment.center,
+                      child: new GestureDetector(
+                          onTap: () {
+                            //print("naam holo "+convention.Name);
+                            Navigator.push(context,MaterialPageRoute(builder: (context)=>ImageList(convention: convention)));
+                          },
+                          child : Text(
+                            '5+',
+                            style: TextStyle(color: Colors.white,
+                              fontSize: 30.0,),
+
+
+                          )
+                      ),
+                  ),
+                ],
+              ),
               Details(),
-              //Facilities(),
-              //Miscellanous(),
-              Container(
-                color: Colors.black,
-                height: 100,
-                child: Text(
-                    "eije kichhu"
-                ),
-              )
             ],
 
 
           ),
-          //hildren: <Widget>[],
-         /* child: ListView(
-              children: <Widget>[
-
-                StaggeredGridView.count(
-                  crossAxisCount: 4,
-                  mainAxisSpacing: 3.0,
-                  crossAxisSpacing: 3.0,
-                  staggeredTiles: [
-                    StaggeredTile.count(2, 1),
-                    StaggeredTile.count(2, 1),
-
-                    StaggeredTile.count(1, 1),
-                    StaggeredTile.count(1, 1),
-
-                    StaggeredTile.count(1, 1),
-                    StaggeredTile.count(1, 1),
-                   // StaggeredTile.count(4, 4),
-                    //StaggeredTile.count(4, 5),
-                    //StaggeredTile.count(4, 5),
-
-                  ],
-
-                  children: <Widget>[
-                    myPhotoList(
-                        "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/Khan's%20Palace%2Fimage1.jpg?alt=media&token=fb301e5b-3c2b-4cce-83ab-dae21de6f6c3"),
-                    myPhotoList(
-                        "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/Khan's%20Palace%2Fimage2.jpg?alt=media&token=c6e48821-38c6-446a-864b-e15410ff5bd2"),
-                    myPhotoList(
-                        "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/Khan's%20Palace%2Fimage3.jpg?alt=media&token=3aec3f2b-2e1d-4fa8-920d-1b0bd6cbacf1"),
-                    myPhotoList(
-                        "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/Khan's%20Palace%2Fimage4.jpg?alt=media&token=3cdb57db-ec30-433c-b508-acbf70a0df51"),
-                    myPhotoList(
-                        "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/Khan's%20Palace%2Fimage5.jpg?alt=media&token=d59484f1-2ee8-4a63-8787-8c9a0c9f13db"),
-                    myPhotoList(
-                        "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/Khan's%20Palace%2Fimage1.jpg?alt=media&token=fb301e5b-3c2b-4cce-83ab-dae21de6f6c3"),
-                  //  Details(),
-                  //  Facilities(),
-                   // Miscellanous(),
-                  ],
-
-
-                ),
-
-              ],
-          ),*/
-
-
-
-
         ),
 
 
@@ -219,17 +196,6 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
 
               ]
           ),
-          /*Row(
-              children: <Widget>[
-                //  String str;
-                //Text("Hi"),
-                AC(),
-                WiFi(),
-                CC(),
-                PhotoShoots(),
-                Parkinglot(),
-              ]
-            ),*/
           AC(),
           WiFi(),
           CC(),
@@ -247,29 +213,10 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
                 ),
               ]
           ),
-     /* Row(
-          children: <Widget>[
-
-            Icon(Icons.check_box, color: Color(0xFF005e6a)),
-            Text("Duplex structure",
-              style: TextStyle(color: Colors.black, fontSize: 16.0),),
-          ]
-      ),*/
          Structure(),
           FireWorks(),
           FireExting(),
 
-
-          /*Align(
-              alignment: Alignment.centerLeft,
-
-
-              /*child: Container(
-
-                /*child: Text( convention.street+"," + convention.City,
-                  style: TextStyle(color: Colors.black, fontSize: 16.0),),*/
-              ),*/
-            ),*/
         ],
       ),
     );
@@ -334,12 +281,14 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
   }
   Widget myPhotoList(String img) {
     return Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          fit: BoxFit.fill,
-          image: NetworkImage(
-              img),
-        ),
+
+      child: new GestureDetector(
+        child: Image.network(
+            img,fit: BoxFit.fill),
+        onTap: () {
+          //print("naam holo "+convention.Name);
+          Navigator.push(context,MaterialPageRoute(builder: (context)=>ImageList(convention: convention)));
+        },
       ),
     );
   }
@@ -497,26 +446,3 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
 
 
 }
-
-
-
-/*class conventionHallDetails extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("PartyPlus"),
-        backgroundColor: Color(0xFF005e6a),
-      ),
-      body: Center(
-        child: Text(
-          "kaj korse",
-        ),
-      ),
-    );
-
-
-  }
-
-}*/
