@@ -143,7 +143,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
   Widget Details() {
 
     return Container(
-      color: Colors.black12,
+      color: Colors.white12,
       padding: const EdgeInsets.all(1.0),
       child: ListView(
         children: <Widget>[
@@ -206,7 +206,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
               children: <Widget>[
                 Container(
                   margin: new EdgeInsets.symmetric(vertical: 10.0),
-                  child: Text("\nMiscellanous",
+                  child: Text("\nMiscellaneous",
                       style: TextStyle(color: Colors.black,
                           fontSize: 25.0,
                           fontWeight: FontWeight.bold)),

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:partyplus/widgets/navigation_drawer.dart';
 import 'register_screen.dart';
@@ -23,10 +24,19 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
   int currentIndex= 0;
   DateTime selectedDate= DateTime.now();
   String searchString;
+  int dayGroup= 1;
   var searchText= TextEditingController();
   //String value = searchText.text;
-
+  int numberOfDays= 2;
   var authHandler = new Auth();
+  static final DateTime now = DateTime.now();
+  static final DateFormat formatter = DateFormat('dd-MM-yyyy');
+  final String formatted = formatter.format(now);
+  static final DateTime secDate = new DateTime(now.year, now.month, now.day+1);
+  static final DateFormat formatter2 = DateFormat('dd-MM-yyyy');
+  final String formatted2 = formatter2.format(secDate);
+
+
 
   void dispose() {
     searchText.dispose();
@@ -69,9 +79,6 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                         blurRadius: 12,
                       ),
                     ],
-                    borderRadius: BorderRadius.vertical(
-                        top: Radius.elliptical(
-                            MediaQuery.of(context).size.width * 2, 100)),
                   ),
                   child: new Column(
                     children: <Widget>[
@@ -92,7 +99,59 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                               color: Colors.white,
                               padding: EdgeInsets.symmetric(
                                   horizontal: 24, vertical: 12),
-                              onPressed: () {},
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (_)=> AlertDialog(
+                                      title: Text(
+                                        "Number of days",
+                                        style: TextStyle(
+                                            color: Colors.black
+                                        ),
+                                      ),
+                                      content: Container(
+                                        height: 170,
+                                        width: 130,
+                                        child: ListView(
+                                          children: <Widget>[
+                                            RadioListTile(
+                                              value: 1,
+                                              groupValue: dayGroup,
+                                              title: Text("1"),
+                                              onChanged: (_)=>{
+                                                setState((){
+                                                  dayGroup= 1;
+                                                })
+                                              },
+                                            ),
+                                            RadioListTile(
+                                              value: 2,
+                                              groupValue: dayGroup,
+                                              title: Text("2",
+                                              ),
+                                              onChanged: (_)=>{
+                                                setState((){
+                                                  dayGroup= 2;
+                                                })
+                                              },
+                                            ),
+                                            RadioListTile(
+                                              value: 3,
+                                              groupValue: dayGroup,
+                                              title: Text("3"),
+                                              onChanged: (_)=>{
+                                                setState((){
+                                                  dayGroup= 3;
+                                                })
+                                              },
+                                            )
+                                          ],
+                                        ),
+                                      )
+                                  )
+                                );
+                              },
                               child: numberOfDaysSelector(),
                             ),
                           )
@@ -101,6 +160,81 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                       Container(
                         height: 1,
                         color: Colors.black26,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Visibility(
+                        visible: true,
+                        child: Container(
+                          height: 80,
+                          padding: EdgeInsets.all(5),
+                          child: Card(
+                            elevation: 10,
+                            child: Row(
+                              children: <Widget>[
+                                Text(
+                                  formatted,
+                                  style: GoogleFonts.overpass(fontSize: 22, color: Colors.black),
+                                ),
+                                SizedBox(
+                                  width: 50,
+                                ),
+                                Text(
+                                  "Select shift",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.teal,
+                                    decoration: TextDecoration.underline
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Visibility(
+                        visible: true,
+                        child: Container(
+                          height: 80,
+                          padding: EdgeInsets.all(5),
+                          child: Card(
+                            elevation: 10,
+                            child: Row(
+                              children: <Widget>[
+                                Text(
+                                  formatted2,
+                                  style: GoogleFonts.overpass(fontSize: 22, color: Colors.black),
+                                ),
+                                SizedBox(
+                                  width: 50,
+                                ),
+                                Text(
+                                  "Select shift",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.teal,
+                                      decoration: TextDecoration.underline
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Visibility(
+                        visible: false,
+                        child: Container(
+                          color: Colors.white70,
+                          child: Row(
+                            children: <Widget>[
+                              Text(
+                                formatted2,
+                                style: GoogleFonts.overpass(fontSize: 18, color: Colors.grey),
+                              )
+                            ],
+                          ),
+                        ),
                       ),
                       Container(
                         margin: EdgeInsets.only(top: kDefaultPadding*3),
@@ -127,7 +261,8 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                             ),
                           ),
                         ),
-                      )
+                      ),
+
                     ],
                   )
               ),
