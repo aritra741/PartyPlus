@@ -7,6 +7,7 @@ import 'package:partyplus/providers/conventionHall.dart';
 import 'ImageList.dart';
 
 class conventionHallDetails extends StatefulWidget {
+  int num_of_days=2;
   conventionHall convention ;
   conventionHallDetails({this.convention});
   @override
@@ -14,6 +15,7 @@ class conventionHallDetails extends StatefulWidget {
 }
 
 class _conventionHallDetailsState extends State<conventionHallDetails> {
+  int num_of_days=2;
   conventionHall convention;
 
   _conventionHallDetailsState(this.convention);
@@ -217,11 +219,174 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
           FireWorks(),
           FireExting(),
 
+          PriceDetails(1),
+          AddRemoveButton(),
+          PriceDetails(2),
+          AddRemoveButton(),
+          PriceDetails(3),
+          AddRemoveButton(),
+          TotalPrice(),
         ],
       ),
     );
   }
 
+  Widget AddRemoveButton(){
+    return Row(
+      children: <Widget>[
+        SizedBox(width: 165),
+        InkWell(
+          // onTap: doSomething,
+          child: SizedBox(
+            child: Container(
+              decoration: BoxDecoration(
+               // color: Colors.blue
+              ),
+              child: Text(
+                "Add/Remove",style: TextStyle(
+                decoration: TextDecoration.underline,color: Colors.black, fontSize: 16.0,
+              ),
+                //textAlign: TextAlign.right,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget PriceDetails(int check)
+  {
+    num_of_days=3;
+    if(num_of_days>=1 && check==1)
+      {
+        return Row(
+
+          children: <Widget>[
+           // SizedBox(height: 80),
+            Container(
+              child:  Text("12.08.2020",
+                style: TextStyle(color: Colors.black, fontSize: 16.0),),
+            ),
+            SizedBox(width: 100),
+            Container(
+              child: new Column(
+                children: <Widget>[
+                  Text("Morning\nEvening\nNight",
+                    style: TextStyle(color: Colors.black, fontSize: 16.0),),
+                ],
+              ),
+            ),
+            SizedBox(width: 100),
+            Container(
+              child: new Column(
+
+                // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                //crossAxisAlignment: CrossAxisAlignment.start,
+                // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Text("10000\u09F3\n10000\u09F3\n10000\u09F3",
+                    style: TextStyle(color: Colors.black, fontSize: 16.0),),
+                ],
+              ),
+            ),
+          ],
+        );
+      }
+    else if(num_of_days>=2 && check==2)
+      {
+        return Row(
+          children: <Widget>[
+            SizedBox(height: 80),
+            Container(
+              child:  Text("13.08.2020",
+                style: TextStyle(color: Colors.black, fontSize: 16.0),),
+            ),
+            SizedBox(width: 100),
+            Container(
+              child: new Column(
+                children: <Widget>[
+                  Text("Morning\nEvening\nNight",
+                    style: TextStyle(color: Colors.black, fontSize: 16.0),),
+                ],
+              ),
+            ),
+            SizedBox(width: 100),
+            Container(
+              child: new Column(
+
+                // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                //crossAxisAlignment: CrossAxisAlignment.start,
+                // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Text("10000\u09F3\n10000\u09F3\n10000\u09F3",
+                    style: TextStyle(color: Colors.black, fontSize: 16.0),),
+                ],
+              ),
+            ),
+          ],
+        );
+      }
+    else if(num_of_days>=3 && check==3)
+      {
+        return Row(
+          children: <Widget>[
+            SizedBox(height: 80),
+            Container(
+              child:  Text("14.08.2020",
+                style: TextStyle(color: Colors.black, fontSize: 16.0),),
+            ),
+            SizedBox(width: 100),
+            Container(
+              child: new Column(
+                children: <Widget>[
+                  Text("Morning\nEvening\nNight",
+                    style: TextStyle(color: Colors.black, fontSize: 16.0),),
+                ],
+              ),
+            ),
+            SizedBox(width: 100),
+            Container(
+              child: new Column(
+
+                // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                //crossAxisAlignment: CrossAxisAlignment.start,
+                // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Text("10000\u09F3\n10000\u09F3\n10000\u09F3",
+                    style: TextStyle(color: Colors.black, fontSize: 16.0),),
+                ],
+              ),
+            ),
+          ],
+        );
+      }
+    else {
+      return Container();
+    }
+  }
+  Widget TotalPrice(){
+    return Row(
+      children: <Widget>[
+        SizedBox(height: 50),
+        SizedBox(width: 255),
+        Container(
+          child:  Text("Total",
+            style: TextStyle(color: Colors.black, fontSize: 16.0),),
+        ),
+
+        SizedBox(width: 50),
+        Container(
+          child: new Column(
+            children: <Widget>[
+              Text("90000\u09F3",
+                style: TextStyle(color: Colors.black, fontSize: 16.0),),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
   Widget Facilities(){
     return Container(
       color: Colors.white,
