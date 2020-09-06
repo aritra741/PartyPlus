@@ -219,18 +219,30 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
           FireWorks(),
           FireExting(),
 
+          SizedBox(height: 20),
           PriceDetails(1),
           AddRemoveButton(),
+          widgetforszbox(2),
           PriceDetails(2),
           AddRemoveButton(),
+          widgetforszbox(3),
           PriceDetails(3),
           AddRemoveButton(),
+          widgetforszbox(4),
           TotalPrice(),
         ],
       ),
     );
   }
 
+  Widget widgetforszbox(int n){
+    if(num_of_days>=2 && n==2)
+      return SizedBox(height: 10,);
+    else if(num_of_days>=3 && n==3)
+      return SizedBox(height: 10,);
+    else if(n==4)
+      return SizedBox(height: 10,);
+  }
   Widget AddRemoveButton(){
     return Row(
       children: <Widget>[
@@ -272,7 +284,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
             Container(
               child: new Column(
                 children: <Widget>[
-                  Text("Morning\nEvening\nNight",
+                  Text("Morning\nEvening\n  Night",
                     style: TextStyle(color: Colors.black, fontSize: 16.0),),
                 ],
               ),
@@ -295,9 +307,9 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
       }
     else if(num_of_days>=2 && check==2)
       {
+
         return Row(
           children: <Widget>[
-            SizedBox(height: 80),
             Container(
               child:  Text("13.08.2020",
                 style: TextStyle(color: Colors.black, fontSize: 16.0),),
@@ -306,7 +318,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
             Container(
               child: new Column(
                 children: <Widget>[
-                  Text("Morning\nEvening\nNight",
+                  Text("Morning\nEvening\n  Night",
                     style: TextStyle(color: Colors.black, fontSize: 16.0),),
                 ],
               ),
@@ -331,7 +343,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
       {
         return Row(
           children: <Widget>[
-            SizedBox(height: 80),
+           // SizedBox(height: 80),
             Container(
               child:  Text("14.08.2020",
                 style: TextStyle(color: Colors.black, fontSize: 16.0),),
@@ -340,7 +352,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
             Container(
               child: new Column(
                 children: <Widget>[
-                  Text("Morning\nEvening\nNight",
+                  Text("Morning\nEvening\n  Night",
                     style: TextStyle(color: Colors.black, fontSize: 16.0),),
                 ],
               ),
@@ -368,7 +380,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
   Widget TotalPrice(){
     return Row(
       children: <Widget>[
-        SizedBox(height: 50),
+       // SizedBox(height: 50),
         SizedBox(width: 255),
         Container(
           child:  Text("Total",

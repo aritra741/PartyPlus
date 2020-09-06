@@ -31,6 +31,7 @@ import 'package:partyplus/conventionHallDetails.dart';
   });
 }*/
 class SearchResultGenerator extends StatefulWidget {
+  bool cbxval = false;
   String searchstring;
   SearchResultGenerator({this.searchstring});
   @override
@@ -38,6 +39,7 @@ class SearchResultGenerator extends StatefulWidget {
 }
 
 class _SearchResultGeneratorState extends State<SearchResultGenerator> {
+  bool cbxval = false;
   String searchstring;
   _SearchResultGeneratorState(this.searchstring);
 
@@ -114,6 +116,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
         onTap: () {
           print("naam holo "+convention.Name);
           Navigator.push(context,MaterialPageRoute(builder: (context)=>conventionHallDetails(convention: convention)));
+          //showFilterDialog();
         },
         child: new Container(
           padding: new EdgeInsets.all(14.0),
@@ -147,6 +150,78 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget showFilterDialog()
+  {
+
+    showDialog(
+        context: context,
+        //barrierDismissible: false,
+        builder: (BuildContext context)
+        {
+          return AlertDialog(
+            title: new Text('Choose to Filter'),
+           // content: new Text('Please enter correct Username and Password'),
+            actions: <Widget>[
+              Row(
+                children: <Widget> [
+                  Checkbox(
+                    value: cbxval,
+                    onChanged: (bool value){
+                      setState(() {
+                        cbxval = value;
+                      });
+                    },
+                  ),
+                  Text("AC"),
+                  Checkbox(
+                    value: cbxval,
+                    onChanged: (bool value){
+                      setState(() {
+                        cbxval = value;
+                      });
+                    },
+                  ),
+                  Text("Wifi"),
+                  Checkbox(
+                    value: cbxval,
+                    onChanged: (bool value){
+                      setState(() {
+                        cbxval = value;
+                      });
+                    },
+                  ),
+                  Text("CC"),
+                  Checkbox(
+                    value: cbxval,
+                    onChanged: (bool value){
+                      setState(() {
+                        print(value);
+                        cbxval = value;
+                      });
+                    },
+                  ),
+                  Text("Fire Control"),
+                ],
+              ),
+
+              Row(
+                children: <Widget> [
+                  FlatButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: new Text('OK')
+                  )
+                ],
+              ),
+             /* new FlatButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: new Text('OK')
+              )*/
+            ],
+          );
+        }
     );
   }
 }
