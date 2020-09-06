@@ -44,10 +44,6 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("PartyPlus"),
-        backgroundColor: Color(0xFF005e6a),
-      ),
       /*body: Center(
         child: Text(
           searchstring,

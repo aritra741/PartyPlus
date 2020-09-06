@@ -31,10 +31,6 @@ class _MapViewState extends State<MapView> {
 
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: Text('MapView'),
-          backgroundColor: Colors.green[700],
-        ),
         body: GoogleMap(
             initialCameraPosition: CameraPosition(
               target: LatLng(24.887635,91.874310),
