@@ -1,5 +1,4 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'search_screen_body.dart';
 import 'package:partyplus/providers/conventionHall.dart';
@@ -40,8 +39,6 @@ class SearchResultGenerator extends StatefulWidget {
 }
 
 class _SearchResultGeneratorState extends State<SearchResultGenerator> {
-  double slid = 10.0;
-  int selectedRadio;
   bool cbxval = false;
   String searchstring;
   _SearchResultGeneratorState(this.searchstring);
@@ -71,7 +68,6 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
   @override
   void initState(){
     super.initState();
-    selectedRadio = 0;
     DatabaseReference ref = FirebaseDatabase.instance.reference().child("conventionHall");
     list.add(test);
     if(ref==null) print('ha eta null');
@@ -110,14 +106,6 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
     });
   }
 
-  setSelectedRadio(int val) {
-    setState(() {
-      selectedRadio = val;
-    });
-  }
-
-
-
   Widget conventionUI(String image,String name,String city,String street,conventionHall convention)
   {
     return new Card(
@@ -127,8 +115,8 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
       child: new InkWell(
         onTap: () {
           print("naam holo "+convention.Name);
-          //Navigator.push(context,MaterialPageRoute(builder: (context)=>conventionHallDetails(convention: convention)));
-          showFilterDialog();
+          Navigator.push(context,MaterialPageRoute(builder: (context)=>conventionHallDetails(convention: convention)));
+          //showFilterDialog();
         },
         child: new Container(
           padding: new EdgeInsets.all(14.0),
@@ -174,7 +162,6 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
         builder: (BuildContext context)
         {
           return AlertDialog(
-            insetPadding: EdgeInsets.all(25),
             title: new Text('Choose to Filter'),
            // content: new Text('Please enter correct Username and Password'),
             actions: <Widget>[
@@ -222,95 +209,12 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
 
               Row(
                 children: <Widget> [
-                  Checkbox(
-                    value: cbxval,
-                    onChanged: (bool value){
-                      setState(() {
-                        cbxval = value;
-                      });
-                    },
-                  ),
-                  Text("Firework Place"),
-                  Checkbox(
-                    value: cbxval,
-                    onChanged: (bool value){
-                      setState(() {
-                        cbxval = value;
-                      });
-                    },
-                  ),
-                  Text("Photoshoot Area"),
-                ],
-              ),
-
-              Row(
-                children: <Widget> [
-                  Text("   Structure",style: TextStyle(color: Colors.black,
-        fontSize: 20.0,
-        fontWeight: FontWeight.bold),),
-                ],
-              ),
-              Row(
-                  children: <Widget>[
-                    Radio(
-                      value: 1,
-                      groupValue: selectedRadio,
-                      activeColor: Color(0xFF005e6a),
-                      onChanged: (val) {
-                        print("Radio $val");
-                        setSelectedRadio(val);
-                      },
-                    ),
-                    Text("Simplex"),
-                    Radio(
-                      value: 2,
-                      groupValue: selectedRadio,
-                      activeColor: Color(0xFF005e6a),
-                      onChanged: (val) {
-                        print("Radio $val");
-                        setSelectedRadio(val);
-                      },
-                    ),
-                    Text("Duplex"),
-                  ]
-              ),
-              Row(
-                children: <Widget>  [
-                  Text("   Structure",style: TextStyle(color: Colors.black,
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold),),
-                ],
-              ),
-              Sliderwid(),
-              Container(
-                child: RaisedButton(
-                  elevation: 5.0,
-                    onPressed: () => Navigator.of(context).pop(),
-                  padding: EdgeInsets.all(15.0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  color: Color(0xFF005e6a),
-                  child: Text(
-                    'OK',
-                    style: TextStyle(
-                      color: Colors.white,
-                      letterSpacing: 1.5,
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'OpenSans',
-                    ),
-                  ),
-                ),
-              ),
-              /*Row(
-                children: <Widget> [
                   FlatButton(
                       onPressed: () => Navigator.of(context).pop(),
                       child: new Text('OK')
                   )
                 ],
-              ),*/
+              ),
              /* new FlatButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: new Text('OK')
@@ -319,37 +223,6 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
           );
         }
     );
-  }
-
-  Widget Sliderwid(){
-      return SliderTheme(
-        data: SliderTheme.of(context).copyWith(
-          trackHeight: 8,
-          overlayColor: Colors.transparent,
-          minThumbSeparation: 1000,
-         // accentTextTheme: TextTheme(bodyText2: TextStyle(color: Colors.white)),
-          rangeThumbShape: RoundRangeSliderThumbShape(
-            enabledThumbRadius: 100,
-            disabledThumbRadius: 100,
-          ),
-        ),
-        child: Slider(
-         // activeColor: CupertinoColors.activeGreen,
-
-         // label: slid.abs().toString(),
-          min: 0.0,
-          max: 100000.0,
-          value: slid,
-         // label: label,
-          onChanged: (val) {
-            setState(() {
-              slid = ((val).toInt()).toDouble();
-              print(slid);
-            });
-          },
-        ),
-      );
-
   }
 }
 
