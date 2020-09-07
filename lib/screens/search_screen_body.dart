@@ -29,6 +29,9 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
   var searchText= TextEditingController();
   //String value = searchText.text;
   int numberOfDays= 2;
+  bool dayOneMorning= false, dayOneEvening= false, dayOneNight= false;
+  bool dayTwoMorning= false, dayTwoEvening= false, dayTwoNight= false;
+  bool dayThreeMorning= false, dayThreeEvening= false, dayThreeNight= false;
   var authHandler = new Auth();
   static final DateTime now = DateTime.now();
   static final DateFormat formatter = DateFormat('dd-MM-yyyy');
@@ -36,6 +39,10 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
   static final DateTime secDate = new DateTime(now.year, now.month, now.day+1);
   static final DateFormat formatter2 = DateFormat('dd-MM-yyyy');
   final String formatted2 = formatter2.format(secDate);
+  static final DateTime thDate = new DateTime(now.year, now.month, now.day+1);
+  static final DateFormat formatter3 = DateFormat('dd-MM-yyyy');
+  final String formatted3 = formatter3.format(thDate);
+
 
 
 
@@ -185,87 +192,372 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                       Visibility(
                         visible: true,
                         child: Container(
-                          height: 80,
-                          padding: EdgeInsets.all(5),
+                          height: 100,
+                          padding: EdgeInsets.only(top:10),
                           child: Card(
-                            elevation: 10,
-                            child: Row(
+                            color: Color(0xFFF4F0DB),
+                            elevation: 20,
+                            child: ListView(
+                              padding: EdgeInsets.only(top: 10, ),
                               children: <Widget>[
-                                Text(
-                                  formatted,
-                                  style: GoogleFonts.overpass(fontSize: 22, color: Colors.black),
+                                Row(
+                                  children: <Widget>[
+                                    Text(
+                                      " "+formatted,
+                                      style: GoogleFonts.overpass(fontSize: 22, color: Colors.black),
+                                    ),
+                                    SizedBox(
+                                      width: 50,
+                                    ),
+                                    InkWell(
+                                      onTap: ()
+                                      {
+                                        showDialog<void>( context: context,
+                                            builder: (BuildContext context){
+                                              bool _morning= dayOneMorning;
+                                              bool _evening= dayOneEvening;
+                                              bool _night= dayOneNight;
+
+                                              return AlertDialog(
+                                                title: Text("Shift(s)"),
+                                                actions: <Widget>[
+                                                  new FlatButton(onPressed: ()
+                                                  {
+                                                    setNumberOfDays();
+                                                    Navigator.of(context, rootNavigator: true)
+                                                        .pop();
+                                                  },
+                                                      child: Container(
+                                                        height: 40,
+                                                        width: 50,
+                                                        padding: EdgeInsets.only(left: 11, top: 5),
+                                                        decoration: BoxDecoration(
+                                                          color: Color(0xFF005e6a),
+                                                        ),
+                                                        child: Text("ok", style: TextStyle(fontSize: 22, color: Colors.white)),
+                                                      )
+                                                  )
+                                                ],
+                                                content: StatefulBuilder(
+                                                  builder: (BuildContext context, StateSetter setState) {
+                                                    return Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      mainAxisSize: MainAxisSize.min,
+                                                      children: <Widget>[
+                                                        CheckboxListTile(
+                                                          value: _morning,
+                                                          title: Text("Morning"),
+                                                          onChanged: (value){
+                                                            setState( ()
+                                                            {
+                                                              _morning= value;
+                                                              getShiftInfoForDayOne(_morning, _evening, _night);
+                                                            });
+                                                          },
+                                                        ),
+                                                        CheckboxListTile(
+                                                          value: _evening,
+                                                          title: Text("Evening"),
+                                                          onChanged: (value)
+                                                          {
+                                                            setState( ()
+                                                            {
+                                                              _evening= value;
+                                                              getShiftInfoForDayOne(_morning, _evening, _night);
+                                                            });
+                                                          },
+                                                        ),
+                                                        CheckboxListTile(
+                                                          value: _night,
+                                                          title: Text("Night"),
+                                                          onChanged: (value)
+                                                          {
+                                                            setState( ()
+                                                            {
+                                                              _night= value;
+                                                              getShiftInfoForDayOne(_morning, _evening, _night);
+                                                            });
+                                                          },
+                                                        ),
+
+                                                      ],
+                                                    );
+                                                  },
+                                                ),
+                                              );
+                                            } );
+                                      },
+                                      child: Text(
+                                        "Select shift",
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            color: Colors.teal,
+                                            decoration: TextDecoration.underline
+                                        ),
+                                      ),
+                                    )
+                                  ],
                                 ),
-                                SizedBox(
-                                  width: 50,
-                                ),
-                                Text(
-                                  "Select shift",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.teal,
-                                    decoration: TextDecoration.underline
+                                Visibility(
+                                  visible: true,
+                                  child: Text(
+                                      (dayOneMorning?" Morning":"")+(dayOneEvening?" Evening":"")+(dayOneNight?" Night":""),
+                                    style: TextStyle(
+                                      fontSize: 22,
+                                      color: Color(0xFF005e6a)
+                                    ),
                                   ),
                                 )
                               ],
-                            ),
+                            )
                           ),
                         ),
                       ),
                       Visibility(
                         visible: dayGroup>=1,
                         child: Container(
-                          height: 80,
-                          padding: EdgeInsets.all(5),
+                          height: 100,
+                          padding: EdgeInsets.only(top:10),
                           child: Card(
-                            elevation: 10,
-                            child: Row(
-                              children: <Widget>[
-                                Text(
-                                  formatted2,
-                                  style: GoogleFonts.overpass(fontSize: 22, color: Colors.black),
-                                ),
-                                SizedBox(
-                                  width: 50,
-                                ),
-                                Text(
-                                  "Select shift",
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.teal,
-                                      decoration: TextDecoration.underline
+                              color: Color(0xFFF4F0DB),
+                              elevation: 20,
+                              child: ListView(
+                                padding: EdgeInsets.only(top: 10, ),
+                                children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                      Text(
+                                        " "+formatted2,
+                                        style: GoogleFonts.overpass(fontSize: 22, color: Colors.black),
+                                      ),
+                                      SizedBox(
+                                        width: 50,
+                                      ),
+                                      InkWell(
+                                        onTap: ()
+                                        {
+                                          showDialog<void>( context: context,
+                                              builder: (BuildContext context){
+                                                bool _morning= dayTwoMorning;
+                                                bool _evening= dayTwoEvening;
+                                                bool _night= dayTwoNight;
+
+                                                return AlertDialog(
+                                                  title: Text("Shift(s)"),
+                                                  actions: <Widget>[
+                                                    new FlatButton(onPressed: ()
+                                                    {
+                                                      setNumberOfDays();
+                                                      Navigator.of(context, rootNavigator: true)
+                                                          .pop();
+                                                    },
+                                                        child: Container(
+                                                          height: 40,
+                                                          width: 50,
+                                                          padding: EdgeInsets.only(left: 11, top: 5),
+                                                          decoration: BoxDecoration(
+                                                            color: Color(0xFF005e6a),
+                                                          ),
+                                                          child: Text("ok", style: TextStyle(fontSize: 22, color: Colors.white)),
+                                                        )
+                                                    )
+                                                  ],
+                                                  content: StatefulBuilder(
+                                                    builder: (BuildContext context, StateSetter setState) {
+                                                      return Column(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        mainAxisSize: MainAxisSize.min,
+                                                        children: <Widget>[
+                                                          CheckboxListTile(
+                                                            value: _morning,
+                                                            title: Text("Morning"),
+                                                            onChanged: (value){
+                                                              setState( ()
+                                                              {
+                                                                _morning= value;
+                                                                getShiftInfoForDayTwo(_morning, _evening, _night);
+                                                              });
+                                                            },
+                                                          ),
+                                                          CheckboxListTile(
+                                                            value: _evening,
+                                                            title: Text("Evening"),
+                                                            onChanged: (value)
+                                                            {
+                                                              setState( ()
+                                                              {
+                                                                _evening= value;
+                                                                getShiftInfoForDayTwo(_morning, _evening, _night);
+                                                              });
+                                                            },
+                                                          ),
+                                                          CheckboxListTile(
+                                                            value: _night,
+                                                            title: Text("Night"),
+                                                            onChanged: (value)
+                                                            {
+                                                              setState( ()
+                                                              {
+                                                                _night= value;
+                                                                getShiftInfoForDayTwo(_morning, _evening, _night);
+                                                              });
+                                                            },
+                                                          ),
+
+                                                        ],
+                                                      );
+                                                    },
+                                                  ),
+                                                );
+                                              } );
+                                        },
+                                        child: Text(
+                                          "Select shift",
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              color: Colors.teal,
+                                              decoration: TextDecoration.underline
+                                          ),
+                                        ),
+                                      )
+                                    ],
                                   ),
-                                )
-                              ],
-                            ),
+                                  Visibility(
+                                    visible: true,
+                                    child: Text(
+                                      (dayTwoMorning?" Morning":"")+(dayTwoEvening?" Evening":"")+(dayTwoNight?" Night":""),
+                                      style: TextStyle(
+                                          fontSize: 22,
+                                          color: Color(0xFF005e6a)
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              )
                           ),
                         ),
                       ),
                       Visibility(
                         visible: dayGroup>=2,
                         child: Container(
-                          height: 80,
-                          padding: EdgeInsets.all(5),
+                          height: 100,
+                          padding: EdgeInsets.only(top:10),
                           child: Card(
-                            elevation: 10,
-                            child: Row(
-                              children: <Widget>[
-                                Text(
-                                  formatted2,
-                                  style: GoogleFonts.overpass(fontSize: 22, color: Colors.black),
-                                ),
-                                SizedBox(
-                                  width: 50,
-                                ),
-                                Text(
-                                  "Select shift",
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.teal,
-                                      decoration: TextDecoration.underline
+                              color: Color(0xFFF4F0DB),
+                              elevation: 20,
+                              child: ListView(
+                                padding: EdgeInsets.only(top: 10, ),
+                                children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                      Text(
+                                        " "+formatted3,
+                                        style: GoogleFonts.overpass(fontSize: 22, color: Colors.black),
+                                      ),
+                                      SizedBox(
+                                        width: 50,
+                                      ),
+                                      InkWell(
+                                        onTap: ()
+                                        {
+                                          showDialog<void>( context: context,
+                                              builder: (BuildContext context){
+                                                bool _morning= dayThreeMorning;
+                                                bool _evening= dayThreeEvening;
+                                                bool _night= dayThreeNight;
+
+                                                return AlertDialog(
+                                                  title: Text("Shift(s)"),
+                                                  actions: <Widget>[
+                                                    new FlatButton(onPressed: ()
+                                                    {
+                                                      setNumberOfDays();
+                                                      Navigator.of(context, rootNavigator: true)
+                                                          .pop();
+                                                    },
+                                                        child: Container(
+                                                          height: 40,
+                                                          width: 50,
+                                                          padding: EdgeInsets.only(left: 11, top: 5),
+                                                          decoration: BoxDecoration(
+                                                            color: Color(0xFF005e6a),
+                                                          ),
+                                                          child: Text("ok", style: TextStyle(fontSize: 22, color: Colors.white)),
+                                                        )
+                                                    )
+                                                  ],
+                                                  content: StatefulBuilder(
+                                                    builder: (BuildContext context, StateSetter setState) {
+                                                      return Column(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        mainAxisSize: MainAxisSize.min,
+                                                        children: <Widget>[
+                                                          CheckboxListTile(
+                                                            value: _morning,
+                                                            title: Text("Morning"),
+                                                            onChanged: (value){
+                                                              setState( ()
+                                                              {
+                                                                _morning= value;
+                                                                getShiftInfoForDayThree(_morning, _evening, _night);
+                                                              });
+                                                            },
+                                                          ),
+                                                          CheckboxListTile(
+                                                            value: _evening,
+                                                            title: Text("Evening"),
+                                                            onChanged: (value)
+                                                            {
+                                                              setState( ()
+                                                              {
+                                                                _evening= value;
+                                                                getShiftInfoForDayThree(_morning, _evening, _night);
+                                                              });
+                                                            },
+                                                          ),
+                                                          CheckboxListTile(
+                                                            value: _night,
+                                                            title: Text("Night"),
+                                                            onChanged: (value)
+                                                            {
+                                                              setState( ()
+                                                              {
+                                                                _night= value;
+                                                                getShiftInfoForDayThree(_morning, _evening, _night);
+                                                              });
+                                                            },
+                                                          ),
+
+                                                        ],
+                                                      );
+                                                    },
+                                                  ),
+                                                );
+                                              } );
+                                        },
+                                        child: Text(
+                                          "Select shift",
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              color: Colors.teal,
+                                              decoration: TextDecoration.underline
+                                          ),
+                                        ),
+                                      )
+                                    ],
                                   ),
-                                )
-                              ],
-                            ),
+                                  Visibility(
+                                    visible: true,
+                                    child: Text(
+                                      (dayThreeMorning?" Morning":"")+(dayThreeEvening?" Evening":"")+(dayThreeNight?" Night":""),
+                                      style: TextStyle(
+                                          fontSize: 22,
+                                          color: Color(0xFF005e6a)
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              )
                           ),
                         ),
                       ),
@@ -386,7 +678,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  showMonth + ' ' + showYear,
+                  showMonth + ' ',
                   style: GoogleFonts.overpass(fontSize: 12),
                 ),
                 Text(
@@ -517,4 +809,30 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
     Navigator.push(context,MaterialPageRoute(builder: (context)=>SearchResultGenerator(searchstring: searchString)),
     );
   }
+
+  void getShiftInfoForDayOne( bool morning, bool evening, bool night )
+  {
+    setState(() {
+      dayOneMorning= morning;
+      dayOneEvening= evening;
+      dayOneNight= night;
+    });
+  }
+  void getShiftInfoForDayTwo( bool morning, bool evening, bool night )
+  {
+    setState(() {
+      dayTwoMorning= morning;
+      dayTwoEvening= evening;
+      dayTwoNight= night;
+    });
+  }
+  void getShiftInfoForDayThree( bool morning, bool evening, bool night )
+  {
+    setState(() {
+      dayThreeMorning= morning;
+      dayThreeEvening= evening;
+      dayThreeNight= night;
+    });
+  }
+
 }
