@@ -115,7 +115,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
   }
   List<conventionHall> list = [];
   conventionHall test = new conventionHall("Sylhet", "cc", "Shubidh Bazar", "Khan's Palace", "1", "1110111", "1234", "1234", "1335", "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/khan.jpg?alt=media&token=267e9cc7-6646-4df0-bceb-a99e1b88360f", 12.3, 12.55);
-  conventionHall test2 = new conventionHall("Chittagong", "cc", "Main Road", "King of Chittagong", "1", "1110111", "1234", "1234", "1335", "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/amanullah.jpg?alt=media&token=b7772da6-42aa-4d06-9552-582ff926882d", 12.3, 12.55);
+  conventionHall test2 = new conventionHall("Chittagong", "cc", "Main Road", "King of Chittagong", "1", "1110111", "1234", "1234", "1335", "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/king%20of%20chittagong.jpg?alt=media&token=003e5c26-53bc-47b8-ab29-654cb9f97028", 12.3, 12.55);
   //list.add(test);
 
   @override
@@ -226,138 +226,143 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
         {
           return AlertDialog(
             insetPadding: EdgeInsets.all(25),
-            title: new Text('Choose to Filter'),
+            title: new Text('Filter Options'),
             // content: new Text('Please enter correct Username and Password'),
-            actions: <Widget>[
-              Row(
-                children: <Widget> [
-                  Checkbox(
-                    value: cbxval,
-                    onChanged: (bool value){
-                      setState(() {
-                        cbxval = value;
-                      });
-                    },
-                  ),
-                  Text("AC"),
-                  Checkbox(
-                    value: cbxval,
-                    onChanged: (bool value){
-                      setState(() {
-                        cbxval = value;
-                      });
-                    },
-                  ),
-                  Text("Wifi"),
-                  Checkbox(
-                    value: cbxval,
-                    onChanged: (bool value){
-                      setState(() {
-                        cbxval = value;
-                      });
-                    },
-                  ),
-                  Text("CC"),
-                  Checkbox(
-                    value: cbxval,
-                    onChanged: (bool value){
-                      setState(() {
-                        print(value);
-                        cbxval = value;
-                      });
-                    },
-                  ),
-                  Text("Fire Control"),
-                ],
-              ),
-
-              Row(
-                children: <Widget> [
-                  Checkbox(
-                    value: cbxval,
-                    onChanged: (bool value){
-                      setState(() {
-                        cbxval = value;
-                      });
-                    },
-                  ),
-                  Text("Firework Place"),
-                  Checkbox(
-                    value: cbxval,
-                    onChanged: (bool value){
-                      setState(() {
-                        cbxval = value;
-                      });
-                    },
-                  ),
-                  Text("Photoshoot Area"),
-                ],
-              ),
-
-              Row(
-                children: <Widget> [
-                  Text("   Structure",style: TextStyle(color: Colors.black,
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold),),
-                ],
-              ),
-
-              Row(
+            content: StatefulBuilder(
+              builder: (BuildContext context, StateSetter setState)
+              {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Radio(
-                      value: 1,
-                      groupValue: selectedRadio,
-                      activeColor: Color(0xFF005e6a),
-                      onChanged: (val) {
-                        print("Radio $val");
-                        setSelectedRadio(val);
-                      },
+                    Row(
+                      children: <Widget> [
+                        Checkbox(
+                          value: cbxval,
+                          onChanged: (bool value){
+                            setState(() {
+                              cbxval = value;
+                            });
+                          },
+                        ),
+                        Text("AC"),
+                        Checkbox(
+                          value: cbxval,
+                          onChanged: (bool value){
+                            setState(() {
+                              cbxval = value;
+                            });
+                          },
+                        ),
+                        Text("Wifi"),
+                        Checkbox(
+                          value: cbxval,
+                          onChanged: (bool value){
+                            setState(() {
+                              cbxval = value;
+                            });
+                          },
+                        ),
+                        Text("CC"),
+                        Checkbox(
+                          value: cbxval,
+                          onChanged: (bool value){
+                            setState(() {
+                              print(value);
+                              cbxval = value;
+                            });
+                          },
+                        ),
+                        Text("Fire Control"),
+                      ],
                     ),
-                    Text("Simplex"),
-                    Radio(
-                      value: 2,
-                      groupValue: selectedRadio,
-                      activeColor: Color(0xFF005e6a),
-                      onChanged: (val) {
-                        print("Radio $val");
-                        setSelectedRadio(val);
-                      },
-                    ),
-                    Text("Duplex"),
-                  ]
-              ),
-              Row(
-                children: <Widget>  [
-                  Text("   Structure",style: TextStyle(color: Colors.black,
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold),),
-                ],
-              ),
 
-              Sliderwid(),
-              Container(
-                child: RaisedButton(
-                  elevation: 5.0,
-                  onPressed: () => Navigator.of(context).pop(),
-                  padding: EdgeInsets.all(15.0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  color: Color(0xFF005e6a),
-                  child: Text(
-                    'OK',
-                    style: TextStyle(
-                      color: Colors.white,
-                      letterSpacing: 1.5,
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'OpenSans',
+                    Row(
+                      children: <Widget> [
+                        Checkbox(
+                          value: cbxval,
+                          onChanged: (bool value){
+                            setState(() {
+                              cbxval = value;
+                            });
+                          },
+                        ),
+                        Text("Firework Place"),
+                        Checkbox(
+                          value: cbxval,
+                          onChanged: (bool value){
+                            setState(() {
+                              cbxval = value;
+                            });
+                          },
+                        ),
+                        Text("Photoshoot Area"),
+                      ],
                     ),
-                  ),
-                ),
-              ),
 
-              /*Row(
+                    Row(
+                      children: <Widget> [
+                        Text("   Structure",style: TextStyle(color: Colors.black,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold),),
+                      ],
+                    ),
+
+                    Row(
+                        children: <Widget>[
+                          Radio(
+                            value: 1,
+                            groupValue: selectedRadio,
+                            activeColor: Color(0xFF005e6a),
+                            onChanged: (val) {
+                              print("Radio $val");
+                              setSelectedRadio(val);
+                            },
+                          ),
+                          Text("Simplex"),
+                          Radio(
+                            value: 2,
+                            groupValue: selectedRadio,
+                            activeColor: Color(0xFF005e6a),
+                            onChanged: (val) {
+                              print("Radio $val");
+                              setSelectedRadio(val);
+                            },
+                          ),
+                          Text("Duplex"),
+                        ]
+                    ),
+                    Row(
+                      children: <Widget>  [
+                        Text("   Structure",style: TextStyle(color: Colors.black,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold),),
+                      ],
+                    ),
+
+                    Sliderwid(),
+                    Container(
+                      child: RaisedButton(
+                        elevation: 5.0,
+                        onPressed: () => Navigator.of(context).pop(),
+                        padding: EdgeInsets.all(15.0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        color: Color(0xFF005e6a),
+                        child: Text(
+                          'OK',
+                          style: TextStyle(
+                            color: Colors.white,
+                            letterSpacing: 1.5,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'OpenSans',
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    /*Row(
                 children: <Widget> [
                   FlatButton(
                       onPressed: () => Navigator.of(context).pop(),
@@ -365,11 +370,17 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
                   )
                 ],
               ),*/
-              /* new FlatButton(
+                    /* new FlatButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: new Text('OK')
               )*/
-            ],
+                  ],
+                );
+              },
+            ),
+//            actions: <Widget>[
+//
+//            ],
           );
         }
     );
