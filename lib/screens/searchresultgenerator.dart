@@ -52,17 +52,18 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
         ),
       ),*/
       body: new Container(
-        child: list.length==0?new Text("No result found") : new ListView.builder(
-        itemCount: list.length,
-        itemBuilder: (_,index){
-          return conventionUI(list[index].image, list[index].Name, list[index].City, list[index].street,list[index]);
-        }
-      ),
-      ),
+              child: list.length==0?new Text("No result found") : new ListView.builder(
+                  itemCount: list.length,
+                  itemBuilder: (_,index){
+                    return conventionUI(list[index].image, list[index].Name, list[index].City, list[index].street,list[index]);
+                  }
+              ),
+            ),
     );
   }
   List<conventionHall> list = [];
   conventionHall test = new conventionHall("Sylhet", "cc", "Shubidh Bazar", "Khan's Palace", "1", "1110111", "1234", "1234", "1335", "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/khan.jpg?alt=media&token=267e9cc7-6646-4df0-bceb-a99e1b88360f", 12.3, 12.55);
+  conventionHall test2 = new conventionHall("Chittagong", "cc", "Main Road", "King of Chittagong", "1", "1110111", "1234", "1234", "1335", "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/king%20of%20chittagong.jpg?alt=media&token=003e5c26-53bc-47b8-ab29-654cb9f97028", 12.3, 12.55);
   //list.add(test);
 
   @override
@@ -70,6 +71,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
     super.initState();
     DatabaseReference ref = FirebaseDatabase.instance.reference().child("conventionHall");
     list.add(test);
+    list.add(test2);
     if(ref==null) print('ha eta null');
     ref.once().then((DataSnapshot snap)
     {
@@ -116,7 +118,8 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
         onTap: () {
           print("naam holo "+convention.Name);
 //          Navigator.push(context,MaterialPageRoute(builder: (context)=>conventionHallDetails(convention: convention)));
-          showFilterDialog();
+//          showFilterDialog();
+          showSortOptions();
         },
         child: new Container(
           padding: new EdgeInsets.all(14.0),
@@ -227,13 +230,17 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
 
   List<dynamic> sortByPriceAscending( List<dynamic> list )
   {
-    list.sort((a, b) => a.mnprice.compareTo(b.mnprice));
+    setState(() {
+      list.sort((a, b) => a.mnprice.compareTo(b.mnprice));
+    });
 
     return list;
   }
   List<dynamic> sortByPriceDescending( List<dynamic> list )
   {
-    list.sort((b, a) => a.mnprice.compareTo(b.mnprice));
+    setState(() {
+      list.sort((b, a) => a.mnprice.compareTo(b.mnprice));
+    });
 
     return list;
   }
@@ -254,20 +261,25 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
 
   List<dynamic> sortByNameAscending( List<dynamic> list )
   {
-    list.sort((a, b) => a.name.compareTo(b.name));
+    setState(() {
+      list.sort((a, b) => a.Name.compareTo(b.Name));
+    });
 
     return list;
   }
 
   List<dynamic> sortByNameDescending( List<dynamic> list )
   {
-    list.sort((a, b) => a.name.compareTo(b.name));
+    setState(() {
+      list.sort((b, a) => a.Name.compareTo(b.Name));
+    });
 
     return list;
   }
 
-  void sortHandler( int value )
+  void sortHandler( int value, context )
   {
+    Navigator.pop(context);
     if( value==0 )
     {
       setState(() {
@@ -304,6 +316,46 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
         list= sortByParkingDescending(list);
       });
     }
+
+    print("first e"+list[0].Name);
+  }
+  
+  void showSortOptions()
+  {
+    showModalBottomSheet(
+        context: context,
+        builder: (context)
+        {
+          return Column(
+              children: <Widget>[
+                ListTile(
+                  title: Text("Sort by name (Ascending)",),
+                  onTap: ()=> sortHandler(0,context),
+                ),
+                ListTile(
+                    title: Text("Sort by name (Descending)"),
+                    onTap: ()=> sortHandler(1,context),
+                ),
+                ListTile(
+                    title: Text("Sort by price (Ascending)"),
+                    onTap: ()=> sortHandler(2,context),
+                ),
+                ListTile(
+                    title: Text("Sort by price (Descending)"),
+                    onTap: ()=> sortHandler(3,context),
+                ),
+                ListTile(
+                    title: Text("Sort by parking space (Ascending)"),
+                    onTap: ()=> sortHandler(4,context),
+                ),
+                ListTile(
+                    title: Text("Sort by parking space (Descending)"),
+                    onTap: ()=> sortHandler(5,context),
+                ),
+              ],
+          );
+        }
+    );
   }
 }
 
