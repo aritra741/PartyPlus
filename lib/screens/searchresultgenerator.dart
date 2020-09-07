@@ -115,8 +115,8 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
       child: new InkWell(
         onTap: () {
           print("naam holo "+convention.Name);
-          Navigator.push(context,MaterialPageRoute(builder: (context)=>conventionHallDetails(convention: convention)));
-          //showFilterDialog();
+//          Navigator.push(context,MaterialPageRoute(builder: (context)=>conventionHallDetails(convention: convention)));
+          showFilterDialog();
         },
         child: new Container(
           padding: new EdgeInsets.all(14.0),
@@ -223,6 +223,87 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
           );
         }
     );
+  }
+
+  List<dynamic> sortByPriceAscending( List<dynamic> list )
+  {
+    list.sort((a, b) => a.mnprice.compareTo(b.mnprice));
+
+    return list;
+  }
+  List<dynamic> sortByPriceDescending( List<dynamic> list )
+  {
+    list.sort((b, a) => a.mnprice.compareTo(b.mnprice));
+
+    return list;
+  }
+
+  List<dynamic> sortByParkingAscending( List<dynamic> list )
+  {
+    list.sort((a, b) => a.parking.compareTo(b.parking));
+
+    return list;
+  }
+
+  List<dynamic> sortByParkingDescending( List<dynamic> list )
+  {
+    list.sort((b, a) => a.parking.compareTo(b.parking));
+
+    return list;
+  }
+
+  List<dynamic> sortByNameAscending( List<dynamic> list )
+  {
+    list.sort((a, b) => a.name.compareTo(b.name));
+
+    return list;
+  }
+
+  List<dynamic> sortByNameDescending( List<dynamic> list )
+  {
+    list.sort((a, b) => a.name.compareTo(b.name));
+
+    return list;
+  }
+
+  void sortHandler( int value )
+  {
+    if( value==0 )
+    {
+      setState(() {
+        list= sortByNameAscending(list);
+      });
+    }
+    if( value==1 )
+    {
+      setState(() {
+        list= sortByNameDescending(list);
+      });
+    }
+    if( value==2 )
+    {
+      setState(() {
+        list= sortByPriceAscending(list);
+      });
+    }
+    if( value==3 )
+    {
+      setState(() {
+        list= sortByPriceDescending(list);
+      });
+    }
+    if( value==4 )
+    {
+      setState(() {
+        list= sortByParkingAscending(list);
+      });
+    }
+    if( value==5 )
+    {
+      setState(() {
+        list= sortByParkingDescending(list);
+      });
+    }
   }
 }
 
