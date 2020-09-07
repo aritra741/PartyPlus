@@ -54,18 +54,68 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
         ),
       ),*/
       body: new Container(
-        child: list.length==0?new Text("No result found") : new ListView.builder(
-            itemCount: list.length,
-            itemBuilder: (_,index){
-              return conventionUI(list[index].image, list[index].Name, list[index].City, list[index].street,list[index]);
-            }
+        child: list.length==0?new Text("No result found") : new Column(
+          children: <Widget>[
+        new Expanded(child:
+          ListView.builder(
+              itemCount: list.length,
+              itemBuilder: (_,index){
+                return conventionUI(list[index].image, list[index].Name, list[index].City, list[index].street,list[index]);
+              }
+          ),
         ),
+
+            Row(
+                children: <Widget>[
+                  FlatButton(
+                   // elevation: 5.0,
+                    onPressed: () => showSortOptions(),
+                  //  padding: EdgeInsets.all(15.0),
+                  /*  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),*/
+                    color: Color(0xFF005e6a),
+                    child: Text(
+                      'Sort',
+                      style: TextStyle(
+                        color: Colors.white,
+                        letterSpacing: 1.5,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'OpenSans',
+                      ),
+                    ),
+                  ),
+                  FlatButton(
+                   // elevation: 5.0,
+                    onPressed: () => showFilterDialog(),
+                  //  padding: EdgeInsets.all(15.0),
+                   /* shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),*/
+                    color: Color(0xFF005e6a),
+                    child: Text(
+                      'Filter',
+                      style: TextStyle(
+                        color: Colors.white,
+                        letterSpacing: 1.5,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'OpenSans',
+                      ),
+                    ),
+                  ),
+                ],
+            ),
+          ],
+        ),
+
       ),
     );
   }
   List<conventionHall> list = [];
-  conventionHall test = new conventionHall("Sylhet", "cc", "Shubidh Bazar", "Khan's Palace", "1", "1110111", "1234", "1234", "1335", "https://f...content-available-to-author-only...s.com/v0/b/fireapp-3d1c4.appspot.com/o/khan.jpg?alt=media&token=267e9cc7-6646-4df0-bceb-a99e1b88360f", 12.3, 12.55);
-  conventionHall test2 = new conventionHall("Chittagong", "cc", "Main Road", "King of Chittagong", "1", "1110111", "1234", "1234", "1335", "https://f...content-available-to-author-only...s.com/v0/b/fireapp-3d1c4.appspot.com/o/king%20of%20chittagong.jpg?alt=media&token=003e5c26-53bc-47b8-ab29-654cb9f97028", 12.3, 12.55);
+  conventionHall test = new conventionHall("Sylhet", "cc", "Shubidh Bazar", "Khan's Palace", "1", "1110111", "1234", "1234", "1335", "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/khan.jpg?alt=media&token=267e9cc7-6646-4df0-bceb-a99e1b88360f", 12.3, 12.55);
+  conventionHall test2 = new conventionHall("Chittagong", "cc", "Main Road", "King of Chittagong", "1", "1110111", "1234", "1234", "1335", "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/amanullah.jpg?alt=media&token=b7772da6-42aa-4d06-9552-582ff926882d", 12.3, 12.55);
   //list.add(test);
 
   @override
@@ -122,14 +172,14 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
   {
     return new Card(
       elevation: 10.0,
-      margin: EdgeInsets.all(15.0),
+     // margin: EdgeInsets.all(15.0),
 
       child: new InkWell(
         onTap: () {
           print("naam holo "+convention.Name);
-//          Navigator.push(context,MaterialPageRoute(builder: (context)=>conventionHallDetails(convention: convention)));
+          Navigator.push(context,MaterialPageRoute(builder: (context)=>conventionHallDetails(convention: convention)));
          // showFilterDialog();
-          showSortOptions();
+         // showSortOptions();
         },
         child: new Container(
           padding: new EdgeInsets.all(14.0),
