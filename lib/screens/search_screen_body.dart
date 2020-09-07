@@ -110,6 +110,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                                       actions: <Widget>[
                                         new FlatButton(onPressed: ()
                                             {
+                                              setNumberOfDays();
                                               Navigator.of(context, rootNavigator: true)
                                                   .pop();
                                             },
@@ -136,7 +137,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                                                   value: 0,
                                                   groupValue: selectedRadio,
                                                   onChanged: (int value) {
-                                                    setState(() {selectedRadio = value;dayGroup= value;dayString= dayGroup.toString();});
+                                                    setState(() {selectedRadio = value;dayGroup= value;dayString= (dayGroup+1).toString();});
                                                   },
                                                 ),
                                               ),
@@ -146,7 +147,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                                                   value: 1,
                                                   groupValue: selectedRadio,
                                                   onChanged: (int value) {
-                                                    setState(() {selectedRadio = value;dayGroup= value;dayString= dayGroup.toString();});
+                                                    setState(() {selectedRadio = value;dayGroup= value;dayString= (dayGroup+1).toString();});
                                                   },
                                                 ),
                                               ),
@@ -156,7 +157,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                                                   value: 2,
                                                   groupValue: selectedRadio,
                                                   onChanged: (int value) {
-                                                    setState(() {selectedRadio = value;dayGroup= value;});
+                                                    setState(() {selectedRadio = value;dayGroup= value;(dayGroup+1).toString();});
                                                   },
                                                 ),
                                               ),
@@ -211,7 +212,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                         ),
                       ),
                       Visibility(
-                        visible: true,
+                        visible: dayGroup>=1,
                         child: Container(
                           height: 80,
                           padding: EdgeInsets.all(5),
@@ -240,16 +241,31 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                         ),
                       ),
                       Visibility(
-                        visible: false,
+                        visible: dayGroup>=2,
                         child: Container(
-                          color: Colors.white70,
-                          child: Row(
-                            children: <Widget>[
-                              Text(
-                                formatted2,
-                                style: GoogleFonts.overpass(fontSize: 18, color: Colors.grey),
-                              )
-                            ],
+                          height: 80,
+                          padding: EdgeInsets.all(5),
+                          child: Card(
+                            elevation: 10,
+                            child: Row(
+                              children: <Widget>[
+                                Text(
+                                  formatted2,
+                                  style: GoogleFonts.overpass(fontSize: 22, color: Colors.black),
+                                ),
+                                SizedBox(
+                                  width: 50,
+                                ),
+                                Text(
+                                  "Select shift",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.teal,
+                                      decoration: TextDecoration.underline
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -485,6 +501,13 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
       setState(() {
         selectedDate = picked;
       });
+  }
+
+  void setNumberOfDays()
+  {
+    setState(() {
+      dayString= (dayGroup+1).toString();
+    });
   }
 
   void searchQuery()

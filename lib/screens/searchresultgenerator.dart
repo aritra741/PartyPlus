@@ -39,6 +39,7 @@ class SearchResultGenerator extends StatefulWidget {
 
 class _SearchResultGeneratorState extends State<SearchResultGenerator> {
   String searchstring;
+  List<String> choices= ["price", "parking"];
   _SearchResultGeneratorState(this.searchstring);
 
   @override
@@ -61,6 +62,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
   }
   List<conventionHall> list = [];
   conventionHall test = new conventionHall("Sylhet", "cc", "Shubidh Bazar", "Khan's Palace", "1", "1110111", "1234", "1234", "1335", "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/khan.jpg?alt=media&token=267e9cc7-6646-4df0-bceb-a99e1b88360f", 12.3, 12.55);
+  conventionHall test2 = new conventionHall("Sylhet", "cc", "Shubidh Bazar", "Khan's Palace", "1", "1110111", "1234", "1234", "1335", "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/khan.jpg?alt=media&token=267e9cc7-6646-4df0-bceb-a99e1b88360f", 12.3, 12.55);
   //list.add(test);
 
   @override
@@ -68,6 +70,9 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
     super.initState();
     DatabaseReference ref = FirebaseDatabase.instance.reference().child("conventionHall");
     list.add(test);
+    list.add(test2);
+    list.add(test2);
+
     if(ref==null) print('ha eta null');
     ref.once().then((DataSnapshot snap)
     {
@@ -148,6 +153,87 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
         ),
       ),
     );
+  }
+
+  List<dynamic> sortByPriceAscending( List<dynamic> list )
+  {
+    list.sort((a, b) => a.mnprice.compareTo(b.mnprice));
+
+    return list;
+  }
+  List<dynamic> sortByPriceDescending( List<dynamic> list )
+  {
+    list.sort((b, a) => a.mnprice.compareTo(b.mnprice));
+
+    return list;
+  }
+
+  List<dynamic> sortByParkingAscending( List<dynamic> list )
+  {
+    list.sort((a, b) => a.parking.compareTo(b.parking));
+
+    return list;
+  }
+
+  List<dynamic> sortByParkingDescending( List<dynamic> list )
+  {
+    list.sort((b, a) => a.parking.compareTo(b.parking));
+
+    return list;
+  }
+
+  List<dynamic> sortByNameAscending( List<dynamic> list )
+  {
+    list.sort((a, b) => a.name.compareTo(b.name));
+
+    return list;
+  }
+
+  List<dynamic> sortByNameDescending( List<dynamic> list )
+  {
+    list.sort((a, b) => a.name.compareTo(b.name));
+
+    return list;
+  }
+
+  void sortHandler( int value )
+  {
+    if( value==0 )
+    {
+        setState(() {
+          list= sortByNameAscending(list);
+        });
+    }
+    if( value==1 )
+    {
+      setState(() {
+        list= sortByNameDescending(list);
+      });
+    }
+    if( value==2 )
+    {
+      setState(() {
+        list= sortByPriceAscending(list);
+      });
+    }
+    if( value==3 )
+    {
+      setState(() {
+        list= sortByPriceDescending(list);
+      });
+    }
+    if( value==4 )
+    {
+      setState(() {
+        list= sortByParkingAscending(list);
+      });
+    }
+    if( value==5 )
+    {
+      setState(() {
+        list= sortByParkingDescending(list);
+      });
+    }
   }
 }
 
