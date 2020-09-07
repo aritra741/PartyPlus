@@ -31,6 +31,7 @@ import 'package:partyplus/conventionHallDetails.dart';
   });
 }*/
 class SearchResultGenerator extends StatefulWidget {
+  bool cbxval = false;
   String searchstring;
   SearchResultGenerator({this.searchstring});
   @override
@@ -38,9 +39,8 @@ class SearchResultGenerator extends StatefulWidget {
 }
 
 class _SearchResultGeneratorState extends State<SearchResultGenerator> {
+  bool cbxval = false;
   String searchstring;
-  List<String> choices = ["price", "parking"];
-
   _SearchResultGeneratorState(this.searchstring);
 
   @override
@@ -52,103 +52,71 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
         ),
       ),*/
       body: new Container(
-        child: list.length == 0 ? new Text("No result found") : new ListView
-            .builder(
-            itemCount: list.length,
-            itemBuilder: (_, index) {
-              return conventionUI(
-                  list[index].image, list[index].Name, list[index].City,
-                  list[index].street, list[index]);
-            }
-        ),
+        child: list.length==0?new Text("No result found") : new ListView.builder(
+        itemCount: list.length,
+        itemBuilder: (_,index){
+          return conventionUI(list[index].image, list[index].Name, list[index].City, list[index].street,list[index]);
+        }
+      ),
       ),
     );
   }
-
   List<conventionHall> list = [];
-  conventionHall test = new conventionHall(
-      "Sylhet",
-      "cc",
-      "Shubidh Bazar",
-      "Khan's Palace",
-      "1",
-      "1110111",
-      "1234",
-      "1234",
-      "1335",
-      "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/khan.jpg?alt=media&token=267e9cc7-6646-4df0-bceb-a99e1b88360f",
-      12.3,
-      12.55);
-  conventionHall test2 = new conventionHall(
-      "Sylhet",
-      "cc",
-      "Shubidh Bazar",
-      "Khan's Palace",
-      "1",
-      "1110111",
-      "1234",
-      "1234",
-      "1335",
-      "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/khan.jpg?alt=media&token=267e9cc7-6646-4df0-bceb-a99e1b88360f",
-      12.3,
-      12.55);
-
+  conventionHall test = new conventionHall("Sylhet", "cc", "Shubidh Bazar", "Khan's Palace", "1", "1110111", "1234", "1234", "1335", "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/khan.jpg?alt=media&token=267e9cc7-6646-4df0-bceb-a99e1b88360f", 12.3, 12.55);
   //list.add(test);
 
   @override
-  void initState() {
+  void initState(){
     super.initState();
-    DatabaseReference ref = FirebaseDatabase.instance.reference().child(
-        "conventionHall");
+    DatabaseReference ref = FirebaseDatabase.instance.reference().child("conventionHall");
     list.add(test);
-    list.add(test2);
-    list.add(test2);
-
-    if (ref == null) print('ha eta null');
-    ref.once().then((DataSnapshot snap) {
+    if(ref==null) print('ha eta null');
+    ref.once().then((DataSnapshot snap)
+    {
       //list.add(test);
       var KEYS = snap.value.keys;
       var DATA = snap.value;
-      //  list.clear();
-      for (var individualkey in KEYS) {
-        conventionHall con = new conventionHall
-          (
-          DATA[individualkey]['City'],
-          DATA[individualkey]['District'],
-          DATA[individualkey]['Street Name'],
-          DATA[individualkey]['Name'],
-          DATA[individualkey]['Id'],
-          DATA[individualkey]['facility'],
-          DATA[individualkey]['parking'],
-          DATA[individualkey]['mnprice'],
-          DATA[individualkey]['mxprice'],
-          DATA[individualkey]['image'],
-          DATA[individualkey]['Lat'],
-          DATA[individualkey]['Long'],
+    //  list.clear();
+      for(var individualkey in KEYS)
+        {
+          conventionHall con = new conventionHall
+            (
+            DATA[individualkey]['City'],
+            DATA[individualkey]['District'],
+            DATA[individualkey]['Street Name'],
+            DATA[individualkey]['Name'],
+            DATA[individualkey]['Id'],
+            DATA[individualkey]['facility'],
+            DATA[individualkey]['parking'],
+            DATA[individualkey]['mnprice'],
+            DATA[individualkey]['mxprice'],
+            DATA[individualkey]['image'],
+            DATA[individualkey]['Lat'],
+            DATA[individualkey]['Long'],
 
-        );
-        print(con.Name);
-        // if(con.Name.contains("k"))
-        list.add(con);
-        //else print("yes");
-      }
+          );
+          print(con.Name);
+         // if(con.Name.contains("k"))
+           list.add(con);
+          //else print("yes");
+        }
       setState(() {
         print('Length: $list.length');
       });
     });
   }
 
-  Widget conventionUI(String image, String name, String city, String street,
-      conventionHall convention) {
+  Widget conventionUI(String image,String name,String city,String street,conventionHall convention)
+  {
     return new Card(
       elevation: 10.0,
       margin: EdgeInsets.all(15.0),
 
       child: new InkWell(
         onTap: () {
-          print("naam holo " + convention.Name);
-          Navigator.push(context, MaterialPageRoute(builder: (context) =>
-              conventionHallDetails(convention: convention)));
+          print("naam holo "+convention.Name);
+          Navigator.push(context,MaterialPageRoute(builder: (context)=>conventionHallDetails(convention: convention)));
+          //showFilterDialog();
         },
         child: new Container(
           padding: new EdgeInsets.all(14.0),
@@ -160,37 +128,100 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
                 children: <Widget>[
                   new Text(
                     name,
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .subtitle1,
+                    style: Theme.of(context).textTheme.subtitle1,
                     textAlign: TextAlign.center,
                   ),
                   new Text(
                     city,
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .subtitle1,
+                    style: Theme.of(context).textTheme.subtitle1,
                     textAlign: TextAlign.center,
                   )
                 ],
               ),
               SizedBox(height: 10.0,),
-              new Image.network(image, fit: BoxFit.cover),
+              new Image.network(image,fit: BoxFit.cover),
               SizedBox(height: 10.0,),
               new Text(
                 street,
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .subtitle1,
+                style: Theme.of(context).textTheme.subtitle1,
                 textAlign: TextAlign.center,
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget showFilterDialog()
+  {
+
+    showDialog(
+        context: context,
+        //barrierDismissible: false,
+        builder: (BuildContext context)
+        {
+          return AlertDialog(
+            title: new Text('Choose to Filter'),
+           // content: new Text('Please enter correct Username and Password'),
+            actions: <Widget>[
+              Row(
+                children: <Widget> [
+                  Checkbox(
+                    value: cbxval,
+                    onChanged: (bool value){
+                      setState(() {
+                        cbxval = value;
+                      });
+                    },
+                  ),
+                  Text("AC"),
+                  Checkbox(
+                    value: cbxval,
+                    onChanged: (bool value){
+                      setState(() {
+                        cbxval = value;
+                      });
+                    },
+                  ),
+                  Text("Wifi"),
+                  Checkbox(
+                    value: cbxval,
+                    onChanged: (bool value){
+                      setState(() {
+                        cbxval = value;
+                      });
+                    },
+                  ),
+                  Text("CC"),
+                  Checkbox(
+                    value: cbxval,
+                    onChanged: (bool value){
+                      setState(() {
+                        print(value);
+                        cbxval = value;
+                      });
+                    },
+                  ),
+                  Text("Fire Control"),
+                ],
+              ),
+
+              Row(
+                children: <Widget> [
+                  FlatButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: new Text('OK')
+                  )
+                ],
+              ),
+             /* new FlatButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: new Text('OK')
+              )*/
+            ],
+          );
+        }
     );
   }
 }
