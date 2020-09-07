@@ -39,6 +39,8 @@ class SearchResultGenerator extends StatefulWidget {
 }
 
 class _SearchResultGeneratorState extends State<SearchResultGenerator> {
+  double slid = 10.0;
+  int selectedRadio;
   bool cbxval = false;
   String searchstring;
   _SearchResultGeneratorState(this.searchstring);
@@ -52,23 +54,24 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
         ),
       ),*/
       body: new Container(
-              child: list.length==0?new Text("No result found") : new ListView.builder(
-                  itemCount: list.length,
-                  itemBuilder: (_,index){
-                    return conventionUI(list[index].image, list[index].Name, list[index].City, list[index].street,list[index]);
-                  }
-              ),
-            ),
+        child: list.length==0?new Text("No result found") : new ListView.builder(
+            itemCount: list.length,
+            itemBuilder: (_,index){
+              return conventionUI(list[index].image, list[index].Name, list[index].City, list[index].street,list[index]);
+            }
+        ),
+      ),
     );
   }
   List<conventionHall> list = [];
-  conventionHall test = new conventionHall("Sylhet", "cc", "Shubidh Bazar", "Khan's Palace", "1", "1110111", "1234", "1234", "1335", "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/khan.jpg?alt=media&token=267e9cc7-6646-4df0-bceb-a99e1b88360f", 12.3, 12.55);
-  conventionHall test2 = new conventionHall("Chittagong", "cc", "Main Road", "King of Chittagong", "1", "1110111", "1234", "1234", "1335", "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/king%20of%20chittagong.jpg?alt=media&token=003e5c26-53bc-47b8-ab29-654cb9f97028", 12.3, 12.55);
+  conventionHall test = new conventionHall("Sylhet", "cc", "Shubidh Bazar", "Khan's Palace", "1", "1110111", "1234", "1234", "1335", "https://f...content-available-to-author-only...s.com/v0/b/fireapp-3d1c4.appspot.com/o/khan.jpg?alt=media&token=267e9cc7-6646-4df0-bceb-a99e1b88360f", 12.3, 12.55);
+  conventionHall test2 = new conventionHall("Chittagong", "cc", "Main Road", "King of Chittagong", "1", "1110111", "1234", "1234", "1335", "https://f...content-available-to-author-only...s.com/v0/b/fireapp-3d1c4.appspot.com/o/king%20of%20chittagong.jpg?alt=media&token=003e5c26-53bc-47b8-ab29-654cb9f97028", 12.3, 12.55);
   //list.add(test);
 
   @override
   void initState(){
     super.initState();
+    selectedRadio = 0;
     DatabaseReference ref = FirebaseDatabase.instance.reference().child("conventionHall");
     list.add(test);
     list.add(test2);
@@ -78,35 +81,42 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
       //list.add(test);
       var KEYS = snap.value.keys;
       var DATA = snap.value;
-    //  list.clear();
+      //  list.clear();
       for(var individualkey in KEYS)
-        {
-          conventionHall con = new conventionHall
-            (
-            DATA[individualkey]['City'],
-            DATA[individualkey]['District'],
-            DATA[individualkey]['Street Name'],
-            DATA[individualkey]['Name'],
-            DATA[individualkey]['Id'],
-            DATA[individualkey]['facility'],
-            DATA[individualkey]['parking'],
-            DATA[individualkey]['mnprice'],
-            DATA[individualkey]['mxprice'],
-            DATA[individualkey]['image'],
-            DATA[individualkey]['Lat'],
-            DATA[individualkey]['Long'],
+      {
+        conventionHall con = new conventionHall
+          (
+          DATA[individualkey]['City'],
+          DATA[individualkey]['District'],
+          DATA[individualkey]['Street Name'],
+          DATA[individualkey]['Name'],
+          DATA[individualkey]['Id'],
+          DATA[individualkey]['facility'],
+          DATA[individualkey]['parking'],
+          DATA[individualkey]['mnprice'],
+          DATA[individualkey]['mxprice'],
+          DATA[individualkey]['image'],
+          DATA[individualkey]['Lat'],
+          DATA[individualkey]['Long'],
 
-          );
-          print(con.Name);
-         // if(con.Name.contains("k"))
-           list.add(con);
-          //else print("yes");
-        }
+        );
+        print(con.Name);
+        // if(con.Name.contains("k"))
+        list.add(con);
+        //else print("yes");
+      }
       setState(() {
         print('Length: $list.length');
       });
     });
   }
+
+  setSelectedRadio(int val) {
+    setState(() {
+      selectedRadio = val;
+    });
+  }
+
 
   Widget conventionUI(String image,String name,String city,String street,conventionHall convention)
   {
@@ -118,7 +128,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
         onTap: () {
           print("naam holo "+convention.Name);
 //          Navigator.push(context,MaterialPageRoute(builder: (context)=>conventionHallDetails(convention: convention)));
-//          showFilterDialog();
+         // showFilterDialog();
           showSortOptions();
         },
         child: new Container(
@@ -165,8 +175,9 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
         builder: (BuildContext context)
         {
           return AlertDialog(
+            insetPadding: EdgeInsets.all(25),
             title: new Text('Choose to Filter'),
-           // content: new Text('Please enter correct Username and Password'),
+            // content: new Text('Please enter correct Username and Password'),
             actions: <Widget>[
               Row(
                 children: <Widget> [
@@ -212,13 +223,99 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
 
               Row(
                 children: <Widget> [
+                  Checkbox(
+                    value: cbxval,
+                    onChanged: (bool value){
+                      setState(() {
+                        cbxval = value;
+                      });
+                    },
+                  ),
+                  Text("Firework Place"),
+                  Checkbox(
+                    value: cbxval,
+                    onChanged: (bool value){
+                      setState(() {
+                        cbxval = value;
+                      });
+                    },
+                  ),
+                  Text("Photoshoot Area"),
+                ],
+              ),
+
+              Row(
+                children: <Widget> [
+                  Text("   Structure",style: TextStyle(color: Colors.black,
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold),),
+                ],
+              ),
+
+              Row(
+                  children: <Widget>[
+                    Radio(
+                      value: 1,
+                      groupValue: selectedRadio,
+                      activeColor: Color(0xFF005e6a),
+                      onChanged: (val) {
+                        print("Radio $val");
+                        setSelectedRadio(val);
+                      },
+                    ),
+                    Text("Simplex"),
+                    Radio(
+                      value: 2,
+                      groupValue: selectedRadio,
+                      activeColor: Color(0xFF005e6a),
+                      onChanged: (val) {
+                        print("Radio $val");
+                        setSelectedRadio(val);
+                      },
+                    ),
+                    Text("Duplex"),
+                  ]
+              ),
+              Row(
+                children: <Widget>  [
+                  Text("   Structure",style: TextStyle(color: Colors.black,
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold),),
+                ],
+              ),
+
+              Sliderwid(),
+              Container(
+                child: RaisedButton(
+                  elevation: 5.0,
+                  onPressed: () => Navigator.of(context).pop(),
+                  padding: EdgeInsets.all(15.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  color: Color(0xFF005e6a),
+                  child: Text(
+                    'OK',
+                    style: TextStyle(
+                      color: Colors.white,
+                      letterSpacing: 1.5,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'OpenSans',
+                    ),
+                  ),
+                ),
+              ),
+
+              /*Row(
+                children: <Widget> [
                   FlatButton(
                       onPressed: () => Navigator.of(context).pop(),
                       child: new Text('OK')
                   )
                 ],
-              ),
-             /* new FlatButton(
+              ),*/
+              /* new FlatButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: new Text('OK')
               )*/
@@ -226,6 +323,37 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
           );
         }
     );
+  }
+
+  Widget Sliderwid(){
+    return SliderTheme(
+      data: SliderTheme.of(context).copyWith(
+        trackHeight: 8,
+        overlayColor: Colors.transparent,
+        minThumbSeparation: 1000,
+        // accentTextTheme: TextTheme(bodyText2: TextStyle(color: Colors.white)),
+        rangeThumbShape: RoundRangeSliderThumbShape(
+          enabledThumbRadius: 100,
+          disabledThumbRadius: 100,
+        ),
+      ),
+      child: Slider(
+        // activeColor: CupertinoColors.activeGreen,
+
+        // label: slid.abs().toString(),
+        min: 0.0,
+        max: 100000.0,
+        value: slid,
+        // label: label,
+        onChanged: (val) {
+          setState(() {
+            slid = ((val).toInt()).toDouble();
+            print(slid);
+          });
+        },
+      ),
+    );
+
   }
 
   List<dynamic> sortByPriceAscending( List<dynamic> list )
@@ -319,7 +447,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
 
     print("first e"+list[0].Name);
   }
-  
+
   void showSortOptions()
   {
     showModalBottomSheet(
@@ -327,32 +455,32 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
         builder: (context)
         {
           return Column(
-              children: <Widget>[
-                ListTile(
-                  title: Text("Sort by name (Ascending)",),
-                  onTap: ()=> sortHandler(0,context),
-                ),
-                ListTile(
-                    title: Text("Sort by name (Descending)"),
-                    onTap: ()=> sortHandler(1,context),
-                ),
-                ListTile(
-                    title: Text("Sort by price (Ascending)"),
-                    onTap: ()=> sortHandler(2,context),
-                ),
-                ListTile(
-                    title: Text("Sort by price (Descending)"),
-                    onTap: ()=> sortHandler(3,context),
-                ),
-                ListTile(
-                    title: Text("Sort by parking space (Ascending)"),
-                    onTap: ()=> sortHandler(4,context),
-                ),
-                ListTile(
-                    title: Text("Sort by parking space (Descending)"),
-                    onTap: ()=> sortHandler(5,context),
-                ),
-              ],
+            children: <Widget>[
+              ListTile(
+                title: Text("Sort by name (Ascending)",),
+                onTap: ()=> sortHandler(0,context),
+              ),
+              ListTile(
+                title: Text("Sort by name (Descending)"),
+                onTap: ()=> sortHandler(1,context),
+              ),
+              ListTile(
+                title: Text("Sort by price (Ascending)"),
+                onTap: ()=> sortHandler(2,context),
+              ),
+              ListTile(
+                title: Text("Sort by price (Descending)"),
+                onTap: ()=> sortHandler(3,context),
+              ),
+              ListTile(
+                title: Text("Sort by parking space (Ascending)"),
+                onTap: ()=> sortHandler(4,context),
+              ),
+              ListTile(
+                title: Text("Sort by parking space (Descending)"),
+                onTap: ()=> sortHandler(5,context),
+              ),
+            ],
           );
         }
     );
