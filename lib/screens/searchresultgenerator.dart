@@ -39,7 +39,8 @@ class SearchResultGenerator extends StatefulWidget {
 }
 
 class _SearchResultGeneratorState extends State<SearchResultGenerator> {
-  double slid = 10.0;
+  double slid = 1000000.0;
+  double parkslid = 0.0;
   int selectedRadio;
   bool cbxval = false;
   String searchstring;
@@ -225,7 +226,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
         builder: (BuildContext context)
         {
           return AlertDialog(
-            insetPadding: EdgeInsets.all(25),
+            insetPadding: EdgeInsets.all(5),
             title: new Text('Filter Options'),
             // content: new Text('Please enter correct Username and Password'),
             content: StatefulBuilder(
@@ -313,9 +314,11 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
                             value: 1,
                             groupValue: selectedRadio,
                             activeColor: Color(0xFF005e6a),
-                            onChanged: (val) {
+                            onChanged: (int val) {
                               print("Radio $val");
-                              setSelectedRadio(val);
+                              setState(() {
+                                selectedRadio = val;
+                              });
                             },
                           ),
                           Text("Simplex"),
@@ -323,9 +326,11 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
                             value: 2,
                             groupValue: selectedRadio,
                             activeColor: Color(0xFF005e6a),
-                            onChanged: (val) {
+                            onChanged: (int val) {
                               print("Radio $val");
-                              setSelectedRadio(val);
+                              setState(() {
+                                selectedRadio = val;
+                              });
                             },
                           ),
                           Text("Duplex"),
@@ -333,13 +338,72 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
                     ),
                     Row(
                       children: <Widget>  [
-                        Text("   Structure",style: TextStyle(color: Colors.black,
+                        Text("   Maximum Price",style: TextStyle(color: Colors.black,
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold),),
                       ],
                     ),
 
-                    Sliderwid(),
+                      SliderTheme(
+                data: SliderTheme.of(context).copyWith(
+                  valueIndicatorColor:  Color(0xFF005e6a),
+                  inactiveTrackColor: Colors.blueGrey,
+                  activeTrackColor: Color(0xFF005e6a),
+                  thumbColor: Colors.black,
+                  trackHeight: 5,
+                     overlayColor: Colors.transparent,
+                     minThumbSeparation: 1000,
+                // accentTextTheme: TextTheme(bodyText2: TextStyle(color: Colors.white)),
+                     rangeThumbShape: RoundRangeSliderThumbShape(
+                     enabledThumbRadius: 100,
+                     disabledThumbRadius: 100,),),
+                        child: Slider(
+                               min: 0.0,
+                               max: 1000000.0,
+                               value: slid,
+                               divisions: 1000000,
+                               label: (slid.toInt()).toString(),
+                               onChanged: (val) {
+                               setState(() {
+                               slid = ((val).toInt()).toDouble();
+                               print(slid);});},),
+                      ),
+
+                    Row(
+                      children: <Widget>  [
+                        Text("   Parking lot",style: TextStyle(color: Colors.black,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold),),
+                      ],
+                    ),
+
+                    SliderTheme(
+                      data: SliderTheme.of(context).copyWith(
+                        valueIndicatorColor:  Color(0xFF005e6a),
+                        inactiveTrackColor: Colors.blueGrey,
+                        activeTrackColor: Color(0xFF005e6a),
+                        thumbColor: Colors.black,
+                        trackHeight: 5,
+                        overlayColor: Colors.transparent,
+                        minThumbSeparation: 1000,
+
+                        // accentTextTheme: TextTheme(bodyText2: TextStyle(color: Colors.white)),
+                        rangeThumbShape: RoundRangeSliderThumbShape(
+
+                          enabledThumbRadius: 100,
+                          disabledThumbRadius: 100,),),
+                      child: Slider(
+
+                        min: 0.0,
+                        max: 10000.0,
+                        value: parkslid,
+                        divisions: 10000,
+                        label: (parkslid.toInt()).toString(),
+                        onChanged: (val) {
+                          setState(() {
+                            parkslid = ((val).toInt()).toDouble();
+                            print(parkslid);});},),
+                    ),
                     Container(
                       child: RaisedButton(
                         elevation: 5.0,
@@ -386,36 +450,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
     );
   }
 
-  Widget Sliderwid(){
-    return SliderTheme(
-      data: SliderTheme.of(context).copyWith(
-        trackHeight: 8,
-        overlayColor: Colors.transparent,
-        minThumbSeparation: 1000,
-        // accentTextTheme: TextTheme(bodyText2: TextStyle(color: Colors.white)),
-        rangeThumbShape: RoundRangeSliderThumbShape(
-          enabledThumbRadius: 100,
-          disabledThumbRadius: 100,
-        ),
-      ),
-      child: Slider(
-        // activeColor: CupertinoColors.activeGreen,
 
-        // label: slid.abs().toString(),
-        min: 0.0,
-        max: 100000.0,
-        value: slid,
-        // label: label,
-        onChanged: (val) {
-          setState(() {
-            slid = ((val).toInt()).toDouble();
-            print(slid);
-          });
-        },
-      ),
-    );
-
-  }
 
   List<dynamic> sortByPriceAscending( List<dynamic> list )
   {
