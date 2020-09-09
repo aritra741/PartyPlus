@@ -39,6 +39,7 @@ class SearchResultGenerator extends StatefulWidget {
 }
 
 class _SearchResultGeneratorState extends State<SearchResultGenerator> {
+  String UserDemandFacility = "0000000";
   double slid = 1000000.0;
   double parkslid = 0.0;
   int selectedRadio;
@@ -126,40 +127,6 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
     DatabaseReference ref = FirebaseDatabase.instance.reference().child("conventionHall");
     list.add(test);
     list.add(test2);
-    if(ref==null) print('ha eta null');
-    ref.once().then((DataSnapshot snap)
-    {
-      //list.add(test);
-      var KEYS = snap.value.keys;
-      var DATA = snap.value;
-      //  list.clear();
-      for(var individualkey in KEYS)
-      {
-        conventionHall con = new conventionHall
-          (
-          DATA[individualkey]['City'],
-          DATA[individualkey]['District'],
-          DATA[individualkey]['Street Name'],
-          DATA[individualkey]['Name'],
-          DATA[individualkey]['Id'],
-          DATA[individualkey]['facility'],
-          DATA[individualkey]['parking'],
-          DATA[individualkey]['mnprice'],
-          DATA[individualkey]['mxprice'],
-          DATA[individualkey]['image'],
-          DATA[individualkey]['Lat'],
-          DATA[individualkey]['Long'],
-
-        );
-        print(con.Name);
-        // if(con.Name.contains("k"))
-        list.add(con);
-        //else print("yes");
-      }
-      setState(() {
-        print('Length: $list.length');
-      });
-    });
   }
 
   setSelectedRadio(int val) {
@@ -449,7 +416,6 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
         }
     );
   }
-
 
 
   List<dynamic> sortByPriceAscending( List<dynamic> list )

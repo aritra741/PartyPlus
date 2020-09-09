@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:partyplus/RetrieveUserReservation.dart';
 import 'package:partyplus/screens/login_screen.dart';
 import 'package:partyplus/screens/register_screen.dart';
 import 'package:partyplus/screens/search_screen_body.dart';
@@ -134,9 +135,16 @@ class _UserProfileState extends State<UserProfile> {
                             SizedBox(
                               width: 20,
                             ),
-                            Text(
-                              'Modify/delete reservation',
-                              style: GoogleFonts.overpass(color: kDarkPrimaryColor, fontSize: 20, fontWeight: FontWeight.bold ),
+
+                            GestureDetector(
+                                onTap: () {
+                                  //print("naam holo "+convention.Name);
+                                  Navigator.push(context,MaterialPageRoute(builder: (context)=>RetrieveUserReservation()));
+                                },
+                                child : Text(
+                                  'Modify/delete reservation',
+                                  style: GoogleFonts.overpass(color: kDarkPrimaryColor, fontSize: 20, fontWeight: FontWeight.bold ),
+                                ),
                             ),
                             SizedBox(
                               width: 10,
