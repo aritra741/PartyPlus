@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:partyplus/screens/register_screen.dart';
+import 'package:partyplus/screens/retrieve_reservation.dart';
 //import 'package:flutterModule/register_screen.dart';
 import 'search_screen_body.dart';
 import '../providers/auth.dart';
@@ -307,9 +308,9 @@ class _LoginScreenState extends State<LoginScreen> {
             setState(() {
               currentIndex= 1;
             });
-//              Navigator.push(
-//                context,
-//                MaterialPageRoute(builder: (context) => RegisterScreen()),);
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => RetrieveReservation()),);
           }
           else if( index==2 )
           {

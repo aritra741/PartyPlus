@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:partyplus/screens/user_profile.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class NavigationDrawer extends StatelessWidget {
   @override
@@ -10,8 +11,22 @@ class NavigationDrawer extends StatelessWidget {
           Container(
             height: 150,
             width: double.infinity,
-            color: Color(0xFF004b55),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  "Party",
+                  style: GoogleFonts.overpass(color: Colors.black, fontSize: 32, fontWeight: FontWeight.w200 ),
+                ),
+                Text(
+                  "Plus",
+                  style: GoogleFonts.overpass(color: Color(0xFF008A8C), fontSize: 32, fontWeight: FontWeight.bold ),
+                )
+              ],
+            ),
           ),
+          Divider(color: Colors.black),
           ListTile(
             onTap: ()=> Navigator.push(context,
               MaterialPageRoute(builder: (context) => UserProfile())),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:partyplus/Reservation.dart';
+import 'package:partyplus/screens/modify_reservation.dart';
 
 
 class RetrieveUserReservation extends StatefulWidget {
@@ -59,7 +60,7 @@ class _RetrieveUserReservationState extends State<RetrieveUserReservation> {
 
       child: new InkWell(
         onTap: () {
-        //  Navigator.push(context,MaterialPageRoute(builder: (context)=>conventionHallDetails(convention: convention)));
+         Navigator.push(context,MaterialPageRoute(builder: (context)=>ModifyReservation()));
         },
         child: new Container(
           padding: new EdgeInsets.all(14.0),

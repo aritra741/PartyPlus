@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:partyplus/screens/retrieve_reservation.dart';
 import 'login_screen.dart';
 import 'search_screen_body.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -383,9 +384,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
             setState(() {
               currentIndex= 1;
             });
-//              Navigator.push(
-//                context,
-//                MaterialPageRoute(builder: (context) => RegisterScreen()),);
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => RetrieveReservation()),);
           }
           else if( index==2 )
           {

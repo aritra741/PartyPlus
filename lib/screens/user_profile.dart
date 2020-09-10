@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:partyplus/RetrieveUserReservation.dart';
 import 'package:partyplus/screens/login_screen.dart';
+import 'package:partyplus/screens/modify_reservation.dart';
 import 'package:partyplus/screens/register_screen.dart';
+import 'package:partyplus/screens/retrieve_reservation.dart';
 import 'package:partyplus/screens/search_screen_body.dart';
 import 'package:partyplus/screens/user_profile_update.dart';
 import '../constants/constants_for_user_profile.dart';
@@ -236,7 +238,7 @@ class _UserProfileState extends State<UserProfile> {
             });
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => RegisterScreen()),);
+              MaterialPageRoute(builder: (context) => RetrieveReservation()),);
           }
           else if( index==2 )
           {

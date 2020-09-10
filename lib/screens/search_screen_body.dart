@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:partyplus/screens/retrieve_reservation.dart';
 import 'package:partyplus/screens/search_result_list_map.dart';
 import 'package:partyplus/widgets/navigation_drawer.dart';
 import 'register_screen.dart';
@@ -657,6 +658,9 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
             setState(() {
               currentIndex= 1;
             });
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => RetrieveReservation()),);
             }
           else if( index==2 )
           {
