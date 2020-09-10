@@ -120,7 +120,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
                             Navigator.push(context,MaterialPageRoute(builder: (context)=>ImageList(convention: convention)));
                           },
                           child : Text(
-                            '5+',
+                            '+5',
                             style: TextStyle(color: Colors.white,
                               fontSize: 30.0,),
 
@@ -179,57 +179,73 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
           Row(
               children: <Widget>[
                 //Text("Hi"),
-                Icon(Icons.location_on),
+                Icon(Icons.location_on, size: 40, color: Color(0xFFEA4335),),
                 Text(convention.street + "," + convention.City,
-                  style: TextStyle(color: Colors.black, fontSize: 16.0),),
+                  style: TextStyle(color: Colors.black, fontSize: 28.0),),
               ]
           ),
-          Row(
-
-              children: <Widget>[
-                Container(
-                  margin: new EdgeInsets.symmetric(vertical: 10.0),
-                  child : Text("\nFacilities",
+          Card(
+            elevation: 20,
+            child: Container(
+              // margin: new EdgeInsets.symmetric(vertical: 10.0),
+              height: 200,
+              child: Column(
+                children: <Widget>[
+                  Text("\nFacilities",
                       style: TextStyle(color: Colors.black,
                           fontSize: 25.0,
                           fontWeight: FontWeight.bold)),
-                ),
 
-
-              ]
+                  AC(),
+                  WiFi(),
+                  CC(),
+                  PhotoShoots(),
+                  Parkinglot(),
+                ],
+              ),
+            )
           ),
-          AC(),
-          WiFi(),
-          CC(),
-          PhotoShoots(),
-          Parkinglot(),
-          Row(
-
-              children: <Widget>[
-                Container(
-                  margin: new EdgeInsets.symmetric(vertical: 10.0),
-                  child: Text("\nMiscellaneous",
-                      style: TextStyle(color: Colors.black,
-                          fontSize: 25.0,
-                          fontWeight: FontWeight.bold)),
-                ),
-              ]
-          ),
-         Structure(),
-          FireWorks(),
-          FireExting(),
-
           SizedBox(height: 20),
-          PriceDetails(1),
-          AddRemoveButton(),
-          widgetforszbox(2),
-          PriceDetails(2),
-          AddRemoveButton(),
-          widgetforszbox(3),
-          PriceDetails(3),
-          AddRemoveButton(),
-          widgetforszbox(4),
-          TotalPrice(),
+          Card(
+            elevation: 20,
+            child: Container(
+              height: 150,
+              child: Column(
+                children: <Widget>[
+                  Text("\nMiscellaneous",
+                      style: TextStyle(color: Colors.black,
+                          fontSize: 25.0,
+                          fontWeight: FontWeight.bold)),
+                  Structure(),
+                  FireWorks(),
+                  FireExting(),
+
+                ],
+              ),
+            ),
+          ),
+          SizedBox(height: 20),
+          Card(
+            elevation: 30,
+            child: Container(
+              padding: EdgeInsets.only(top: 20),
+              height: 400,
+              child: Column(
+                children: <Widget>[
+                  PriceDetails(1),
+                  AddRemoveButton(),
+                  widgetforszbox(2),
+                  PriceDetails(2),
+                  AddRemoveButton(),
+                  widgetforszbox(3),
+                  PriceDetails(3),
+                  AddRemoveButton(),
+                  widgetforszbox(4),
+                  TotalPrice(),
+                ],
+              ),
+            ),
+          )
         ],
       ),
     );
@@ -246,7 +262,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
   Widget AddRemoveButton(){
     return Row(
       children: <Widget>[
-        SizedBox(width: 165),
+        SizedBox(width: 145),
         InkWell(
           // onTap: doSomething,
           child: SizedBox(
@@ -256,7 +272,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
               ),
               child: Text(
                 "Add/Remove",style: TextStyle(
-                decoration: TextDecoration.underline,color: Colors.black, fontSize: 16.0,
+                decoration: TextDecoration.underline,color: Colors.teal, fontSize: 16.0,
               ),
                 //textAlign: TextAlign.right,
               ),
@@ -280,7 +296,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
               child:  Text("12.08.2020",
                 style: TextStyle(color: Colors.black, fontSize: 16.0),),
             ),
-            SizedBox(width: 100),
+            SizedBox(width: 80),
             Container(
               child: new Column(
                 children: <Widget>[
@@ -289,7 +305,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
                 ],
               ),
             ),
-            SizedBox(width: 100),
+            SizedBox(width: 80),
             Container(
               child: new Column(
 
@@ -314,7 +330,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
               child:  Text("13.08.2020",
                 style: TextStyle(color: Colors.black, fontSize: 16.0),),
             ),
-            SizedBox(width: 100),
+            SizedBox(width: 80),
             Container(
               child: new Column(
                 children: <Widget>[
@@ -323,7 +339,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
                 ],
               ),
             ),
-            SizedBox(width: 100),
+            SizedBox(width: 80),
             Container(
               child: new Column(
 
@@ -348,7 +364,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
               child:  Text("14.08.2020",
                 style: TextStyle(color: Colors.black, fontSize: 16.0),),
             ),
-            SizedBox(width: 100),
+            SizedBox(width: 80),
             Container(
               child: new Column(
                 children: <Widget>[
@@ -357,7 +373,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
                 ],
               ),
             ),
-            SizedBox(width: 100),
+            SizedBox(width: 80),
             Container(
               child: new Column(
 
@@ -381,13 +397,13 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
     return Row(
       children: <Widget>[
        // SizedBox(height: 50),
-        SizedBox(width: 255),
+        SizedBox(width: 170),
         Container(
           child:  Text("Total",
             style: TextStyle(color: Colors.black, fontSize: 16.0),),
         ),
 
-        SizedBox(width: 50),
+        SizedBox(width: 100),
         Container(
           child: new Column(
             children: <Widget>[
@@ -474,7 +490,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
     if (convention.facility[0] == '1') {
       return Row(
           children: <Widget>[
-            Icon(Icons.check_box, color: Color(0xFF005e6a)),
+            Icon(Icons.check, color: Color(0xFF00ff00)),
             Text("Air Conditioning",
               style: TextStyle(color: Colors.black, fontSize: 16.0),),
           ]
@@ -493,7 +509,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
       return Row(
           children: <Widget>[
 
-            Icon(Icons.check_box, color: Color(0xFF005e6a)),
+            Icon(Icons.check, color: Color(0xFF00ff00)),
             Text("Free Wifi",
               style: TextStyle(color: Colors.black, fontSize: 16.0),),
           ]
@@ -512,7 +528,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
       return Row(
           children: <Widget>[
 
-            Icon(Icons.check_box, color: Color(0xFF005e6a)),
+            Icon(Icons.check, color: Color(0xFF00ff00)),
             Text("Surveilled by CC camera",
               style: TextStyle(color: Colors.black, fontSize: 16.0),),
           ]
@@ -531,7 +547,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
       return Row(
           children: <Widget>[
 
-            Icon(Icons.check_box, color: Color(0xFF005e6a)),
+            Icon(Icons.check, color: Color(0xFF00ff00)),
             Text("Special corner for photoshoots",
               style: TextStyle(color: Colors.black, fontSize: 16.0),),
           ]
@@ -548,7 +564,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
       return Row(
           children: <Widget>[
 
-            Icon(Icons.check_box, color: Color(0xFF005e6a)),
+            Icon(Icons.check, color: Color(0xFF00ff00)),
             Text(convention.parking +" square feet parking lot",
               style: TextStyle(color: Colors.black, fontSize: 16.0),),
           ]
