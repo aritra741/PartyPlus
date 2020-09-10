@@ -230,17 +230,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
                             });
                           },
                         ),
-                        Text("CC"),
-                        Checkbox(
-                          value: cbxval,
-                          onChanged: (bool value){
-                            setState(() {
-                              print(value);
-                              cbxval = value;
-                            });
-                          },
-                        ),
-                        Text("Fire Control"),
+                        Text("CC Camera"),
                       ],
                     ),
 
@@ -264,6 +254,20 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
                           },
                         ),
                         Text("Photoshoot Area"),
+                      ],
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Checkbox(
+                          value: cbxval,
+                          onChanged: (bool value){
+                            setState(() {
+                              print(value);
+                              cbxval = value;
+                            });
+                          },
+                        ),
+                        Text("Fire Control"),
                       ],
                     ),
 

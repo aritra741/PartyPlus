@@ -400,7 +400,8 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
         SizedBox(width: 170),
         Container(
           child:  Text("Total",
-            style: TextStyle(color: Colors.black, fontSize: 16.0),),
+            style: TextStyle(color: Colors.black, fontSize: 16.0,
+            fontWeight: FontWeight.bold))
         ),
 
         SizedBox(width: 100),
@@ -408,7 +409,8 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
           child: new Column(
             children: <Widget>[
               Text("90000\u09F3",
-                style: TextStyle(color: Colors.black, fontSize: 16.0),),
+                style: TextStyle(color: Colors.black, fontSize: 16.0,
+                fontWeight: FontWeight.bold),),
             ],
           ),
         ),
