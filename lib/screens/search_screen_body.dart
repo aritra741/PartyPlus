@@ -39,7 +39,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
   static final DateTime secDate = new DateTime(now.year, now.month, now.day+1);
   static final DateFormat formatter2 = DateFormat('dd-MM-yyyy');
   final String formatted2 = formatter2.format(secDate);
-  static final DateTime thDate = new DateTime(now.year, now.month, now.day+1);
+  static final DateTime thDate = new DateTime(secDate.year, secDate.month, secDate.day+1);
   static final DateFormat formatter3 = DateFormat('dd-MM-yyyy');
   final String formatted3 = formatter3.format(thDate);
 
@@ -73,11 +73,8 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
               Expanded(
                 child: searchScreenTop(),
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.1,
-              ),
               Container(
-                  height: MediaQuery.of(context).size.height * 0.6,
+                  height: MediaQuery.of(context).size.height * 0.82,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     boxShadow: [
@@ -192,22 +189,26 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                       Visibility(
                         visible: true,
                         child: Container(
-                          height: 100,
+                          height: 75,
                           padding: EdgeInsets.only(top:10),
-                          child: Card(
-                            color: Color(0xFFF4F0DB),
-                            elevation: 20,
+                          child: Container(
+//                            color: Color(0xFFF4F0DB),
+//                            elevation: 20,
+                              height: 30,
                             child: ListView(
                               padding: EdgeInsets.only(top: 10, ),
                               children: <Widget>[
                                 Row(
                                   children: <Widget>[
+                                    SizedBox(
+                                      width: 20,
+                                    ),
                                     Text(
                                       " "+formatted,
                                       style: GoogleFonts.overpass(fontSize: 22, color: Colors.black),
                                     ),
                                     SizedBox(
-                                      width: 50,
+                                      width: 95,
                                     ),
                                     InkWell(
                                       onTap: ()
@@ -301,7 +302,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                                 Visibility(
                                   visible: true,
                                   child: Text(
-                                      (dayOneMorning?" Morning":"")+(dayOneEvening?" Evening":"")+(dayOneNight?" Night":""),
+                                      (dayOneMorning?"     Morning":"")+(dayOneEvening?"     Evening":"")+(dayOneNight?"     Night":""),
                                     style: TextStyle(
                                       fontSize: 22,
                                       color: Color(0xFF005e6a)
@@ -313,25 +314,32 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                           ),
                         ),
                       ),
+                      Divider(
+                        color: Colors.black,
+                      ),
                       Visibility(
                         visible: dayGroup>=1,
                         child: Container(
-                          height: 100,
+                          height: 75,
                           padding: EdgeInsets.only(top:10),
-                          child: Card(
-                              color: Color(0xFFF4F0DB),
-                              elevation: 20,
+                          child: SizedBox(
+//                              color: Color(0xFFF4F0DB),
+//                              elevation: 20,
+                              height: 30,
                               child: ListView(
                                 padding: EdgeInsets.only(top: 10, ),
                                 children: <Widget>[
                                   Row(
                                     children: <Widget>[
+                                      SizedBox(
+                                        width: 20,
+                                      ),
                                       Text(
                                         " "+formatted2,
                                         style: GoogleFonts.overpass(fontSize: 22, color: Colors.black),
                                       ),
                                       SizedBox(
-                                        width: 50,
+                                        width: 100,
                                       ),
                                       InkWell(
                                         onTap: ()
@@ -425,7 +433,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                                   Visibility(
                                     visible: true,
                                     child: Text(
-                                      (dayTwoMorning?" Morning":"")+(dayTwoEvening?" Evening":"")+(dayTwoNight?" Night":""),
+                                      (dayTwoMorning?"     Morning":"")+(dayTwoEvening?"     Evening":"")+(dayTwoNight?"      Night":""),
                                       style: TextStyle(
                                           fontSize: 22,
                                           color: Color(0xFF005e6a)
@@ -438,24 +446,34 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                         ),
                       ),
                       Visibility(
+                        visible: dayGroup>=1,
+                        child: Divider(
+                          color: Colors.black,
+                        ),
+                      ),
+                      Visibility(
                         visible: dayGroup>=2,
                         child: Container(
-                          height: 100,
+                          height: 75,
                           padding: EdgeInsets.only(top:10),
-                          child: Card(
-                              color: Color(0xFFF4F0DB),
-                              elevation: 20,
+                          child: Container(
+//                              color: Color(0xFFF4F0DB),
+//                              elevation: 20,
+                              height: 30,
                               child: ListView(
                                 padding: EdgeInsets.only(top: 10, ),
                                 children: <Widget>[
                                   Row(
                                     children: <Widget>[
+                                      SizedBox(
+                                        width: 20,
+                                      ),
                                       Text(
                                         " "+formatted3,
                                         style: GoogleFonts.overpass(fontSize: 22, color: Colors.black),
                                       ),
                                       SizedBox(
-                                        width: 50,
+                                        width: 95,
                                       ),
                                       InkWell(
                                         onTap: ()
@@ -549,7 +567,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                                   Visibility(
                                     visible: true,
                                     child: Text(
-                                      (dayThreeMorning?" Morning":"")+(dayThreeEvening?" Evening":"")+(dayThreeNight?" Night":""),
+                                      (dayThreeMorning?"     Morning":"")+(dayThreeEvening?"     Evening":"")+(dayThreeNight?"     Night":""),
                                       style: TextStyle(
                                           fontSize: 22,
                                           color: Color(0xFF005e6a)
@@ -561,8 +579,14 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                           ),
                         ),
                       ),
+                      Visibility(
+                        visible: dayGroup>=2,
+                        child: Divider(
+                          color: Colors.black,
+                        ),
+                      ),
                       Container(
-                        margin: EdgeInsets.only(top: kDefaultPadding*3),
+                        margin: EdgeInsets.only(top: kDefaultPadding),
                         width: 200,
                         height: 50,
                         child: RaisedButton(
@@ -679,7 +703,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
               children: <Widget>[
                 Text(
                   showMonth + ' ',
-                  style: GoogleFonts.overpass(fontSize: 12),
+                  style: GoogleFonts.overpass(fontSize: 18),
                 ),
                 Text(
                   showDay,
@@ -718,8 +742,8 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
     double screenwidth= MediaQuery.of(context).size.width;
     return new Scaffold(
       body: new Container(
-        margin: EdgeInsets.only(bottom: kDefaultPadding * 2.5, top: kDefaultPadding * 3),
-        height: size*0.2+27,
+        margin: EdgeInsets.only(bottom: kDefaultPadding, top: kDefaultPadding * .25),
+        height: size*0.15,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,

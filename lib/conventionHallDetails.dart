@@ -74,7 +74,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
               StaggeredTile.count(2, 1.8),
               StaggeredTile.count(2, 1.8),
               StaggeredTile.count(2, 1.8),
-              StaggeredTile.count(6, 7),
+              StaggeredTile.count(6, 9),
 
             ],
 
