@@ -5,6 +5,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:partyplus/providers/conventionHall.dart';
 import 'ImageList.dart';
+import 'package:partyplus/screens/modify_reservation.dart';
 
 class conventionHallDetails extends StatefulWidget {
   int num_of_days=2;
@@ -64,6 +65,8 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
             color: Colors.black12,
           ),
           child: StaggeredGridView.count(
+            //shrinkWrap: true,
+           // primary: false,
             crossAxisCount: 6,
             mainAxisSpacing: 1.0,
             crossAxisSpacing: 1.0,
@@ -79,6 +82,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
             ],
 
             children: <Widget>[
+
               myPhotoList(
                   "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/Khan's%20Palace%2Fimage1.jpg?alt=media&token=fb301e5b-3c2b-4cce-83ab-dae21de6f6c3"),
               myPhotoList(
@@ -130,6 +134,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
                   ),
                 ],
               ),
+
               Details(),
             ],
 
@@ -145,6 +150,8 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
   Widget Details() {
 
     return Container(
+
+
       color: Colors.white12,
       padding: const EdgeInsets.all(1.0),
       child: ListView(
@@ -245,7 +252,40 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
                 ],
               ),
             ),
-          )
+          ),
+          SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              RaisedButton(
+
+                elevation: 5.0,
+                onPressed: (){
+                  Navigator.push(context,MaterialPageRoute(builder: (context)=>ModifyReservation()));
+                },
+                padding: EdgeInsets.all(15.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
+                color: Color(0xFF005e6a),
+                child: Text(
+                  'BOOK',
+                  style: TextStyle(
+                    color: Colors.white,
+                    letterSpacing: 1.5,
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'OpenSans',
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 10),
+
+
+
         ],
       ),
     );
