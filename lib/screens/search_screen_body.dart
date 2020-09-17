@@ -5,6 +5,7 @@ import 'package:partyplus/screens/search_result_list_map.dart';
 import 'package:partyplus/widgets/navigation_drawer.dart';
 import 'register_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:partyplus/db_test.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../providers/auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -43,9 +44,6 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
   static final DateTime thDate = new DateTime(secDate.year, secDate.month, secDate.day+1);
   static final DateFormat formatter3 = DateFormat('dd-MM-yyyy');
   final String formatted3 = formatter3.format(thDate);
-
-
-
 
   void dispose() {
     searchText.dispose();
