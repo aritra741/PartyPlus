@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:partyplus/constants/constants_for_login.dart';
-import 'package:partyplus/screens/addon_dummy_page.dart';
 import 'package:partyplus/screens/login_screen.dart';
 import 'package:partyplus/screens/register_screen.dart';
 import 'package:partyplus/screens/search_screen_body.dart';
 import 'package:partyplus/constants/constants_for_search_screen_top.dart';
 
-class ModifyReservation extends StatefulWidget {
+class ConfirmBooking extends StatefulWidget {
   @override
-  _ModifyReservationState createState() => _ModifyReservationState();
+  _ConfirmBookingState createState() => _ConfirmBookingState();
 }
 
-class _ModifyReservationState extends State<ModifyReservation> {
-
+class _ConfirmBookingState extends State<ConfirmBooking> {
   var userEmail= TextEditingController(text: "aritra741@gmail.com");
   var userPhone= TextEditingController(text: "01555514523");
   var userName= TextEditingController(text: "Aritra Mazumder");
@@ -136,18 +134,14 @@ class _ModifyReservationState extends State<ModifyReservation> {
               ),
             ),
             Container(
-              child: Row(
-                children: <Widget>[
-              Container(
               margin: EdgeInsets.only(top: kDefaultPadding),
-              width: 150,
+              width: 200,
               height: 50,
               child: RaisedButton(
                 elevation: 5.0,
                 onPressed: (){
                   setState(() {
                     pressed= true;
-                    Navigator.push(context,MaterialPageRoute(builder: (context)=>AddOnDummy()));
                   });
                 },
                 padding: EdgeInsets.all(15.0),
@@ -156,7 +150,7 @@ class _ModifyReservationState extends State<ModifyReservation> {
                 ),
                 color: Color(0xFF005e6a),
                 child: Text(
-                  'AddOn',
+                  'CONFIRM',
                   style: TextStyle(
                     color: Colors.white,
                     letterSpacing: 1.5,
@@ -167,39 +161,6 @@ class _ModifyReservationState extends State<ModifyReservation> {
                 ),
               ),
             ),
-                  SizedBox(width: 10,),
-
-                  Container(
-                    margin: EdgeInsets.only(top: kDefaultPadding),
-                    width: 200,
-                    height: 50,
-                    child: RaisedButton(
-                      elevation: 5.0,
-                      onPressed: (){
-                        setState(() {
-                          pressed= true;
-                        });
-                      },
-                      padding: EdgeInsets.all(15.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                      ),
-                      color: Color(0xFF005e6a),
-                      child: Text(
-                        'UPDATE',
-                        style: TextStyle(
-                          color: Colors.white,
-                          letterSpacing: 1.5,
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'OpenSans',
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            )
           ],
         ),
       ),

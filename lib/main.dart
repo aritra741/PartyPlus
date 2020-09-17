@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:partyplus/screens/addon_dummy_page.dart';
 import 'package:partyplus/screens/search_screen_body.dart';
 import 'package:partyplus/screens/user_profile.dart';
 

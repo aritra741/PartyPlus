@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:partyplus/providers/conventionHall.dart';
+import 'package:partyplus/screens/confirm_booking.dart';
 import 'ImageList.dart';
 import 'package:partyplus/screens/modify_reservation.dart';
 
@@ -246,7 +247,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
 
                   elevation: 5.0,
                   onPressed: (){
-                    Navigator.push(context,MaterialPageRoute(builder: (context)=>ModifyReservation()));
+                    Navigator.push(context,MaterialPageRoute(builder: (context)=>ConfirmBooking()));
                   },
                   padding: EdgeInsets.all(15.0),
                   shape: RoundedRectangleBorder(
@@ -529,10 +530,88 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
               decoration: BoxDecoration(
                // color: Colors.blue
               ),
-              child: Text(
-                "Add/Remove",style: TextStyle(
+              child: InkWell(
+                  onTap: ()=>{
+                  showDialog<void>( context: context,
+                  builder: (BuildContext context){
+                  bool _morning= true;
+                  bool _evening= true;
+                  bool _night= true;
+
+                  return AlertDialog(
+                  title: Text("Shift(s)"),
+                  actions: <Widget>[
+                  new FlatButton(onPressed: ()
+                  {
+                  // setNumberOfDays();
+                  Navigator.of(context, rootNavigator: true)
+                      .pop();
+                  },
+                  child: Container(
+                  height: 40,
+                  width: 50,
+                  padding: EdgeInsets.only(left: 11, top: 5),
+                  decoration: BoxDecoration(
+                  color: Color(0xFF005e6a),
+                  ),
+                  child: Text("ok", style: TextStyle(fontSize: 22, color: Colors.white)),
+                  )
+                  )
+                  ],
+                  content: StatefulBuilder(
+                  builder: (BuildContext context, StateSetter setState) {
+                  return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                  CheckboxListTile(
+                  value: _morning,
+                  title: Text("Morning"),
+                  onChanged: (value){
+                  setState( ()
+                  {
+                  _morning= value;
+                  // getShiftInfoForDayOne(_morning, _evening, _night);
+                  });
+                  },
+                  ),
+                  CheckboxListTile(
+                  value: _evening,
+                  title: Text("Evening"),
+                  onChanged: (value)
+                  {
+                  setState( ()
+                  {
+                  _evening= value;
+                  // getShiftInfoForDayOne(_morning, _evening, _night);
+                  });
+                  },
+                  ),
+                  CheckboxListTile(
+                  value: _night,
+                  title: Text("Night"),
+                  onChanged: (value)
+                  {
+                  setState( ()
+                  {
+                  _night= value;
+                  // getShiftInfoForDayOne(_morning, _evening, _night);
+                  });
+                  },
+                  ),
+
+                  ],
+                  );
+                  },
+                  ),
+                  );
+                  } )
+                  },
+                  child: Text(
+                  "Add/Remove",style: TextStyle(
                 decoration: TextDecoration.underline,color: Colors.teal, fontSize: 16.0,
               ),
+    )
                 //textAlign: TextAlign.right,
               ),
             ),
