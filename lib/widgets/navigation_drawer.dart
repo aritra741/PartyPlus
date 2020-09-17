@@ -9,20 +9,26 @@ class NavigationDrawer extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Container(
+            color: Colors.white,
             height: 150,
-            width: double.infinity,
+            //width: double.infinity,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Text(
+                Image(
+                  image: AssetImage('assets/logo.jpg'),
+                  width: 300,
+                  fit:BoxFit.fill ,
+                ),
+                /*Text(
                   "Party",
                   style: GoogleFonts.overpass(color: Colors.black, fontSize: 32, fontWeight: FontWeight.w200 ),
                 ),
                 Text(
                   "Plus",
                   style: GoogleFonts.overpass(color: Color(0xFF008A8C), fontSize: 32, fontWeight: FontWeight.bold ),
-                )
+                )*/
               ],
             ),
           ),

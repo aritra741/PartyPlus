@@ -5,6 +5,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:partyplus/providers/conventionHall.dart';
 import 'ImageList.dart';
+import 'package:partyplus/screens/modify_reservation.dart';
 
 class conventionHallDetails extends StatefulWidget {
   int num_of_days=2;
@@ -56,6 +57,223 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
       ),*/
 
       body: Container(
+        decoration: BoxDecoration(
+          color: Colors.black12,
+        ),
+        //color: Colors.white12,
+        padding: const EdgeInsets.all(1.0),
+        child: ListView(
+          shrinkWrap : true,
+          children: <Widget>[
+
+        StaggeredGridView.count(
+        shrinkWrap: true,
+        // primary: false,
+        crossAxisCount: 6,
+          mainAxisSpacing: 1.0,
+          crossAxisSpacing: 1.0,
+          staggeredTiles: [
+            StaggeredTile.count(3, 2),
+            StaggeredTile.count(3, 2),
+
+            StaggeredTile.count(2, 1.8),
+            StaggeredTile.count(2, 1.8),
+            StaggeredTile.count(2, 1.8),
+          ],
+
+          children: <Widget>[
+
+            myPhotoList(
+                "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/Khan's%20Palace%2Fimage1.jpg?alt=media&token=fb301e5b-3c2b-4cce-83ab-dae21de6f6c3"),
+            myPhotoList(
+                "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/Khan's%20Palace%2Fimage2.jpg?alt=media&token=c6e48821-38c6-446a-864b-e15410ff5bd2"),
+            myPhotoList(
+                "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/Khan's%20Palace%2Fimage3.jpg?alt=media&token=3aec3f2b-2e1d-4fa8-920d-1b0bd6cbacf1"),
+            myPhotoList(
+                "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/Khan's%20Palace%2Fimage4.jpg?alt=media&token=3cdb57db-ec30-433c-b508-acbf70a0df51"),
+            Stack(
+              children: <Widget>[
+                myPhotoList(
+                    "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/Khan's%20Palace%2Fimage5.jpg?alt=media&token=d59484f1-2ee8-4a63-8787-8c9a0c9f13db"),
+
+                Container(
+                  child: new GestureDetector(
+                    onTap: () {
+                      //print("naam holo "+convention.Name);
+                      Navigator.push(context,MaterialPageRoute(builder: (context)=>ImageList(convention: convention)));
+                    },
+                  ),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        const Color(0xCC000000),
+                        const Color(0x00000000),
+                        const Color(0x00000000),
+                        const Color(0xCC000000),
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  child: new GestureDetector(
+                      onTap: () {
+                        //print("naam holo "+convention.Name);
+                        Navigator.push(context,MaterialPageRoute(builder: (context)=>ImageList(convention: convention)));
+                      },
+                      child : Text(
+                        '+5',
+                        style: TextStyle(color: Colors.white,
+                          fontSize: 30.0,),
+
+
+                      )
+                  ),
+                ),
+              ],
+            ),
+          ],
+
+
+        ),
+
+            //ekhane shesh
+            SizedBox(height: 20.0),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Container(
+                child: Text(convention.Name,
+                  style: TextStyle(color: Colors.black,
+                      fontSize: 30.0,
+                      fontWeight: FontWeight.bold),),
+              ),
+            ),
+
+            Align(
+              alignment: Alignment.center,
+              child: SizedBox(
+                  height: 300,
+                  width: 400,
+                  child: GoogleMap(
+                      initialCameraPosition: CameraPosition(
+                        target: LatLng(24.887635, 91.874310),
+                        zoom: 11.0,
+                      ),
+                      mapType: MapType.normal,
+                      markers: Set<Marker>.of(locations),
+                      onMapCreated: _onMapCreated
+                  )
+              ),
+            ),
+            Row(
+                children: <Widget>[
+                  //Text("Hi"),
+                  Icon(Icons.location_on, size: 40, color: Color(0xFFEA4335),),
+                  Text(convention.street + "," + convention.City,
+                    style: TextStyle(color: Colors.black, fontSize: 28.0),),
+                ]
+            ),
+            Card(
+                elevation: 20,
+                child: Container(
+                  // margin: new EdgeInsets.symmetric(vertical: 10.0),
+                  height: 200,
+                  child: Column(
+                    children: <Widget>[
+                      Text("\nFacilities",
+                          style: TextStyle(color: Colors.black,
+                              fontSize: 25.0,
+                              fontWeight: FontWeight.bold)),
+
+                      AC(),
+                      WiFi(),
+                      CC(),
+                      PhotoShoots(),
+                      Parkinglot(),
+                    ],
+                  ),
+                )
+            ),
+            SizedBox(height: 20),
+            Card(
+              elevation: 20,
+              child: Container(
+                height: 150,
+                child: Column(
+                  children: <Widget>[
+                    Text("\nMiscellaneous",
+                        style: TextStyle(color: Colors.black,
+                            fontSize: 25.0,
+                            fontWeight: FontWeight.bold)),
+                    Structure(),
+                    FireWorks(),
+                    FireExting(),
+
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 20),
+            Card(
+              elevation: 30,
+              child: Container(
+                padding: EdgeInsets.only(top: 20),
+                height: 400,
+                child: Column(
+                  children: <Widget>[
+                    PriceDetails(1),
+                    AddRemoveButton(),
+                    widgetforszbox(2),
+                    PriceDetails(2),
+                    AddRemoveButton(),
+                    widgetforszbox(3),
+                    PriceDetails(3),
+                    AddRemoveButton(),
+                    widgetforszbox(4),
+                    TotalPrice(),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                RaisedButton(
+
+                  elevation: 5.0,
+                  onPressed: (){
+                    Navigator.push(context,MaterialPageRoute(builder: (context)=>ModifyReservation()));
+                  },
+                  padding: EdgeInsets.all(15.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  color: Color(0xFF005e6a),
+                  child: Text(
+                    'BOOK',
+                    style: TextStyle(
+                      color: Colors.white,
+                      letterSpacing: 1.5,
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'OpenSans',
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 10),
+
+
+
+          ],
+        ),
+      ),
+      /*body: Container(
         //padding: const EdgeInsets.all(8.0),
         child: Container(
           //color: Colors.black12,
@@ -64,6 +282,8 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
             color: Colors.black12,
           ),
           child: StaggeredGridView.count(
+            //shrinkWrap: true,
+           // primary: false,
             crossAxisCount: 6,
             mainAxisSpacing: 1.0,
             crossAxisSpacing: 1.0,
@@ -79,6 +299,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
             ],
 
             children: <Widget>[
+
               myPhotoList(
                   "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/Khan's%20Palace%2Fimage1.jpg?alt=media&token=fb301e5b-3c2b-4cce-83ab-dae21de6f6c3"),
               myPhotoList(
@@ -130,25 +351,30 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
                   ),
                 ],
               ),
+
               Details(),
             ],
 
 
-          ),
+          ),//staggered
         ),
 
 
-      ),
+      ),*/
     );
   }
 
-  Widget Details() {
+  /*Widget Details() {
 
     return Container(
+
+
+
       color: Colors.white12,
       padding: const EdgeInsets.all(1.0),
       child: ListView(
         children: <Widget>[
+
           SizedBox(height: 20.0),
           Align(
             alignment: Alignment.centerLeft,
@@ -245,11 +471,44 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
                 ],
               ),
             ),
-          )
+          ),
+          SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              RaisedButton(
+
+                elevation: 5.0,
+                onPressed: (){
+                  Navigator.push(context,MaterialPageRoute(builder: (context)=>ModifyReservation()));
+                },
+                padding: EdgeInsets.all(15.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
+                color: Color(0xFF005e6a),
+                child: Text(
+                  'BOOK',
+                  style: TextStyle(
+                    color: Colors.white,
+                    letterSpacing: 1.5,
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'OpenSans',
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 10),
+
+
+
         ],
       ),
     );
-  }
+  }*/
 
   Widget widgetforszbox(int n){
     if(num_of_days>=2 && n==2)
