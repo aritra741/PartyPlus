@@ -44,7 +44,7 @@ class _SearchResultListMapState extends State<SearchResultListMap> with SingleTi
       body: TabBarView(
         controller: controller,
         children: <Widget>[
-          SearchResultGenerator(searchstring: "Sylhet"),
+          SearchResultGenerator(searchstring: "sylhet"),
           MapView()
         ],
       ),

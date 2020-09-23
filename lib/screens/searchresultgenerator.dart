@@ -3,33 +3,11 @@ import 'package:flutter/material.dart';
 import 'search_screen_body.dart';
 import 'package:partyplus/providers/conventionHall.dart';
 import 'package:partyplus/conventionHallDetails.dart';
-/*class SearchResultGenerator extends StatelessWidget {
-  String searchstring;
-  SearchResultGenerator({this.searchstring});
-  @override
-  Widget build(BuildContext context) {
-    print("eikhane paisi"+searchstring);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("PartyPlus"),
-        backgroundColor: Color(0xFF005e6a),
-      ),
-        body: Center(
-          child: Text(
-            searchstring,
-          ),
-        ),
-    );
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
 
 
-  }
-  List<conventionHall> list = [];
-  DatabaseReference ref = FirebaseDatabase.instance.reference().child("conventionHall");
-  ref.once().then((DataSnapshot snap)
-  {
-    var KEYS = snap.value.keys;
-  });
-}*/
 class SearchResultGenerator extends StatefulWidget {
   bool cbxval = false;
   String searchstring;
@@ -47,8 +25,29 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
   String searchstring;
   _SearchResultGeneratorState(this.searchstring);
 
+  Map data;
+  List userData;
+
+  var search = {
+    "name" : {"aaaa": "dddd"}
+  };
+  Future getData() async {
+    http.Response response = await http.get("https://reqres.in/api/users?page=2");
+    data = json.decode(response.body);
+    setState(() {
+      userData = data["data"];
+    });
+    debugPrint(userData.toString());
+    //print("hello");
+  }
+
+
   @override
   Widget build(BuildContext context) {
+    var search = {
+      "name" : searchstring
+    };
+    print(search);
     return Scaffold(
       /*body: Center(
         child: Text(
@@ -127,6 +126,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
     DatabaseReference ref = FirebaseDatabase.instance.reference().child("conventionHall");
     list.add(test);
     list.add(test2);
+    getData();
   }
 
   setSelectedRadio(int val) {
