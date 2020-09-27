@@ -26,27 +26,64 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
   _SearchResultGeneratorState(this.searchstring);
 
   Map data;
-  List userData;
+  List userData,fuserData;
 
   var search = {
     "name" : {"aaaa": "dddd"}
   };
-  Future getData() async {
+  /*Future getData() async {
     http.Response response = await http.get("https://reqres.in/api/users?page=2");
     data = json.decode(response.body);
     setState(() {
       userData = data["data"];
     });
-    print(userData.toString());
+   // debugPrint(userData.toString());
     //print("hello");
-  }
+  }*/
 
+  Future postData() async{
+
+    var match = {
+      "name" : searchstring
+    };
+    print("HYSE??");
+    final String apiurl = "http://partyplusapi.herokuapp.com/search";
+    //http.Response response = await http.post(apiurl);
+   /* final response = await http.post(apiurl,body: {
+      "name" : searchstring
+    });*/
+   try{
+     http.Response response = await http.post(apiurl,
+         headers: {
+           "Accept": "application/json",
+           "Content-Type": "application/x-www-form-urlencoded"
+         },
+         body: json.encode(match),
+         encoding: Encoding.getByName("utf-8"));
+   }catch(Exception e) {
+
+    };
+
+    //print("HYSE??");
+   // body: json.encode(match),);
+    data = json.decode(response.body);
+    debugPrint(fuserData.toString());
+    setState(() {
+      fuserData = data['Name'];
+    });
+    debugPrint(fuserData.toString());
+  //  return fuserData;
+
+
+  }
 
   @override
   Widget build(BuildContext context) {
     var search = {
       "name" : searchstring
     };
+
+   // var response = await post(Uri.parse("https://l.facebook.com/l.php?u=http%3A%2F%2Fpartyplusapi.herokuapp.com%2Fsearch%3Ffbclid%3DIwAR23PMRsfGcZolvbS6OhzHvi7f8M1xh_1IccNuxh0eiT_zKWumesa9JVG3M&h=AT0jBTSIaQpGhvxlZziUwCc3rfRMJyR2HbbxSqCkc3EI3dhd2UI7DTE_sYcivZyrxXSkV1unsAQ6OGHdZCuE1mG3_aa8o2o8Dtgd-QKF7EgBsC9uLUQk7LqNTmcZzLBW2dhcyQ"));
     print(search);
     return Scaffold(
       /*body: Center(
@@ -126,7 +163,8 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
     DatabaseReference ref = FirebaseDatabase.instance.reference().child("conventionHall");
     list.add(test);
     list.add(test2);
-    getData();
+  //  getData();
+    postData();
   }
 
   setSelectedRadio(int val) {
