@@ -37,7 +37,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
     setState(() {
       userData = data["data"];
     });
-    debugPrint(userData.toString());
+    print(userData.toString());
     //print("hello");
   }
 
