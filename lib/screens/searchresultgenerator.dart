@@ -44,7 +44,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
   Future postData() async{
 
     var match = {
-      "name" : searchstring
+      "name" : "khan"
     };
     print("HYSE??");
     final String apiurl = "http://partyplusapi.herokuapp.com/search";
@@ -52,26 +52,28 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
    /* final response = await http.post(apiurl,body: {
       "name" : searchstring
     });*/
+    http.Response response;
    try{
-     http.Response response = await http.post(apiurl,
+      response= await http.post(apiurl,
          headers: {
            "Accept": "application/json",
            "Content-Type": "application/x-www-form-urlencoded"
          },
          body: json.encode(match),
          encoding: Encoding.getByName("utf-8"));
-   }catch(Exception e) {
-
+   }catch(e) {
+        print(e.toString());
     };
 
     //print("HYSE??");
    // body: json.encode(match),);
-    data = json.decode(response.body);
-    debugPrint(fuserData.toString());
-    setState(() {
-      fuserData = data['Name'];
-    });
-    debugPrint(fuserData.toString());
+   //  data = json.decode(response.body);
+   //  debugPrint(fuserData.toString());
+   //  setState(() {
+   //    fuserData = data['Name'];
+   //  });
+   //  debugPrint(fuserData.toString());
+    print(response.body);
   //  return fuserData;
 
 
