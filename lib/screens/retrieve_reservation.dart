@@ -5,7 +5,9 @@ import 'package:partyplus/screens/register_screen.dart';
 import 'package:partyplus/screens/search_screen_body.dart';
 import 'package:partyplus/constants/constants_for_search_screen_top.dart';
 import 'modify_reservation.dart';
-
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
 class RetrieveReservation extends StatefulWidget {
   @override
   _RetrieveReservationState createState() => _RetrieveReservationState();
@@ -24,6 +26,47 @@ class _RetrieveReservationState extends State<RetrieveReservation> {
     super.dispose();
   }
 
+  Future postData() async{
+
+    var match = {
+      "name" : "-M9j505OZWci1NRRIjoO"
+    };
+
+    print( json.encode(match) );
+
+    print("HYSE??");
+    // print(SearchScreenBody.numberOfDays);
+    final String apiurl = "http://partyplusapi.herokuapp.com/retrieve";
+    //http.Response response = await http.post(apiurl);
+    /* final response = await http.post(apiurl,body: {
+      "name" : searchstring
+    });*/
+    http.Response response;
+    try{
+      response= await http.post(apiurl,
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          body: match,
+          encoding: Encoding.getByName("utf-8"));
+    }catch(e) {
+      print(e.toString());
+    };
+
+    //print("HYSE??");
+    // body: json.encode(match),);
+    //  data = json.decode(response.body);
+    //  debugPrint(fuserData.toString());
+    //  setState(() {
+    //    fuserData = data['Name'];
+    //  });
+    //  debugPrint(fuserData.toString());
+    print(response.body);
+    //  return fuserData;
+
+
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -168,5 +211,11 @@ class _RetrieveReservationState extends State<RetrieveReservation> {
         },
       ),
     );
+  }
+
+  @override
+  void initState(){
+    super.initState();
+    postData();
   }
 }

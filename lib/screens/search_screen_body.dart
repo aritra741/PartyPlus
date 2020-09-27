@@ -30,7 +30,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
   int dayGroup= 0;
   var searchText= TextEditingController();
   //String value = searchText.text;
-  int numberOfDays= 2;
+  static int numberOfDays= 2;
   bool dayOneMorning= false, dayOneEvening= false, dayOneNight= false;
   bool dayTwoMorning= false, dayTwoEvening= false, dayTwoNight= false;
   bool dayThreeMorning= false, dayThreeEvening= false, dayThreeNight= false;

@@ -4,6 +4,9 @@ import 'package:partyplus/screens/login_screen.dart';
 import 'package:partyplus/screens/register_screen.dart';
 import 'package:partyplus/screens/search_screen_body.dart';
 import 'package:partyplus/constants/constants_for_search_screen_top.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
 
 class ConfirmBooking extends StatefulWidget {
   @override
@@ -26,6 +29,63 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
     super.dispose();
   }
 
+  Future postData() async{
+
+    var match = {
+      "convname" : "Khan's Palace",
+      "numofdays" : "2",
+      "date1" : "28.09.2020",
+      "date2" : "29.09.2020",
+      "date3" : "30.09.2020",
+      "shift1" : "111",
+      "shift2" : "101",
+      "shift3" : "011",
+      "price1" : "50000\n50000\n50000",
+      "price2" : "50000\n50000",
+      "price3" : "50000\n50000",
+      "totalCost" : "350000",
+      "email" : "aritra741@gmail.com",
+      "id" : "1",
+      "name" : "Aritra",
+      "phoneNumber" : "0152342",
+
+    };
+
+    print( json.encode(match) );
+
+    print("HYSE??");
+    // print(SearchScreenBody.numberOfDays);
+    final String apiurl = "http://partyplusapi.herokuapp.com/book";
+    //http.Response response = await http.post(apiurl);
+    /* final response = await http.post(apiurl,body: {
+      "name" : searchstring
+    });*/
+    http.Response response;
+    try{
+      response= await http.post(apiurl,
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          body: match,
+          encoding: Encoding.getByName("utf-8"));
+    }catch(e) {
+      print(e.toString());
+    };
+
+    //print("HYSE??");
+    // body: json.encode(match),);
+    //  data = json.decode(response.body);
+    //  debugPrint(fuserData.toString());
+    //  setState(() {
+    //    fuserData = data['Name'];
+    //  });
+    //  debugPrint(fuserData.toString());
+    print(response.body);
+    //  return fuserData;
+
+
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -140,9 +200,7 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
               child: RaisedButton(
                 elevation: 5.0,
                 onPressed: (){
-                  setState(() {
-                    pressed= true;
-                  });
+                  postData();
                 },
                 padding: EdgeInsets.all(15.0),
                 shape: RoundedRectangleBorder(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'search_screen_body.dart';
 import 'package:partyplus/providers/conventionHall.dart';
 import 'package:partyplus/conventionHallDetails.dart';
+import 'package:partyplus/screens/search_screen_body.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
@@ -50,6 +51,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
     print( json.encode(match) );
 
     print("HYSE??");
+   // print(SearchScreenBody.numberOfDays);
     final String apiurl = "http://partyplusapi.herokuapp.com/search";
     //http.Response response = await http.post(apiurl);
    /* final response = await http.post(apiurl,body: {
