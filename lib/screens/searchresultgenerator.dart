@@ -44,8 +44,11 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
   Future postData() async{
 
     var match = {
-      "name" : "khan"
+      "what" : searchstring
     };
+    
+    print( json.encode(match) );
+
     print("HYSE??");
     final String apiurl = "http://partyplusapi.herokuapp.com/search";
     //http.Response response = await http.post(apiurl);
@@ -59,7 +62,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
            "Accept": "application/json",
            "Content-Type": "application/x-www-form-urlencoded"
          },
-         body: json.encode(match),
+         body: match,
          encoding: Encoding.getByName("utf-8"));
    }catch(e) {
         print(e.toString());
