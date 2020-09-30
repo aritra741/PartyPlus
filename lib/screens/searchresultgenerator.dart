@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'search_screen_body.dart';
 import 'package:partyplus/providers/conventionHall.dart';
 import 'package:partyplus/conventionHallDetails.dart';
+import 'package:intl/intl.dart';
 import 'package:partyplus/screens/search_screen_body.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
@@ -11,10 +12,11 @@ import 'dart:convert';
 
 class SearchResultGenerator extends StatefulWidget {
   bool cbxval = false;
-  String searchstring;
-  SearchResultGenerator({this.searchstring});
+  String searchstring,dayString;
+  DateTime selectedDate,secDate,thDate;
+  SearchResultGenerator({this.searchstring,this.dayString,this.selectedDate,this.secDate,this.thDate});
   @override
-  _SearchResultGeneratorState createState() => _SearchResultGeneratorState(searchstring);
+  _SearchResultGeneratorState createState() => _SearchResultGeneratorState(searchstring,dayString,selectedDate,secDate,thDate);
 }
 
 class _SearchResultGeneratorState extends State<SearchResultGenerator> {
@@ -23,8 +25,10 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
   double parkslid = 0.0;
   int selectedRadio;
   bool cbxval = false;
-  String searchstring;
-  _SearchResultGeneratorState(this.searchstring);
+  String searchstring,dayString;
+  DateTime selectedDate,secDate,thDate;
+  List<conventionHall> hallList = new List();
+  _SearchResultGeneratorState(this.searchstring,this.dayString,this.selectedDate,this.secDate,this.thDate);
 
   Map data;
   List userData,fuserData;
@@ -78,11 +82,13 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
    //    fuserData = data['Name'];
    //  });
    //  debugPrint(fuserData.toString());
-    print(response.body);
-    //print(response["Name"]);
-  //  return fuserData;
-
-
+    var jsonlist = jsonDecode(response.body) as List;
+    jsonlist.forEach((e) {
+      hallList.add(conventionHall.fromJson(e));
+      list.add(conventionHall.fromJson(e));
+    });
+    print(list[0].Name);
+    print(hallList[0].Name);
   }
 
   @override
@@ -100,7 +106,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
         ),
       ),*/
       body: new Container(
-        child: list.length==0?new Text("No result found") : new Column(
+        child: list.length==0?new Text("No result found",textAlign: TextAlign.center,) : new Column(
           children: <Widget>[
         new Expanded(child:
           ListView.builder(
@@ -169,10 +175,14 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
     super.initState();
     selectedRadio = 0;
     DatabaseReference ref = FirebaseDatabase.instance.reference().child("conventionHall");
-    list.add(test);
-    list.add(test2);
   //  getData();
     postData();
+    //list.add(test);
+    //list.add(test2);
+
+   // String d = "${selectedDate.year.toString()}-${selectedDate.month.toString()}-${selectedDate.day.toString()}";
+    print("s s " + dayString );
+    print(hallList.length );
   }
 
   setSelectedRadio(int val) {
@@ -191,7 +201,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
       child: new InkWell(
         onTap: () {
           print("naam holo "+convention.Name);
-          Navigator.push(context,MaterialPageRoute(builder: (context)=>conventionHallDetails(convention: convention)));
+          Navigator.push(context,MaterialPageRoute(builder: (context)=>conventionHallDetails(convention: convention,searchstring: searchstring,dayString:dayString,selectedDate:selectedDate,secDate:secDate,thDate:thDate)));
          // showFilterDialog();
          // showSortOptions();
         },

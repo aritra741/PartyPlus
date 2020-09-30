@@ -3,14 +3,20 @@ import 'package:partyplus/screens/map_view.dart';
 import 'package:partyplus/screens/searchresultgenerator.dart';
 
 class SearchResultListMap extends StatefulWidget {
+  String searchstring,dayString;
+  DateTime selectedDate,secDate,thDate;
+  SearchResultListMap({this.searchstring,this.dayString,this.selectedDate,this.secDate,this.thDate});
   @override
-  _SearchResultListMapState createState() => _SearchResultListMapState();
+  _SearchResultListMapState createState() => _SearchResultListMapState(searchstring,dayString,selectedDate,secDate,thDate);
 }
 
 class _SearchResultListMapState extends State<SearchResultListMap> with SingleTickerProviderStateMixin {
 
   TabController controller;
 
+  String searchstring,dayString;
+  DateTime selectedDate,secDate,thDate;
+  _SearchResultListMapState(this.searchstring,this.dayString,this.selectedDate,this.secDate,this.thDate);
   @override
   void initState() {
     // TODO: implement initState
@@ -44,7 +50,7 @@ class _SearchResultListMapState extends State<SearchResultListMap> with SingleTi
       body: TabBarView(
         controller: controller,
         children: <Widget>[
-          SearchResultGenerator(searchstring: "sylhet"),
+          SearchResultGenerator(searchstring: searchstring,dayString:dayString,selectedDate:selectedDate,secDate:secDate,thDate:thDate),
           MapView()
         ],
       ),

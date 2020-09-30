@@ -7,10 +7,15 @@ import 'package:partyplus/constants/constants_for_search_screen_top.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
+import 'package:partyplus/providers/conventionHall.dart';
 
 class ConfirmBooking extends StatefulWidget {
+  conventionHall convention ;
+  String searchstring,dayString;
+  DateTime selectedDate,secDate,thDate;
+  ConfirmBooking({this.convention,this.searchstring,this.dayString,this.selectedDate,this.secDate,this.thDate});
   @override
-  _ConfirmBookingState createState() => _ConfirmBookingState();
+  _ConfirmBookingState createState() => _ConfirmBookingState(convention,searchstring,dayString,selectedDate,secDate,thDate);
 }
 
 class _ConfirmBookingState extends State<ConfirmBooking> {
@@ -21,6 +26,11 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
   int num_of_days= 3, check= 3;
   bool pressed= false;
 
+  conventionHall convention ;
+  String searchstring,dayString;
+  DateTime selectedDate,secDate,thDate;
+  String date1,date2,date3;
+  _ConfirmBookingState(this.convention,this.searchstring,this.dayString,this.selectedDate,this.secDate,this.thDate);
   @override
   void dispose() {
     userEmail.dispose();
@@ -29,25 +39,26 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
     super.dispose();
   }
 
+
   Future postData() async{
 
     var match = {
-      "convname" : "Khan's Palace",
-      "numofdays" : "2",
-      "date1" : "28.09.2020",
-      "date2" : "29.09.2020",
-      "date3" : "30.09.2020",
+      "convname" : convention.Name,
+      "numofdays" : dayString,
+      "date1" : date1,
+      "date2" : date2,
+      "date3" : date3,
       "shift1" : "111",
       "shift2" : "101",
       "shift3" : "011",
-      "price1" : "50000\n50000\n50000",
-      "price2" : "50000\n50000",
-      "price3" : "50000\n50000",
+      "price1" : convention.mxprice+"\n"+convention.mxprice+"\n" + convention.mxprice,
+      "price2" : convention.mxprice+"\n"+convention.mxprice,
+      "price3" : convention.mxprice+"\n"+convention.mxprice,
       "totalCost" : "350000",
-      "email" : "aritra741@gmail.com",
-      "id" : "1",
-      "name" : "Aritra",
-      "phoneNumber" : "0152342",
+      "email" : userEmail.text,
+      "id" : convention.Id,
+      "name" : userName.text,
+      "phoneNumber" : userPhone.text,
 
     };
 
@@ -88,6 +99,9 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
   }
   @override
   Widget build(BuildContext context) {
+    date1 = "${selectedDate.day.toString()}-${selectedDate.month.toString()}-${selectedDate.year.toString()}";
+    date2 = "${secDate.day.toString()}-${secDate.month.toString()}-${secDate.year.toString()}";
+    date3 = "${thDate.day.toString()}-${thDate.month.toString()}-${thDate.year.toString()}";
     return Scaffold(
       appBar: AppBar(
         title: Text(

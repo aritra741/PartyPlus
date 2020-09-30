@@ -38,12 +38,12 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
   static final DateTime now = DateTime.now();
   static final DateFormat formatter = DateFormat('dd-MM-yyyy');
   final String formatted = formatter.format(now);
-  static final DateTime secDate = new DateTime(now.year, now.month, now.day+1);
-  static final DateFormat formatter2 = DateFormat('dd-MM-yyyy');
-  final String formatted2 = formatter2.format(secDate);
-  static final DateTime thDate = new DateTime(secDate.year, secDate.month, secDate.day+1);
-  static final DateFormat formatter3 = DateFormat('dd-MM-yyyy');
-  final String formatted3 = formatter3.format(thDate);
+  static DateTime secDate; //= new DateTime(now.year, now.month, selectedDate.day+1);
+  static DateFormat formatter2 ;//= DateFormat('dd-MM-yyyy');
+  String formatted2; //= formatter2.format(secDate);
+  static DateTime thDate;//= new DateTime(secDate.year, secDate.month, secDate.day+1);
+  static DateFormat formatter3 ;//= DateFormat('dd-MM-yyyy');
+  String formatted3; //= formatter3.format(thDate);
 
   void dispose() {
     searchText.dispose();
@@ -52,6 +52,12 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
 
   @override
   Widget build(BuildContext context) {
+    secDate = new DateTime(selectedDate.year, selectedDate.month, selectedDate.day+1);
+    formatter2 = DateFormat('dd-MM-yyyy');
+    formatted2 = formatter2.format(secDate);
+    thDate = new DateTime(secDate.year, secDate.month, secDate.day+1);
+    formatter3 = DateFormat('dd-MM-yyyy');
+    formatted3 = formatter3.format(thDate);
     DateTime now = DateTime.now();
     showDay = DateFormat('EEEE').format(now);
     showMonth = DateFormat('MMMM').format(now);
@@ -592,8 +598,8 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                           elevation: 5.0,
                           onPressed: (){
                             print("daygroup "+dayString);
-//                            searchQuery();
-                            Navigator.push(context,MaterialPageRoute(builder: (context)=>SearchResultListMap()));
+                            searchQuery();
+                        //    Navigator.push(context,MaterialPageRoute(builder: (context)=>SearchResultListMap()));
                           },
                           padding: EdgeInsets.all(15.0),
                           shape: RoundedRectangleBorder(
@@ -832,8 +838,8 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
   {
     String searchString= searchText.text;
     print(searchString);
-    Navigator.push(context,MaterialPageRoute(builder: (context)=>SearchResultGenerator(searchstring: searchString)),
-    );
+    Navigator.push(context,MaterialPageRoute(builder: (context)=>SearchResultListMap(searchstring: searchString,dayString:dayString,selectedDate:selectedDate,secDate:secDate,thDate:thDate)));
+   // Navigator.push(context,MaterialPageRoute(builder: (context)=>SearchResultGenerator(searchstring: searchString)),);
   }
 
   void getShiftInfoForDayOne( bool morning, bool evening, bool night )
