@@ -79,6 +79,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
    //  });
    //  debugPrint(fuserData.toString());
     print(response.body);
+    //print(response["Name"]);
   //  return fuserData;
 
 
