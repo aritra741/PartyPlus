@@ -78,10 +78,13 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
    //    fuserData = data['Name'];
    //  });
    //  debugPrint(fuserData.toString());
-    print(response.body);
-  //  return fuserData;
+    List<conventionHall> hallList = new List();
+    var jsonlist = jsonDecode(response.body) as List;
+    jsonlist.forEach((e) {
+      hallList.add(conventionHall.fromJson(e));
+    });
 
-
+    print(hallList[0].Name);
   }
 
   @override
