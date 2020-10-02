@@ -5,9 +5,10 @@ import 'package:partyplus/screens/searchresultgenerator.dart';
 class SearchResultListMap extends StatefulWidget {
   String searchstring,dayString;
   DateTime selectedDate,secDate,thDate;
-  SearchResultListMap({this.searchstring,this.dayString,this.selectedDate,this.secDate,this.thDate});
+  List<bool> dayOneShift, dayTwoShift, dayThreeShift;
+  SearchResultListMap({this.searchstring,this.dayString,this.selectedDate,this.secDate,this.thDate,this.dayOneShift, this.dayTwoShift, this.dayThreeShift});
   @override
-  _SearchResultListMapState createState() => _SearchResultListMapState(searchstring,dayString,selectedDate,secDate,thDate);
+  _SearchResultListMapState createState() => _SearchResultListMapState(searchstring,dayString,selectedDate,secDate,thDate,dayOneShift, dayTwoShift, dayThreeShift);
 }
 
 class _SearchResultListMapState extends State<SearchResultListMap> with SingleTickerProviderStateMixin {
@@ -16,7 +17,8 @@ class _SearchResultListMapState extends State<SearchResultListMap> with SingleTi
 
   String searchstring,dayString;
   DateTime selectedDate,secDate,thDate;
-  _SearchResultListMapState(this.searchstring,this.dayString,this.selectedDate,this.secDate,this.thDate);
+  List<bool> dayOneShift, dayTwoShift, dayThreeShift;
+  _SearchResultListMapState(this.searchstring,this.dayString,this.selectedDate,this.secDate,this.thDate,this.dayOneShift, this.dayTwoShift, this.dayThreeShift);
   @override
   void initState() {
     // TODO: implement initState
@@ -50,7 +52,7 @@ class _SearchResultListMapState extends State<SearchResultListMap> with SingleTi
       body: TabBarView(
         controller: controller,
         children: <Widget>[
-          SearchResultGenerator(searchstring: searchstring,dayString:dayString,selectedDate:selectedDate,secDate:secDate,thDate:thDate),
+          SearchResultGenerator(searchstring: searchstring,dayString:dayString,selectedDate:selectedDate,secDate:secDate,thDate:thDate,dayOneShift:dayOneShift,dayTwoShift: dayTwoShift, dayThreeShift: dayThreeShift),
           MapView()
         ],
       ),

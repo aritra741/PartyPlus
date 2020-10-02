@@ -13,9 +13,10 @@ class ConfirmBooking extends StatefulWidget {
   conventionHall convention ;
   String searchstring,dayString;
   DateTime selectedDate,secDate,thDate;
-  ConfirmBooking({this.convention,this.searchstring,this.dayString,this.selectedDate,this.secDate,this.thDate});
+  List<bool> dayOneShift, dayTwoShift, dayThreeShift;
+  ConfirmBooking({this.convention,this.searchstring,this.dayString,this.selectedDate,this.secDate,this.thDate,this.dayOneShift, this.dayTwoShift, this.dayThreeShift});
   @override
-  _ConfirmBookingState createState() => _ConfirmBookingState(convention,searchstring,dayString,selectedDate,secDate,thDate);
+  _ConfirmBookingState createState() => _ConfirmBookingState(convention,searchstring,dayString,selectedDate,secDate,thDate,dayOneShift, dayTwoShift, dayThreeShift);
 }
 
 class _ConfirmBookingState extends State<ConfirmBooking> {
@@ -29,8 +30,9 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
   conventionHall convention ;
   String searchstring,dayString;
   DateTime selectedDate,secDate,thDate;
+  List<bool> dayOneShift, dayTwoShift, dayThreeShift;
   String date1,date2,date3;
-  _ConfirmBookingState(this.convention,this.searchstring,this.dayString,this.selectedDate,this.secDate,this.thDate);
+  _ConfirmBookingState(this.convention,this.searchstring,this.dayString,this.selectedDate,this.secDate,this.thDate,this.dayOneShift, this.dayTwoShift, this.dayThreeShift);
   @override
   void dispose() {
     userEmail.dispose();

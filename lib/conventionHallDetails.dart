@@ -14,6 +14,7 @@ class conventionHallDetails extends StatefulWidget {
 
   String searchstring, dayString;
   DateTime selectedDate, secDate, thDate;
+  List<bool> dayOneShift, dayTwoShift, dayThreeShift;
 
   conventionHallDetails(
       {this.convention,
@@ -21,11 +22,11 @@ class conventionHallDetails extends StatefulWidget {
       this.dayString,
       this.selectedDate,
       this.secDate,
-      this.thDate});
+      this.thDate,this.dayOneShift, this.dayTwoShift, this.dayThreeShift});
 
   @override
   _conventionHallDetailsState createState() => _conventionHallDetailsState(
-      convention, searchstring, dayString, selectedDate, secDate, thDate);
+      convention, searchstring, dayString, selectedDate, secDate, thDate,dayOneShift, dayTwoShift, dayThreeShift);
 }
 
 class _conventionHallDetailsState extends State<conventionHallDetails> {
@@ -33,9 +34,10 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
   conventionHall convention;
   String searchstring, dayString;
   DateTime selectedDate, secDate, thDate;
+  List<bool> dayOneShift, dayTwoShift, dayThreeShift;
 
   _conventionHallDetailsState(this.convention, this.searchstring,
-      this.dayString, this.selectedDate, this.secDate, this.thDate);
+      this.dayString, this.selectedDate, this.secDate, this.thDate,this.dayOneShift, this.dayTwoShift, this.dayThreeShift);
 
   String str;
 
@@ -270,7 +272,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
                                 dayString: dayString,
                                 selectedDate: selectedDate,
                                 secDate: secDate,
-                                thDate: thDate)));
+                                thDate: thDate,dayOneShift:dayOneShift,dayTwoShift: dayTwoShift, dayThreeShift: dayThreeShift)));
                   },
                   padding: EdgeInsets.all(15.0),
                   shape: RoundedRectangleBorder(

@@ -14,9 +14,10 @@ class SearchResultGenerator extends StatefulWidget {
   bool cbxval = false;
   String searchstring,dayString;
   DateTime selectedDate,secDate,thDate;
-  SearchResultGenerator({this.searchstring,this.dayString,this.selectedDate,this.secDate,this.thDate});
+  List<bool> dayOneShift, dayTwoShift, dayThreeShift;
+  SearchResultGenerator({this.searchstring,this.dayString,this.selectedDate,this.secDate,this.thDate,this.dayOneShift, this.dayTwoShift, this.dayThreeShift});
   @override
-  _SearchResultGeneratorState createState() => _SearchResultGeneratorState(searchstring,dayString,selectedDate,secDate,thDate);
+  _SearchResultGeneratorState createState() => _SearchResultGeneratorState(searchstring,dayString,selectedDate,secDate,thDate,dayOneShift, dayTwoShift, dayThreeShift);
 }
 
 class _SearchResultGeneratorState extends State<SearchResultGenerator> {
@@ -27,8 +28,9 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
   bool cbxval = false;
   String searchstring,dayString;
   DateTime selectedDate,secDate,thDate;
+  List<bool> dayOneShift, dayTwoShift, dayThreeShift;
   List<conventionHall> hallList = new List();
-  _SearchResultGeneratorState(this.searchstring,this.dayString,this.selectedDate,this.secDate,this.thDate);
+  _SearchResultGeneratorState(this.searchstring,this.dayString,this.selectedDate,this.secDate,this.thDate,this.dayOneShift, this.dayTwoShift, this.dayThreeShift);
 
   Map data;
   List userData,fuserData;
@@ -177,8 +179,8 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
     DatabaseReference ref = FirebaseDatabase.instance.reference().child("conventionHall");
   //  getData();
     postData();
-    //list.add(test);
-    //list.add(test2);
+    list.add(test);
+    list.add(test2);
 
    // String d = "${selectedDate.year.toString()}-${selectedDate.month.toString()}-${selectedDate.day.toString()}";
     print("s s " + dayString );
@@ -201,7 +203,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
       child: new InkWell(
         onTap: () {
           print("naam holo "+convention.Name);
-          Navigator.push(context,MaterialPageRoute(builder: (context)=>conventionHallDetails(convention: convention,searchstring: searchstring,dayString:dayString,selectedDate:selectedDate,secDate:secDate,thDate:thDate)));
+          Navigator.push(context,MaterialPageRoute(builder: (context)=>conventionHallDetails(convention: convention,searchstring: searchstring,dayString:dayString,selectedDate:selectedDate,secDate:secDate,thDate:thDate,dayOneShift:dayOneShift,dayTwoShift: dayTwoShift, dayThreeShift: dayThreeShift)));
          // showFilterDialog();
          // showSortOptions();
         },
