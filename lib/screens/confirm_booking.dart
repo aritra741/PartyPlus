@@ -31,7 +31,9 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
   String searchstring,dayString;
   DateTime selectedDate,secDate,thDate;
   List<bool> dayOneShift, dayTwoShift, dayThreeShift;
-  String date1,date2,date3;
+  String date1,date2,date3,booking_id;
+  String shiftBitstr1="000",shiftBitstr2,shiftBitstr3;
+  String shiftTextstr1,shiftTextstr2,shiftTextstr3;
   _ConfirmBookingState(this.convention,this.searchstring,this.dayString,this.selectedDate,this.secDate,this.thDate,this.dayOneShift, this.dayTwoShift, this.dayThreeShift);
   @override
   void dispose() {
@@ -51,8 +53,8 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
       "date2" : date2,
       "date3" : date3,
       "shift1" : "111",
-      "shift2" : "101",
-      "shift3" : "011",
+      "shift2" : "111",
+      "shift3" : "111",
       "price1" : convention.mxprice+"\n"+convention.mxprice+"\n" + convention.mxprice,
       "price2" : convention.mxprice+"\n"+convention.mxprice,
       "price3" : convention.mxprice+"\n"+convention.mxprice,
@@ -94,6 +96,7 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
     //    fuserData = data['Name'];
     //  });
     //  debugPrint(fuserData.toString());
+    booking_id = response.body;
     print(response.body);
     //  return fuserData;
 
@@ -216,7 +219,66 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
               child: RaisedButton(
                 elevation: 5.0,
                 onPressed: (){
+                 // ShiftString();
                   postData();
+                  showGeneralDialog(
+
+                      context: context,
+                      barrierDismissible: true,
+                      barrierLabel: MaterialLocalizations.of(context)
+                          .modalBarrierDismissLabel,
+                      barrierColor: Colors.black45,
+                      transitionDuration: const Duration(milliseconds: 200),
+                      pageBuilder: (BuildContext buildContext,
+                          Animation animation,
+                          Animation secondaryAnimation) {
+                        return Center(
+
+
+                          child: Container(
+
+                            width: MediaQuery.of(context).size.width - 0,
+                            height: MediaQuery.of(context).size.height -  200,
+                            padding: EdgeInsets.all(20),
+                            color: Colors.white,
+                            child : Card(
+                            elevation: 0,
+                            child: Container(
+                              //padding: EdgeInsets.only(top: 20),
+                              //height: 320,
+                              child: Column(
+                                children: <Widget>[
+                                  Text("Booking Receipt",style: TextStyle(color: Colors.black, fontSize: 20.0,
+                                  fontWeight: FontWeight.bold),),
+                              Text("\nConvention Hall Name : " + convention.Name +"\n" +
+                              "Name : " + userName.text + "\n" +
+                              "Email : " + userEmail.text + "\n" +
+                              "Phone Number : "  + userPhone.text + "\n" +
+                              "Booking Id : " + booking_id + "\n"),
+                                  PriceDetails(1),
+                                  widgetforszbox(2),
+                                  PriceDetails(2),
+                                  widgetforszbox(3),
+                                  PriceDetails(3),
+                                  widgetforszbox(4),
+                                  TotalPrice(),
+                                  RaisedButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text(
+                                      "OK",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                    color: const Color(0xFF1BC0C5),
+                                  )
+                                ],
+                              ),
+                            ),
+                         ),//card
+                          ),
+                        );
+                      });
                 },
                 padding: EdgeInsets.all(15.0),
                 shape: RoundedRectangleBorder(
@@ -240,6 +302,38 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
       ),
     );
   }
+  void ShiftString()
+  {
+    String s;
+    List<String> shft = ["Morning","Evening","NIght"];
+    for(int i=0;i<3;i++)
+      {
+        if(dayOneShift[i]==true)
+          {
+
+            shiftBitstr1 += "1";
+            if(shiftTextstr1!=null) shiftTextstr1+="\n";
+            shiftTextstr1 += shft[i];
+          }
+        else shiftBitstr1 +=  "0";
+        if(dayTwoShift[i]==true)
+        {
+          shiftBitstr2+="1";
+          if(shiftTextstr2!=null) shiftTextstr2+="\n";
+          shiftTextstr2 += shft[i];
+        }
+        else shiftBitstr2 += "0";
+        if(dayThreeShift[i]==true)
+        {
+          shiftBitstr3+= "1";
+          if(shiftTextstr3!=null) shiftTextstr3+="\n";
+          shiftTextstr3 += shft[i];
+        }
+        else shiftBitstr3 += "0";
+      }
+    return;
+  }
+
 
   Widget widgetforszbox(int n){
     if(num_of_days>=2 && n==2)
@@ -283,7 +377,7 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
         children: <Widget>[
           // SizedBox(height: 80),
           Container(
-            child:  Text("12.08.2020",
+            child:  Text(date1,
               style: TextStyle(color: Colors.black, fontSize: 16.0),),
           ),
           SizedBox(width: 80),
@@ -317,7 +411,7 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
       return Row(
         children: <Widget>[
           Container(
-            child:  Text("13.08.2020",
+            child:  Text(date2,
               style: TextStyle(color: Colors.black, fontSize: 16.0),),
           ),
           SizedBox(width: 80),
@@ -351,7 +445,7 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
         children: <Widget>[
           // SizedBox(height: 80),
           Container(
-            child:  Text("14.08.2020",
+            child:  Text(date3,
               style: TextStyle(color: Colors.black, fontSize: 16.0),),
           ),
           SizedBox(width: 80),
@@ -394,7 +488,7 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
                     fontWeight: FontWeight.bold))
         ),
 
-        SizedBox(width: 100),
+        SizedBox(width: 93),
         Container(
           child: new Column(
             children: <Widget>[
