@@ -34,6 +34,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
   bool dayOneMorning= false, dayOneEvening= false, dayOneNight= false;
   bool dayTwoMorning= false, dayTwoEvening= false, dayTwoNight= false;
   bool dayThreeMorning= false, dayThreeEvening= false, dayThreeNight= false;
+  List<bool> dayOneShift, dayTwoShift, dayThreeShift;
   var authHandler = new Auth();
   static final DateTime now = DateTime.now();
   static final DateFormat formatter = DateFormat('dd-MM-yyyy');
@@ -62,6 +63,13 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
     showDay = DateFormat('EEEE').format(now);
     showMonth = DateFormat('MMMM').format(now);
     showYear = DateFormat('y').format(now);
+
+    for( int i=0;i<3;i++ )
+      {
+        dayOneShift.add(false);
+        dayTwoShift.add(false);
+        dayThreeShift.add(false);
+      }
 
     return new Scaffold(
       appBar: AppBar(
@@ -848,6 +856,9 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
       dayOneMorning= morning;
       dayOneEvening= evening;
       dayOneNight= night;
+      dayOneShift[0]= morning;
+      dayOneShift[1]= evening;
+      dayOneShift[2]= night;
     });
   }
   void getShiftInfoForDayTwo( bool morning, bool evening, bool night )
@@ -856,6 +867,9 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
       dayTwoMorning= morning;
       dayTwoEvening= evening;
       dayTwoNight= night;
+      dayTwoShift[0]= morning;
+      dayTwoShift[1]= evening;
+      dayTwoShift[2]= night;
     });
   }
   void getShiftInfoForDayThree( bool morning, bool evening, bool night )
@@ -864,6 +878,9 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
       dayThreeMorning= morning;
       dayThreeEvening= evening;
       dayThreeNight= night;
+      dayThreeShift[0]= morning;
+      dayThreeShift[1]= evening;
+      dayThreeShift[2]= night;
     });
   }
 
