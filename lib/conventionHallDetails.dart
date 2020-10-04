@@ -86,8 +86,8 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
   void initState(){
     super.initState();
 
-    postData();
     imageList = new List();
+    postData();
   }
   @override
   Widget build(BuildContext context) {

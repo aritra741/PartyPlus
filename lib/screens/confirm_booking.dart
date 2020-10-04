@@ -32,7 +32,7 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
   DateTime selectedDate,secDate,thDate;
   List<bool> dayOneShift, dayTwoShift, dayThreeShift;
   String date1,date2,date3,booking_id;
-  String shiftBitstr1="000",shiftBitstr2,shiftBitstr3;
+  String shiftBitstr1="",shiftBitstr2="",shiftBitstr3="";
   String shiftTextstr1,shiftTextstr2,shiftTextstr3;
   _ConfirmBookingState(this.convention,this.searchstring,this.dayString,this.selectedDate,this.secDate,this.thDate,this.dayOneShift, this.dayTwoShift, this.dayThreeShift);
   @override
@@ -219,7 +219,7 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
               child: RaisedButton(
                 elevation: 5.0,
                 onPressed: (){
-                 // ShiftString();
+                  ShiftString();
                   postData();
                   showGeneralDialog(
 
@@ -304,8 +304,22 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
   }
   void ShiftString()
   {
-    String s;
-    List<String> shft = ["Morning","Evening","NIght"];
+    print("Ss");
+    //String s;
+    shiftBitstr1="";
+    shiftBitstr2="";
+    shiftBitstr3="";
+    shiftTextstr1 = "";
+    shiftTextstr2 = "";
+    shiftTextstr3 = "";
+    List<String> shft = ['Morning','Evening','NIght'];
+    for(int i=0;i<3;i++)
+      {
+        print(dayOneShift[i]);
+        print(dayTwoShift[i]);
+        print(dayThreeShift[i]);
+      }
+
     for(int i=0;i<3;i++)
       {
         if(dayOneShift[i]==true)
@@ -322,7 +336,7 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
           if(shiftTextstr2!=null) shiftTextstr2+="\n";
           shiftTextstr2 += shft[i];
         }
-        else shiftBitstr2 += "0";
+        else shiftBitstr2 += "0'";
         if(dayThreeShift[i]==true)
         {
           shiftBitstr3+= "1";
@@ -330,6 +344,7 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
           shiftTextstr3 += shft[i];
         }
         else shiftBitstr3 += "0";
+        print(shiftBitstr1);
       }
     return;
   }
