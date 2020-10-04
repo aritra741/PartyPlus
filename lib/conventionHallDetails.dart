@@ -55,7 +55,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
   Future postData() async{
 
     var match = {
-      "what" : convention.Id
+      "id" : convention.Id
     };
 
     print( json.encode(match) );
@@ -75,12 +75,8 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
       print(e.toString());
     };
 
-
-    var jsonlist = jsonDecode(response.body) as List;
-    jsonlist.forEach((e) {
-     // imageList.add(String.fromJson(e));
-
-    });
+    List<String> imageList = (jsonDecode(response.body) as List<dynamic>).cast<String>();
+    print(imageList);
   }
   @override
   void initState(){
