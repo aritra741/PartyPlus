@@ -7,6 +7,9 @@ import 'package:partyplus/providers/conventionHall.dart';
 import 'package:partyplus/screens/confirm_booking.dart';
 import 'ImageList.dart';
 import 'package:partyplus/screens/modify_reservation.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
 
 class conventionHallDetails extends StatefulWidget {
   int num_of_days = 2;
@@ -36,6 +39,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
   DateTime selectedDate, secDate, thDate;
   List<bool> dayOneShift, dayTwoShift, dayThreeShift;
 
+  List<String> imageList;
   _conventionHallDetailsState(this.convention, this.searchstring,
       this.dayString, this.selectedDate, this.secDate, this.thDate,this.dayOneShift, this.dayTwoShift, this.dayThreeShift);
 
@@ -48,6 +52,43 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
     mapController = controller;
   }
 
+  Future postData() async{
+
+    var match = {
+      "what" : convention.Id
+    };
+
+    print( json.encode(match) );
+
+    print("HYSE??");
+    final String apiurl = "http://partyplusapi.herokuapp.com/images";
+    http.Response response;
+    try{
+      response= await http.post(apiurl,
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          body: match,
+          encoding: Encoding.getByName("utf-8"));
+    }catch(e) {
+      print(e.toString());
+    };
+
+
+    var jsonlist = jsonDecode(response.body) as List;
+    jsonlist.forEach((e) {
+     // imageList.add(String.fromJson(e));
+
+    });
+  }
+  @override
+  void initState(){
+    super.initState();
+
+    postData();
+    imageList = new List();
+  }
   @override
   Widget build(BuildContext context) {
     setState(() {
