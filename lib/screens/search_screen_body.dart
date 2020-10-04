@@ -851,6 +851,16 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
   {
     String searchString= searchText.text;
     print(searchString);
+    dayOneShift[0]= dayOneMorning;
+    dayOneShift[1]= dayOneEvening;
+    dayOneShift[2]= dayOneNight;
+    dayTwoShift[0]= dayTwoMorning;
+    dayTwoShift[1]= dayTwoEvening;
+    dayTwoShift[2]= dayTwoNight;
+    dayThreeShift[0]= dayThreeMorning;
+    dayThreeShift[1]= dayThreeEvening;
+    dayThreeShift[2]= dayThreeNight;
+
     for(int i=0;i<3;i++)
     {
       print(dayOneShift[i]);

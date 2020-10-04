@@ -14,8 +14,9 @@ class conventionHall
         parking= json['Parking'],
         mnprice= json['MinPrice'],
         mxprice= json['MaxPrice'],
-        image= json['Image'];
-
+        image= json['Image'],
+        Lat= double.parse(json['Lat']),
+        Long= double.parse(json['Long']);
 //conventionHall(this.city,this.contact_info,this.Di)
 
 
