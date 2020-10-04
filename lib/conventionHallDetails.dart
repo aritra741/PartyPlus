@@ -44,6 +44,11 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
       this.dayString, this.selectedDate, this.secDate, this.thDate,this.dayOneShift, this.dayTwoShift, this.dayThreeShift);
 
   String str;
+  String shiftBitstr1="",shiftBitstr2="",shiftBitstr3="";
+  String shiftTextstr1,shiftTextstr2,shiftTextstr3;
+  String takatext1,takatext2,takatext3;
+  String date1,date2,date3;
+  int total_cost= 0;
 
   GoogleMapController mapController;
   List<Marker> locations = <Marker>[];
@@ -75,18 +80,26 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
       print(e.toString());
     };
 
-    List<String> imageList = (jsonDecode(response.body) as List<dynamic>).cast<String>();
+    imageList = (jsonDecode(response.body) as List<dynamic>).cast<String>();
     print(imageList);
+    for(int i=0;i<imageList.length;i++)
+    print(imageList[i]);
   }
   @override
   void initState(){
     super.initState();
-
-    imageList = new List();
+    //imageList = new List();
     postData();
+    ShiftString();
+    if(dayString=="1") num_of_days=1;
+    else if(dayString=="2") num_of_days=2;
+    else num_of_days=3;
   }
   @override
   Widget build(BuildContext context) {
+    date1 = "${selectedDate.day.toString()}-${selectedDate.month.toString()}-${selectedDate.year.toString()}";
+    date2 = "${secDate.day.toString()}-${secDate.month.toString()}-${secDate.year.toString()}";
+    date3 = "${thDate.day.toString()}-${thDate.month.toString()}-${thDate.year.toString()}";
     setState(() {
       str = convention.Name;
       locations.add(Marker(
@@ -131,17 +144,22 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
 
               children: <Widget>[
                 myPhotoList(
-                    "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/Khan's%20Palace%2Fimage1.jpg?alt=media&token=fb301e5b-3c2b-4cce-83ab-dae21de6f6c3"),
+                    imageList[0]),
+                   // "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/Khan's%20Palace%2Fimage1.jpg?alt=media&token=fb301e5b-3c2b-4cce-83ab-dae21de6f6c3"),
                 myPhotoList(
-                    "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/Khan's%20Palace%2Fimage2.jpg?alt=media&token=c6e48821-38c6-446a-864b-e15410ff5bd2"),
+                    imageList[1]),
+                   // "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/Khan's%20Palace%2Fimage2.jpg?alt=media&token=c6e48821-38c6-446a-864b-e15410ff5bd2"),
                 myPhotoList(
-                    "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/Khan's%20Palace%2Fimage3.jpg?alt=media&token=3aec3f2b-2e1d-4fa8-920d-1b0bd6cbacf1"),
+                    imageList[2]),
+                   // "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/Khan's%20Palace%2Fimage3.jpg?alt=media&token=3aec3f2b-2e1d-4fa8-920d-1b0bd6cbacf1"),
                 myPhotoList(
-                    "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/Khan's%20Palace%2Fimage4.jpg?alt=media&token=3cdb57db-ec30-433c-b508-acbf70a0df51"),
+                    imageList[3]),
+                   // "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/Khan's%20Palace%2Fimage4.jpg?alt=media&token=3cdb57db-ec30-433c-b508-acbf70a0df51"),
                 Stack(
                   children: <Widget>[
                     myPhotoList(
-                        "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/Khan's%20Palace%2Fimage5.jpg?alt=media&token=d59484f1-2ee8-4a63-8787-8c9a0c9f13db"),
+                        imageList[4]),
+                       // "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/Khan's%20Palace%2Fimage5.jpg?alt=media&token=d59484f1-2ee8-4a63-8787-8c9a0c9f13db"),
                     Container(
                       child: new GestureDetector(
                         onTap: () {
@@ -175,10 +193,10 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        ImageList(convention: convention)));
+                                        ImageList(convention: convention,imageList:imageList)));
                           },
                           child: Text(
-                            '+5',
+                            (imageList.length-5).toString()+"+",
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 30.0,
@@ -278,14 +296,22 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
                 height: 400,
                 child: Column(
                   children: <Widget>[
-                    PriceDetails(1),
-                    AddRemoveButton(),
-                    widgetforszbox(2),
-                    PriceDetails(2),
-                    AddRemoveButton(),
-                    widgetforszbox(3),
-                    PriceDetails(3),
-                    AddRemoveButton(),
+                    if(num_of_days>=1)
+                      PriceDetails(1),
+                    if(num_of_days>=1)
+                      AddRemoveButton(),
+                    if(num_of_days>=2)
+                      widgetforszbox(2),
+                    if(num_of_days>=2)
+                      PriceDetails(2),
+                    if(num_of_days>=2)
+                      AddRemoveButton(),
+                    if(num_of_days>=3)
+                      widgetforszbox(3),
+                    if(num_of_days>=3)
+                      PriceDetails(3),
+                    if(num_of_days>=3)
+                      AddRemoveButton(),
                     widgetforszbox(4),
                     TotalPrice(),
                   ],
@@ -334,6 +360,69 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
         ),
       ),
     );
+  }
+
+  void ShiftString()
+  {
+    print("Ss");
+    //String s;
+    shiftBitstr1="";
+    shiftBitstr2="";
+    shiftBitstr3="";
+    shiftTextstr1 = "";
+    shiftTextstr2 = "";
+    shiftTextstr3 = "";
+    takatext1="";
+    takatext2="";
+    takatext3="";
+    total_cost = 0;
+    List<String> shft = ['Morning','Evening','NIght'];
+    for(int i=0;i<3;i++)
+    {
+      print(dayOneShift[i]);
+      print(dayTwoShift[i]);
+      print(dayThreeShift[i]);
+    }
+
+    for(int i=0;i<3;i++)
+    {
+      if(dayOneShift[i]==true)
+      {
+
+        shiftBitstr1 += "1";
+        if(shiftTextstr1!="") shiftTextstr1+="\n";
+        if(takatext1!="") takatext1+="\n";
+        takatext1+=convention.mxprice.toString();
+        takatext1 += "\u09F3";
+        shiftTextstr1 += shft[i];
+        total_cost += int.parse(convention.mxprice);
+      }
+      else shiftBitstr1 +=  "0";
+      if(dayTwoShift[i]==true)
+      {
+        shiftBitstr2+="1";
+        if(shiftTextstr2!="") shiftTextstr2+="\n";
+        if(takatext2!="") takatext2+="\n";
+        takatext2+=convention.mxprice.toString();
+        takatext2 += "\u09F3";
+        shiftTextstr2 += shft[i];
+        total_cost += int.parse(convention.mxprice);
+      }
+      else shiftBitstr2 += "0'";
+      if(dayThreeShift[i]==true)
+      {
+        shiftBitstr3+= "1";
+        if(shiftTextstr3!="") shiftTextstr3+="\n";
+        if(takatext3!="") takatext3+="\n";
+        takatext3+=convention.mxprice.toString();
+        takatext3 += "\u09F3";
+        shiftTextstr3 += shft[i];
+        total_cost += int.parse(convention.mxprice);
+      }
+      else shiftBitstr3 += "0";
+      print(shiftBitstr1);
+    }
+    return;
   }
 
   Widget widgetforszbox(int n) {
@@ -457,146 +546,137 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
     );
   }
 
-  Widget PriceDetails(int check) {
-    num_of_days = 3;
-    if (num_of_days >= 1 && check == 1) {
+  Widget PriceDetails(int check)
+  {
+
+    if(num_of_days>=1 && check==1)
+    {
+      return Row(
+
+        children: <Widget>[
+          // SizedBox(height: 80),
+          Container(
+            child:  Text(date1,
+              style: TextStyle(color: Colors.black, fontSize: 16.0),),
+          ),
+          SizedBox(width: 80),
+          Container(
+            child: new Column(
+              children: <Widget>[
+                Text(shiftTextstr1,
+                  style: TextStyle(color: Colors.black, fontSize: 16.0),),
+              ],
+            ),
+          ),
+          SizedBox(width: 80),
+          Container(
+            child: new Column(
+
+              // mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //crossAxisAlignment: CrossAxisAlignment.start,
+              // mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Text(takatext1,
+                  style: TextStyle(color: Colors.black, fontSize: 16.0),),
+              ],
+            ),
+          ),
+        ],
+      );
+    }
+    else if(num_of_days>=2 && check==2)
+    {
+
+      return Row(
+        children: <Widget>[
+          Container(
+            child:  Text(date2,
+              style: TextStyle(color: Colors.black, fontSize: 16.0),),
+          ),
+          SizedBox(width: 80),
+          Container(
+            child: new Column(
+              children: <Widget>[
+                Text(shiftTextstr2,
+                  style: TextStyle(color: Colors.black, fontSize: 16.0),),
+              ],
+            ),
+          ),
+          SizedBox(width: 80),
+          Container(
+            child: new Column(
+
+              // mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //crossAxisAlignment: CrossAxisAlignment.start,
+              // mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Text(takatext2,
+                  style: TextStyle(color: Colors.black, fontSize: 16.0),),
+              ],
+            ),
+          ),
+        ],
+      );
+    }
+    else if(num_of_days>=3 && check==3)
+    {
       return Row(
         children: <Widget>[
           // SizedBox(height: 80),
           Container(
-            child: Text(
-              "12.08.2020",
-              style: TextStyle(color: Colors.black, fontSize: 16.0),
-            ),
+            child:  Text(date3,
+              style: TextStyle(color: Colors.black, fontSize: 16.0),),
           ),
           SizedBox(width: 80),
           Container(
             child: new Column(
               children: <Widget>[
-                Text(
-                  "Morning\nEvening\n  Night",
-                  style: TextStyle(color: Colors.black, fontSize: 16.0),
-                ),
+                Text(shiftTextstr3,
+                  style: TextStyle(color: Colors.black, fontSize: 16.0),),
               ],
             ),
           ),
           SizedBox(width: 80),
           Container(
             child: new Column(
+
               // mainAxisAlignment: MainAxisAlignment.spaceAround,
               //crossAxisAlignment: CrossAxisAlignment.start,
               // mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                Text(
-                  "10000\u09F3\n10000\u09F3\n10000\u09F3",
-                  style: TextStyle(color: Colors.black, fontSize: 16.0),
-                ),
+                Text(takatext3,
+                  style: TextStyle(color: Colors.black, fontSize: 16.0),),
               ],
             ),
           ),
         ],
       );
-    } else if (num_of_days >= 2 && check == 2) {
-      return Row(
-        children: <Widget>[
-          Container(
-            child: Text(
-              "13.08.2020",
-              style: TextStyle(color: Colors.black, fontSize: 16.0),
-            ),
-          ),
-          SizedBox(width: 80),
-          Container(
-            child: new Column(
-              children: <Widget>[
-                Text(
-                  "Morning\nEvening\n  Night",
-                  style: TextStyle(color: Colors.black, fontSize: 16.0),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(width: 80),
-          Container(
-            child: new Column(
-              // mainAxisAlignment: MainAxisAlignment.spaceAround,
-              //crossAxisAlignment: CrossAxisAlignment.start,
-              // mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Text(
-                  "10000\u09F3\n10000\u09F3\n10000\u09F3",
-                  style: TextStyle(color: Colors.black, fontSize: 16.0),
-                ),
-              ],
-            ),
-          ),
-        ],
-      );
-    } else if (num_of_days >= 3 && check == 3) {
-      return Row(
-        children: <Widget>[
-          // SizedBox(height: 80),
-          Container(
-            child: Text(
-              "14.08.2020",
-              style: TextStyle(color: Colors.black, fontSize: 16.0),
-            ),
-          ),
-          SizedBox(width: 80),
-          Container(
-            child: new Column(
-              children: <Widget>[
-                Text(
-                  "Morning\nEvening\n  Night",
-                  style: TextStyle(color: Colors.black, fontSize: 16.0),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(width: 80),
-          Container(
-            child: new Column(
-              // mainAxisAlignment: MainAxisAlignment.spaceAround,
-              //crossAxisAlignment: CrossAxisAlignment.start,
-              // mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Text(
-                  "10000\u09F3\n10000\u09F3\n10000\u09F3",
-                  style: TextStyle(color: Colors.black, fontSize: 16.0),
-                ),
-              ],
-            ),
-          ),
-        ],
-      );
-    } else {
-      return Container();
+    }
+    else {
+      return Row(children: <Widget>[
+        Text("d")
+      ],);
     }
   }
 
-  Widget TotalPrice() {
+  Widget TotalPrice(){
     return Row(
       children: <Widget>[
         // SizedBox(height: 50),
         SizedBox(width: 170),
         Container(
-            child: Text("Total",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold))),
+            child:  Text("Total",
+                style: TextStyle(color: Colors.black, fontSize: 16.0,
+                    fontWeight: FontWeight.bold))
+        ),
 
-        SizedBox(width: 100),
+        SizedBox(width: 93),
         Container(
           child: new Column(
             children: <Widget>[
-              Text(
-                "90000\u09F3",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold),
-              ),
+              Text((total_cost).toString() + "\u09F3",
+                style: TextStyle(color: Colors.black, fontSize: 16.0,
+                    fontWeight: FontWeight.bold),),
             ],
           ),
         ),

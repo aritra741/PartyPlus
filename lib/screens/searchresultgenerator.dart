@@ -31,6 +31,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
   DateTime selectedDate,secDate,thDate;
   List<bool> dayOneShift, dayTwoShift, dayThreeShift;
   List<conventionHall> hallList = new List();
+  List<conventionHall> AllHall = new List();
   _SearchResultGeneratorState(this.searchstring,this.dayString,this.selectedDate,this.secDate,this.thDate,this.dayOneShift, this.dayTwoShift, this.dayThreeShift);
 
   Map data;
@@ -88,10 +89,11 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
 
     hallList.clear();
 
+    AllHall.clear();
     var jsonlist = jsonDecode(response.body) as List;
     jsonlist.forEach((e) {
       hallList.add(conventionHall.fromJson(e));
-      // list.add(conventionHall.fromJson(e));
+      AllHall.add(conventionHall.fromJson(e));
     });
 
     return hallList;
@@ -204,8 +206,8 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
     DatabaseReference ref = FirebaseDatabase.instance.reference().child("conventionHall");
   //  getData();
     postData();
-    list.add(test);
-    list.add(test2);
+    //list.add(test);
+    //list.add(test2);
 
    // String d = "${selectedDate.year.toString()}-${selectedDate.month.toString()}-${selectedDate.day.toString()}";
     print("s s " + dayString );
@@ -458,6 +460,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
                         onChanged: (val) {
                           setState(() {
                             parkslid = ((val).toInt()).toDouble();
+                            chosenlot = (val).toInt();
                             print(parkslid);});},),
                     ),
                     Container(

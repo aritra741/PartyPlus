@@ -6,15 +6,16 @@ import 'package:partyplus/conventionHallDetails.dart';
 
 class ImageList extends StatefulWidget {
   conventionHall convention ;
-  ImageList({this.convention});
+  List<String>imageList;
+  ImageList({this.convention,this.imageList});
   @override
-  _ImageListState createState() => _ImageListState(convention);
+  _ImageListState createState() => _ImageListState(convention,imageList);
 }
 
 class _ImageListState extends State<ImageList> {
   conventionHall convention;
-
-  _ImageListState(this.convention);
+  List<String>imageList;
+  _ImageListState(this.convention,this.imageList);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,21 +26,21 @@ class _ImageListState extends State<ImageList> {
 
      body: new Container(
         child: new ListView.builder(
-            itemCount: list.length,
+            itemCount:  imageList.length,
             itemBuilder: (_,index){
-              return ImgList(list[index]);
+              return ImgList(imageList[index]);
             }
         ),
       ),
     );
   }
 
-  List<String> list = [];
+
 
   @override
   void initState(){
     super.initState();
-    list.add("https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/Khan's%20Palace%2Fimage1.jpg?alt=media&token=fb301e5b-3c2b-4cce-83ab-dae21de6f6c3");
+   /* list.add("https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/Khan's%20Palace%2Fimage1.jpg?alt=media&token=fb301e5b-3c2b-4cce-83ab-dae21de6f6c3");
     list.add( "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/Khan's%20Palace%2Fimage2.jpg?alt=media&token=c6e48821-38c6-446a-864b-e15410ff5bd2");
     list.add("https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/Khan's%20Palace%2Fimage3.jpg?alt=media&token=3aec3f2b-2e1d-4fa8-920d-1b0bd6cbacf1");
     list.add("https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/Khan's%20Palace%2Fimage4.jpg?alt=media&token=3cdb57db-ec30-433c-b508-acbf70a0df51");
@@ -50,6 +51,7 @@ class _ImageListState extends State<ImageList> {
     list.add("https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/Khan's%20Palace%2Fimage4.jpg?alt=media&token=3cdb57db-ec30-433c-b508-acbf70a0df51");
     list.add("https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/Khan's%20Palace%2Fimage5.jpg?alt=media&token=d59484f1-2ee8-4a63-8787-8c9a0c9f13db");
 
+    */
   }
 
   Widget ImgList(String image)
