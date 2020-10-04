@@ -68,7 +68,6 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
     dayTwoShift= List<bool>();
     dayThreeShift= List<bool>();
 
-
     for( int i=0;i<3;i++ )
       {
         dayOneShift.add(false);

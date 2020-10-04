@@ -53,7 +53,7 @@ class _SearchResultListMapState extends State<SearchResultListMap> with SingleTi
         controller: controller,
         children: <Widget>[
           SearchResultGenerator(searchstring: searchstring,dayString:dayString,selectedDate:selectedDate,secDate:secDate,thDate:thDate,dayOneShift:dayOneShift,dayTwoShift: dayTwoShift, dayThreeShift: dayThreeShift),
-          MapView()
+          MapView(searchString: searchstring,)
         ],
       ),
     );
