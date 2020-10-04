@@ -851,6 +851,18 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
   {
     String searchString= searchText.text;
     print(searchString);
+    dayOneShift[0]= dayOneMorning;
+    dayOneShift[1]= dayOneEvening;
+    dayOneShift[2]= dayOneNight;
+    dayTwoShift[0]= dayTwoMorning;
+    dayTwoShift[1]= dayTwoEvening;
+    dayTwoShift[2]= dayTwoNight;
+    dayThreeShift[0]= dayThreeMorning;
+    dayThreeShift[1]= dayThreeEvening;
+    dayThreeShift[2]= dayThreeNight;
+
+
+    print("sheshe shift "+ dayOneShift[0].toString());
     Navigator.push(context,MaterialPageRoute(builder: (context)=>SearchResultListMap(searchstring: searchString,dayString:dayString,selectedDate:selectedDate,secDate:secDate,thDate:thDate,dayOneShift:dayOneShift,dayTwoShift: dayTwoShift, dayThreeShift: dayThreeShift)));
    // Navigator.push(context,MaterialPageRoute(builder: (context)=>SearchResultGenerator(searchstring: searchString)),);
   }
@@ -861,10 +873,12 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
       dayOneMorning= morning;
       dayOneEvening= evening;
       dayOneNight= night;
-      dayOneShift[0]= morning;
-      dayOneShift[1]= evening;
-      dayOneShift[2]= night;
     });
+
+    dayOneShift[0]= morning;
+    dayOneShift[1]= evening;
+    dayOneShift[2]= night;
+    print("eikhane shift "+dayOneShift[0].toString());
   }
   void getShiftInfoForDayTwo( bool morning, bool evening, bool night )
   {
@@ -872,10 +886,11 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
       dayTwoMorning= morning;
       dayTwoEvening= evening;
       dayTwoNight= night;
-      dayTwoShift[0]= morning;
-      dayTwoShift[1]= evening;
-      dayTwoShift[2]= night;
     });
+
+    dayTwoShift[0]= morning;
+    dayTwoShift[1]= evening;
+    dayTwoShift[2]= night;
   }
   void getShiftInfoForDayThree( bool morning, bool evening, bool night )
   {

@@ -9,7 +9,6 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
-
 class SearchResultGenerator extends StatefulWidget {
   bool cbxval = false;
   String searchstring,dayString;
@@ -48,7 +47,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
     //print("hello");
   }*/
 
-  Future postData() async{
+  Future<List<conventionHall>> postData() async{
 
     var match = {
       "what" : searchstring
@@ -84,13 +83,16 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
    //    fuserData = data['Name'];
    //  });
    //  debugPrint(fuserData.toString());
+
+    hallList.clear();
+
     var jsonlist = jsonDecode(response.body) as List;
     jsonlist.forEach((e) {
       hallList.add(conventionHall.fromJson(e));
-      list.add(conventionHall.fromJson(e));
+      // list.add(conventionHall.fromJson(e));
     });
-    print(list[0].Name);
-    print(hallList[0].Name);
+
+    return hallList;
   }
 
   @override
@@ -101,70 +103,91 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
 
    // var response = await post(Uri.parse("https://l.facebook.com/l.php?u=http%3A%2F%2Fpartyplusapi.herokuapp.com%2Fsearch%3Ffbclid%3DIwAR23PMRsfGcZolvbS6OhzHvi7f8M1xh_1IccNuxh0eiT_zKWumesa9JVG3M&h=AT0jBTSIaQpGhvxlZziUwCc3rfRMJyR2HbbxSqCkc3EI3dhd2UI7DTE_sYcivZyrxXSkV1unsAQ6OGHdZCuE1mG3_aa8o2o8Dtgd-QKF7EgBsC9uLUQk7LqNTmcZzLBW2dhcyQ"));
     print(search);
-    return Scaffold(
-      /*body: Center(
+    return FutureBuilder(
+      future: postData(),
+      builder: ( BuildContext context, AsyncSnapshot snapshot ){
+        if( snapshot.data!=null )
+          {
+            Set<conventionHall>hallSet= Set.of(hallList);
+            var val;
+
+            hallList.clear();
+            for( val in hallSet )
+              hallList.add(val);
+
+            print("got value of size "+hallList.length.toString());
+
+            return Scaffold(
+              /*body: Center(
         child: Text(
           searchstring,
         ),
       ),*/
-      body: new Container(
-        child: list.length==0?new Text("No result found",textAlign: TextAlign.center,) : new Column(
-          children: <Widget>[
-        new Expanded(child:
-          ListView.builder(
-              itemCount: list.length,
-              itemBuilder: (_,index){
-                return conventionUI(list[index].image, list[index].Name, list[index].City, list[index].street,list[index]);
-              }
-          ),
-        ),
+              body: new Container(
+                child: (hallList.length==1 && hallList[0].Name=='null' )?new Text("No result found",textAlign: TextAlign.center,) : new Column(
+                  children: <Widget>[
+                    new Expanded(child:
+                    ListView.builder(
+                        itemCount: hallList.length,
+                        itemBuilder: (_,index){
+                          return conventionUI(hallList[index].image, hallList[index].Name, hallList[index].City, hallList[index].street,hallList[index]);
 
-            Row(
-                children: <Widget>[
-                  FlatButton(
-                   // elevation: 5.0,
-                    onPressed: () => showSortOptions(),
-                  //  padding: EdgeInsets.all(15.0),
-                  /*  shape: RoundedRectangleBorder(
+                        }
+                    ),
+                    ),
+
+                    Row(
+                      children: <Widget>[
+                        FlatButton(
+                          // elevation: 5.0,
+                          onPressed: () => showSortOptions(),
+                          //  padding: EdgeInsets.all(15.0),
+                          /*  shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0),
                     ),*/
-                    color: Color(0xFF005e6a),
-                    child: Text(
-                      'Sort',
-                      style: TextStyle(
-                        color: Colors.white,
-                        letterSpacing: 1.5,
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'OpenSans',
-                      ),
-                    ),
-                  ),
-                  FlatButton(
-                   // elevation: 5.0,
-                    onPressed: () => showFilterDialog(),
-                  //  padding: EdgeInsets.all(15.0),
-                   /* shape: RoundedRectangleBorder(
+                          color: Color(0xFF005e6a),
+                          child: Text(
+                            'Sort',
+                            style: TextStyle(
+                              color: Colors.white,
+                              letterSpacing: 1.5,
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'OpenSans',
+                            ),
+                          ),
+                        ),
+                        FlatButton(
+                          // elevation: 5.0,
+                          onPressed: () => showFilterDialog(),
+                          //  padding: EdgeInsets.all(15.0),
+                          /* shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0),
                     ),*/
-                    color: Color(0xFF005e6a),
-                    child: Text(
-                      'Filter',
-                      style: TextStyle(
-                        color: Colors.white,
-                        letterSpacing: 1.5,
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'OpenSans',
-                      ),
+                          color: Color(0xFF005e6a),
+                          child: Text(
+                            'Filter',
+                            style: TextStyle(
+                              color: Colors.white,
+                              letterSpacing: 1.5,
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'OpenSans',
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-            ),
-          ],
-        ),
+                  ],
+                ),
 
-      ),
+              ),
+            );
+          }
+        else
+          return Center(child:
+            SizedBox( width: 30, height: 30, child: CircularProgressIndicator()));
+      },
     );
   }
   List<conventionHall> list = [];
