@@ -16,7 +16,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
 //import 'package:flutterModule/navigation_drawer.dart';
 import 'searchresultgenerator.dart';
-
+import 'package:fluttertoast/fluttertoast.dart';
 class SearchScreenBody extends StatefulWidget {
   @override
   _SearchScreenBodyState createState() => _SearchScreenBodyState();
@@ -276,7 +276,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                                                         ),
                                                         CheckboxListTile(
                                                           value: _evening,
-                                                          title: Text("Evening"),
+                                                          title: Text("Noon"),
                                                           onChanged: (value)
                                                           {
                                                             setState( ()
@@ -288,7 +288,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                                                         ),
                                                         CheckboxListTile(
                                                           value: _night,
-                                                          title: Text("Night"),
+                                                          title: Text("Evening"),
                                                           onChanged: (value)
                                                           {
                                                             setState( ()
@@ -320,7 +320,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                                 Visibility(
                                   visible: true,
                                   child: Text(
-                                      (dayOneMorning?"     Morning":"")+(dayOneEvening?"     Evening":"")+(dayOneNight?"     Night":""),
+                                      (dayOneMorning?"     Morning":"")+(dayOneEvening?"     Noon":"")+(dayOneNight?"    Evening":""),
                                     style: TextStyle(
                                       fontSize: 22,
                                       color: Color(0xFF005e6a)
@@ -407,7 +407,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                                                           ),
                                                           CheckboxListTile(
                                                             value: _evening,
-                                                            title: Text("Evening"),
+                                                            title: Text("Noon"),
                                                             onChanged: (value)
                                                             {
                                                               setState( ()
@@ -419,7 +419,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                                                           ),
                                                           CheckboxListTile(
                                                             value: _night,
-                                                            title: Text("Night"),
+                                                            title: Text("Evening"),
                                                             onChanged: (value)
                                                             {
                                                               setState( ()
@@ -451,7 +451,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                                   Visibility(
                                     visible: true,
                                     child: Text(
-                                      (dayTwoMorning?"     Morning":"")+(dayTwoEvening?"     Evening":"")+(dayTwoNight?"      Night":""),
+                                      (dayTwoMorning?"     Morning":"")+(dayTwoEvening?"     Noon":"")+(dayTwoNight?"      Evening":""),
                                       style: TextStyle(
                                           fontSize: 22,
                                           color: Color(0xFF005e6a)
@@ -541,7 +541,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                                                           ),
                                                           CheckboxListTile(
                                                             value: _evening,
-                                                            title: Text("Evening"),
+                                                            title: Text("Noon"),
                                                             onChanged: (value)
                                                             {
                                                               setState( ()
@@ -553,7 +553,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                                                           ),
                                                           CheckboxListTile(
                                                             value: _night,
-                                                            title: Text("Night"),
+                                                            title: Text("Evening"),
                                                             onChanged: (value)
                                                             {
                                                               setState( ()
@@ -585,7 +585,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                                   Visibility(
                                     visible: true,
                                     child: Text(
-                                      (dayThreeMorning?"     Morning":"")+(dayThreeEvening?"     Evening":"")+(dayThreeNight?"     Night":""),
+                                      (dayThreeMorning?"     Morning":"")+(dayThreeEvening?"     Noon":"")+(dayThreeNight?"     Evening":""),
                                       style: TextStyle(
                                           fontSize: 22,
                                           color: Color(0xFF005e6a)
@@ -860,13 +860,45 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
     dayThreeShift[0]= dayThreeMorning;
     dayThreeShift[1]= dayThreeEvening;
     dayThreeShift[2]= dayThreeNight;
-
+    int f = 1;
+    int day = int.parse(dayString);
+    if(day>=1 &&dayOneShift[0]==false && dayOneShift[1]== false && dayOneShift[2]==false ) f = 0;
+    if(day>=2 &&dayTwoShift[0]==false && dayTwoShift[1]== false && dayTwoShift[2]==false ) f = 0;
+    if(day>=3 &&dayThreeShift[0]==false && dayThreeShift[1]== false && dayThreeShift[2]==false ) f = 0;
     for(int i=0;i<3;i++)
     {
       print(dayOneShift[i]);
       print(dayTwoShift[i]);
       print(dayThreeShift[i]);
     }
+    if(f==0 && searchString.length==0)
+      {
+        Fluttertoast.showToast(
+            msg: "Please add shift and city or address",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+             timeInSecForIosWeb: 1,
+        );
+      }
+    else if(f==0)
+      {
+        Fluttertoast.showToast(
+          msg: "Please add shift",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+        );
+      }
+    else if(searchString.length==0)
+      {
+        Fluttertoast.showToast(
+          msg: "Please add city or address",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+        );
+      }
+    else
     Navigator.push(context,MaterialPageRoute(builder: (context)=>SearchResultListMap(searchstring: searchString,dayString:dayString,selectedDate:selectedDate,secDate:secDate,thDate:thDate,dayOneShift:dayOneShift,dayTwoShift: dayTwoShift, dayThreeShift: dayThreeShift)));
    // Navigator.push(context,MaterialPageRoute(builder: (context)=>SearchResultGenerator(searchstring: searchString)),);
   }

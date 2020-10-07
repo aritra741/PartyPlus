@@ -307,19 +307,19 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
                           if(num_of_days >= 1)
                             PriceDetails(1),
                           if(num_of_days >= 1)
-                            AddRemoveButton(),
+                            AddRemoveButton1(),
                           if(num_of_days >= 2)
                             widgetforszbox(2),
                           if(num_of_days >= 2)
                             PriceDetails(2),
                           if(num_of_days >= 2)
-                            AddRemoveButton(),
+                            AddRemoveButton2(),
                           if(num_of_days >= 3)
                             widgetforszbox(3),
                           if(num_of_days >= 3)
                             PriceDetails(3),
                           if(num_of_days >= 3)
-                            AddRemoveButton(),
+                            AddRemoveButton3(),
                           widgetforszbox(4),
                           TotalPrice(),
                         ],
@@ -394,7 +394,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
     takatext2="";
     takatext3="";
     total_cost = 0;
-    List<String> shft = ['Morning','Evening','NIght'];
+    List<String> shft = ['Morning','Noon','Evening'];
     for(int i=0;i<3;i++)
     {
       print(dayOneShift[i]);
@@ -458,7 +458,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
       );
   }
 
-  Widget AddRemoveButton() {
+  Widget AddRemoveButton1() {
     return Row(
       children: <Widget>[
         SizedBox(width: 145),
@@ -474,20 +474,19 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
                         showDialog<void>(
                             context: context,
                             builder: (BuildContext context) {
-                              bool _morning = true;
-                              bool _evening = true;
-                              bool _night = true;
-
                               return AlertDialog(
                                 title: Text("Shift(s)"),
                                 actions: <Widget>[
                                   new FlatButton(
                                       onPressed: () {
-                                        // setNumberOfDays();
+                                        setState(() {
+                                          ShiftString();
+                                        });
                                         Navigator.of(context,
                                                 rootNavigator: true)
                                             .pop();
                                       },
+
                                       child: Container(
                                         height: 40,
                                         width: 50,
@@ -511,31 +510,31 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
                                       mainAxisSize: MainAxisSize.min,
                                       children: <Widget>[
                                         CheckboxListTile(
-                                          value: _morning,
+                                          value: dayOneShift[0],
                                           title: Text("Morning"),
                                           onChanged: (value) {
                                             setState(() {
-                                              _morning = value;
+                                              dayOneShift[0] = value;
                                               // getShiftInfoForDayOne(_morning, _evening, _night);
                                             });
                                           },
                                         ),
                                         CheckboxListTile(
-                                          value: _evening,
+                                          value: dayOneShift[1],
+                                          title: Text("Noon"),
+                                          onChanged: (value) {
+                                            setState(() {
+                                              dayOneShift[1] = value;
+                                              // getShiftInfoForDayOne(_morning, _evening, _night);
+                                            });
+                                          },
+                                        ),
+                                        CheckboxListTile(
+                                          value: dayOneShift[2],
                                           title: Text("Evening"),
                                           onChanged: (value) {
                                             setState(() {
-                                              _evening = value;
-                                              // getShiftInfoForDayOne(_morning, _evening, _night);
-                                            });
-                                          },
-                                        ),
-                                        CheckboxListTile(
-                                          value: _night,
-                                          title: Text("Night"),
-                                          onChanged: (value) {
-                                            setState(() {
-                                              _night = value;
+                                              dayOneShift[2] = value;
                                               // getShiftInfoForDayOne(_morning, _evening, _night);
                                             });
                                           },
@@ -564,6 +563,214 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
     );
   }
 
+  Widget AddRemoveButton2() {
+    return Row(
+      children: <Widget>[
+        SizedBox(width: 145),
+        InkWell(
+          // onTap: doSomething,
+          child: SizedBox(
+            child: Container(
+              decoration: BoxDecoration(
+                // color: Colors.blue
+              ),
+              child: InkWell(
+                  onTap: () => {
+                    showDialog<void>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text("Shift(s)"),
+                            actions: <Widget>[
+                              new FlatButton(
+                                  onPressed: () {
+
+                                    setState(() {
+                                      ShiftString();
+                                    });
+                                    Navigator.of(context,
+                                        rootNavigator: true)
+                                        .pop();
+                                  },
+                                  child: Container(
+                                    height: 40,
+                                    width: 50,
+                                    padding:
+                                    EdgeInsets.only(left: 11, top: 5),
+                                    decoration: BoxDecoration(
+                                      color: Color(0xFF005e6a),
+                                    ),
+                                    child: Text("ok",
+                                        style: TextStyle(
+                                            fontSize: 22,
+                                            color: Colors.white)),
+                                  ))
+                            ],
+                            content: StatefulBuilder(
+                              builder: (BuildContext context,
+                                  StateSetter setState) {
+                                return Column(
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    CheckboxListTile(
+                                      value: dayTwoShift[0],
+                                      title: Text("Morning"),
+                                      onChanged: (value) {
+                                        setState(() {
+                                          dayTwoShift[0] = value;
+                                          // getShiftInfoForDayOne(_morning, _evening, _night);
+                                        });
+                                      },
+                                    ),
+                                    CheckboxListTile(
+                                      value: dayTwoShift[1],
+                                      title: Text("Noon"),
+                                      onChanged: (value) {
+                                        setState(() {
+                                          dayTwoShift[1] = value;
+                                          // getShiftInfoForDayOne(_morning, _evening, _night);
+                                        });
+                                      },
+                                    ),
+                                    CheckboxListTile(
+                                      value: dayTwoShift[2],
+                                      title: Text("Evening"),
+                                      onChanged: (value) {
+                                        setState(() {
+                                          dayTwoShift[2] = value;
+                                          // getShiftInfoForDayOne(_morning, _evening, _night);
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            ),
+                          );
+                        })
+                  },
+                  child: Text(
+                    "Add/Remove",
+                    style: TextStyle(
+                      decoration: TextDecoration.underline,
+                      color: Colors.teal,
+                      fontSize: 16.0,
+                    ),
+                  )
+                //textAlign: TextAlign.right,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget AddRemoveButton3() {
+    return Row(
+      children: <Widget>[
+        SizedBox(width: 145),
+        InkWell(
+          // onTap: doSomething,
+          child: SizedBox(
+            child: Container(
+              decoration: BoxDecoration(
+                // color: Colors.blue
+              ),
+              child: InkWell(
+                  onTap: () => {
+                    showDialog<void>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text("Shift(s)"),
+                            actions: <Widget>[
+                              new FlatButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      ShiftString();
+                                    });
+                                    Navigator.of(context,
+                                        rootNavigator: true)
+                                        .pop();
+                                  },
+                                  child: Container(
+                                    height: 40,
+                                    width: 50,
+                                    padding:
+                                    EdgeInsets.only(left: 11, top: 5),
+                                    decoration: BoxDecoration(
+                                      color: Color(0xFF005e6a),
+                                    ),
+                                    child: Text("ok",
+                                        style: TextStyle(
+                                            fontSize: 22,
+                                            color: Colors.white)),
+                                  ))
+                            ],
+                            content: StatefulBuilder(
+                              builder: (BuildContext context,
+                                  StateSetter setState) {
+                                return Column(
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    CheckboxListTile(
+                                      value: dayThreeShift[0],
+                                      title: Text("Morning"),
+                                      onChanged: (value) {
+                                        setState(() {
+                                          dayThreeShift[0] = value;
+                                          // getShiftInfoForDayOne(_morning, _evening, _night);
+                                        });
+                                      },
+                                    ),
+                                    CheckboxListTile(
+                                      value: dayThreeShift[1],
+                                      title: Text("Noon"),
+                                      onChanged: (value) {
+                                        setState(() {
+                                          dayThreeShift[1] = value;
+                                          // getShiftInfoForDayOne(_morning, _evening, _night);
+                                        });
+                                      },
+                                    ),
+                                    CheckboxListTile(
+                                      value: dayThreeShift[2],
+                                      title: Text("Evening"),
+                                      onChanged: (value) {
+                                        setState(() {
+                                          dayThreeShift[2] = value;
+                                          // getShiftInfoForDayOne(_morning, _evening, _night);
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            ),
+                          );
+                        })
+                  },
+                  child: Text(
+                    "Add/Remove",
+                    style: TextStyle(
+                      decoration: TextDecoration.underline,
+                      color: Colors.teal,
+                      fontSize: 16.0,
+                    ),
+                  )
+                //textAlign: TextAlign.right,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
   Widget PriceDetails(int check)
   {
 

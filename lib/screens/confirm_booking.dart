@@ -332,7 +332,7 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
     takatext1="";
     takatext2="";
     takatext3="";
-    List<String> shft = ['Morning','Evening','NIght'];
+    List<String> shft = ['Morning','Noon','Evening'];
     for(int i=0;i<3;i++)
       {
         print(dayOneShift[i]);
