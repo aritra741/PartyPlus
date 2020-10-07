@@ -715,7 +715,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
         Row(
           children: <Widget>[
             Text(
-              dateTime.day.toString().padLeft(2, '0'),
+              selectedDate.day.toString().padLeft(2, '0'),
               style: GoogleFonts.overpass(fontSize: 48),
             ),
 //            SizedBox(width: 8),
@@ -723,11 +723,11 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  showMonth + ' ',
+                  DateFormat('MMMM').format(selectedDate) + ' ',
                   style: GoogleFonts.overpass(fontSize: 18),
                 ),
                 Text(
-                  showDay,
+                  DateFormat('EEEE').format(selectedDate),
                   style: GoogleFonts.overpass(fontSize: 16, color: Colors.grey),
                 )
               ],

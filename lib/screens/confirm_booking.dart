@@ -101,8 +101,6 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
     booking_id = response.body;
     print(response.body);
     //  return fuserData;
-
-
   }
   @override
   void initState(){
