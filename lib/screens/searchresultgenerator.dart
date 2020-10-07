@@ -466,7 +466,11 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
                     Container(
                       child: RaisedButton(
                         elevation: 5.0,
-                        onPressed: () => Navigator.of(context).pop(),
+                        onPressed: () {
+                          makefilteredList();
+                          Navigator.of(context).pop();
+                        },
+                       // onPressed: () => Navigator.of(context).pop(),
                         padding: EdgeInsets.all(15.0),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20.0),
@@ -507,6 +511,33 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
           );
         }
     );
+  }
+  void makefilteredList()
+  {
+    List<conventionHall>filtered_list = new List();
+    for(int i=0;i<hallList.length;i++)
+      {
+        int f = 1;
+        for(int j=0;j<7;j++)
+          {
+            if(j<6)
+              {
+                if(hallList[i].facility[j]=='0' && filter[j]==true) f = 0;
+                else if(hallList[i].facility[j]=='1' && filter[j]==false) f = 0;
+              }
+            else if(selectedRadio==true && hallList[i].facility[j]=='0') f = 0;
+            else if(selectedRadio==false && hallList[i].facility[j]=='1') f = 0;
+
+          }
+        if(f==1) filtered_list.add(hallList[i]);
+      }
+
+    setState(() {
+      hallList.clear();
+      for(int i=0;i<filtered_list.length;i++)
+        hallList.add(filtered_list[i]);
+    });
+    return ;
   }
 
 
