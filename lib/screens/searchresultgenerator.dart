@@ -34,6 +34,8 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
   List<conventionHall> AllHall = new List();
   _SearchResultGeneratorState(this.searchstring,this.dayString,this.selectedDate,this.secDate,this.thDate,this.dayOneShift, this.dayTwoShift, this.dayThreeShift);
 
+  Future _postdata;
+
   Map data;
   List userData,fuserData;
 
@@ -108,7 +110,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
    // var response = await post(Uri.parse("https://l.facebook.com/l.php?u=http%3A%2F%2Fpartyplusapi.herokuapp.com%2Fsearch%3Ffbclid%3DIwAR23PMRsfGcZolvbS6OhzHvi7f8M1xh_1IccNuxh0eiT_zKWumesa9JVG3M&h=AT0jBTSIaQpGhvxlZziUwCc3rfRMJyR2HbbxSqCkc3EI3dhd2UI7DTE_sYcivZyrxXSkV1unsAQ6OGHdZCuE1mG3_aa8o2o8Dtgd-QKF7EgBsC9uLUQk7LqNTmcZzLBW2dhcyQ"));
     print(search);
     return FutureBuilder(
-      future: postData(),
+      future: _postdata,
       builder: ( BuildContext context, AsyncSnapshot snapshot ){
         if( snapshot.data!=null )
           {
@@ -205,7 +207,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
     selectedRadio = 0;
     DatabaseReference ref = FirebaseDatabase.instance.reference().child("conventionHall");
   //  getData();
-    postData();
+    _postdata= postData();
     //list.add(test);
     //list.add(test2);
 
@@ -544,50 +546,50 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
   List<dynamic> sortByPriceAscending( List<dynamic> list )
   {
     setState(() {
-      list.sort((a, b) => a.mnprice.compareTo(b.mnprice));
+      hallList.sort((a, b) => a.mnprice.compareTo(b.mnprice));
     });
 
-    return list;
+    return hallList;
   }
   List<dynamic> sortByPriceDescending( List<dynamic> list )
   {
     setState(() {
-      list.sort((b, a) => a.mnprice.compareTo(b.mnprice));
+      hallList.sort((b, a) => a.mnprice.compareTo(b.mnprice));
     });
 
-    return list;
+    return hallList;
   }
 
   List<dynamic> sortByParkingAscending( List<dynamic> list )
   {
-    list.sort((a, b) => a.parking.compareTo(b.parking));
+    hallList.sort((a, b) => a.parking.compareTo(b.parking));
 
-    return list;
+    return hallList;
   }
 
   List<dynamic> sortByParkingDescending( List<dynamic> list )
   {
-    list.sort((b, a) => a.parking.compareTo(b.parking));
+    hallList.sort((b, a) => a.parking.compareTo(b.parking));
 
-    return list;
+    return hallList;
   }
 
   List<dynamic> sortByNameAscending( List<dynamic> list )
   {
     setState(() {
-      list.sort((a, b) => a.Name.compareTo(b.Name));
+      hallList.sort((a, b) => a.Name.compareTo(b.Name));
     });
 
-    return list;
+    return hallList;
   }
 
   List<dynamic> sortByNameDescending( List<dynamic> list )
   {
     setState(() {
-      list.sort((b, a) => a.Name.compareTo(b.Name));
+      hallList.sort((b, a) => a.Name.compareTo(b.Name));
     });
 
-    return list;
+    return hallList;
   }
 
   void sortHandler( int value, context )
@@ -596,41 +598,41 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
     if( value==0 )
     {
       setState(() {
-        list= sortByNameAscending(list);
+        hallList= sortByNameAscending(hallList);
       });
     }
     if( value==1 )
     {
       setState(() {
-        list= sortByNameDescending(list);
+        hallList= sortByNameDescending(hallList);
       });
     }
     if( value==2 )
     {
       setState(() {
-        list= sortByPriceAscending(list);
+        hallList= sortByPriceAscending(hallList);
       });
     }
     if( value==3 )
     {
       setState(() {
-        list= sortByPriceDescending(list);
+        hallList= sortByPriceDescending(hallList);
       });
     }
     if( value==4 )
     {
       setState(() {
-        list= sortByParkingAscending(list);
+        hallList= sortByParkingAscending(hallList);
       });
     }
     if( value==5 )
     {
       setState(() {
-        list= sortByParkingDescending(list);
+        hallList= sortByParkingDescending(hallList);
       });
     }
 
-    print("first e"+list[0].Name);
+    print("first e"+hallList[0].Name);
   }
 
   void showSortOptions()
