@@ -375,6 +375,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
                             onChanged: (int val) {
                               print("Radio $val");
                               setState(() {
+                                print("sim $val");
                                 selectedRadio = val;
                               });
                             },
@@ -387,6 +388,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
                             onChanged: (int val) {
                               print("Radio $val");
                               setState(() {
+                                print("dup $val");
                                 selectedRadio = val;
                               });
                             },
@@ -517,21 +519,27 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
   void makefilteredList()
   {
     List<conventionHall>filtered_list = new List();
-    for(int i=0;i<hallList.length;i++)
+    for(int i=0;i<AllHall.length;i++)
       {
         int f = 1;
+        int cnt = 0;
         for(int j=0;j<7;j++)
           {
             if(j<6)
               {
-                if(hallList[i].facility[j]=='0' && filter[j]==true) f = 0;
-                else if(hallList[i].facility[j]=='1' && filter[j]==false) f = 0;
+                if(filter[j]==false) cnt++;
+                if(AllHall[i].facility[j]=='0' && filter[j]==true) f = 0;
+                else if(AllHall[i].facility[j]=='1' && filter[j]==false) f = 0;
+                if(cnt==6) f = 1;
               }
-            else if(selectedRadio==true && hallList[i].facility[j]=='0') f = 0;
-            else if(selectedRadio==false && hallList[i].facility[j]=='1') f = 0;
+            else if(selectedRadio==2 && AllHall[i].facility[j]=='0') f = 0;
 
           }
-        if(f==1) filtered_list.add(hallList[i]);
+        int val = int.parse(AllHall[i].mxprice);
+        if(chosenprice!=-1 && val>chosenprice) f =0 ;
+        val = int.parse(AllHall[i].parking);
+        if(chosenlot!=-1 && val<chosenlot) f = 0;
+        if(f==1) filtered_list.add(AllHall[i]);
       }
 
     setState(() {
