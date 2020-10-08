@@ -7,6 +7,7 @@ import 'package:partyplus/constants/constants_for_search_screen_top.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
 import 'package:partyplus/providers/conventionHall.dart';
 
 class ConfirmBooking extends StatefulWidget {
@@ -45,6 +46,17 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
     super.dispose();
   }
 
+  var _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+  Random _rnd = Random();
+
+  String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
+      length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
+
+  void confirm()
+  {
+    booking_id = getRandomString(20)+getLastName();
+    postData();
+  }
 
   Future postData() async{
 
@@ -98,10 +110,27 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
     //    fuserData = data['Name'];
     //  });
     //  debugPrint(fuserData.toString());
-    booking_id = response.body;
     print(response.body);
     //  return fuserData;
   }
+
+  String getLastName()
+  {
+    String userFullName= userName.text;
+    var nameList= userFullName.split(' ');
+
+    String firstName='';
+
+    for( int i=0;i<nameList.length-1;i++ )
+    {
+      if(i>0)
+        firstName+= ' ';
+      firstName+= nameList[i];
+    }
+
+    return nameList[nameList.length-1];
+  }
+
   @override
   void initState(){
     super.initState();
@@ -231,7 +260,7 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
                 elevation: 5.0,
                 onPressed: (){
                 //  ShiftString();
-                  postData();
+                  confirm();
                   showGeneralDialog(
 
                       context: context,
@@ -436,7 +465,7 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
               ],
             ),
           ),
-          SizedBox(width: 80),
+          SizedBox(width: 50),
           Container(
             child: new Column(
 
@@ -530,7 +559,7 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
     return Row(
       children: <Widget>[
         // SizedBox(height: 50),
-        SizedBox(width: 170),
+        SizedBox(width: 140),
         Container(
             child:  Text("Total",
                 style: TextStyle(color: Colors.black, fontSize: 16.0,
