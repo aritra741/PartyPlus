@@ -29,7 +29,7 @@ class _RetrieveReservationState extends State<RetrieveReservation> {
   Future postData() async{
 
     var match = {
-      "name" : "-M9j505OZWci1NRRIjoO"
+      "name" : reservationID.text
     };
 
     print( json.encode(match) );
@@ -120,6 +120,7 @@ class _RetrieveReservationState extends State<RetrieveReservation> {
               child: RaisedButton(
                 elevation: 5.0,
                 onPressed: () {
+                  postData();
                   setState(() {
                     pressed = true;
                     Navigator.push(
@@ -216,6 +217,5 @@ class _RetrieveReservationState extends State<RetrieveReservation> {
   @override
   void initState(){
     super.initState();
-    postData();
   }
 }
