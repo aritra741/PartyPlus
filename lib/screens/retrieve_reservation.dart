@@ -19,6 +19,7 @@ class _RetrieveReservationState extends State<RetrieveReservation> {
   int currentIndex= 1;
   int num_of_days= 3, check= 3;
   bool pressed= false;
+  Map<String, dynamic> data;
 
   @override
   void dispose() {
@@ -65,8 +66,9 @@ class _RetrieveReservationState extends State<RetrieveReservation> {
     print(response.body);
     //  return fuserData;
 
-    final Map<String, dynamic> data = json.decode(response.body);
+    data = json.decode(response.body);
     print(data);
+    print(data['convname'] + " ha thik ache");
   }
   @override
   Widget build(BuildContext context) {
@@ -124,9 +126,9 @@ class _RetrieveReservationState extends State<RetrieveReservation> {
                   postData();
                   setState(() {
                     pressed = true;
-                    Navigator.push(
+                   Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ModifyReservation()));
+                        MaterialPageRoute(builder: (context) => ModifyReservation(data : data)));
                   });
                 },
                 padding: EdgeInsets.all(15.0),

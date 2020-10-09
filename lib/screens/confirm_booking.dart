@@ -66,13 +66,13 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
       "date1" : date1,
       "date2" : date2,
       "date3" : date3,
-      "shift1" : shiftTextstr1,
-      "shift2" : shiftTextstr2,
-      "shift3" : shiftTextstr3,
+      "shift1" : shiftBitstr1,
+      "shift2" : shiftBitstr2,
+      "shift3" : shiftBitstr3,
       "price1" : takatext1,
       "price2" : takatext2,
       "price3" : takatext3,
-      "totalCost" : "350000",
+      "totalCost" : total_cost,
       "email" : userEmail.text,
       "id" : convention.Id,
       "name" : userName.text,
@@ -245,6 +245,10 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
                       widgetforszbox(3),
                       if(num_of_days>=3)
                       PriceDetails(3),
+                      SizedBox(height: 10,),
+                      VAT(),
+                      SizedBox(height: 10,),
+                      ServiceFee(),
                       widgetforszbox(4),
                       TotalPrice(),
                     ],
@@ -305,6 +309,10 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
                                   widgetforszbox(3),
                                   if(num_of_days>=3)
                                   PriceDetails(3),
+                                  SizedBox(height: 10,),
+                                  VAT(),
+                                  SizedBox(height: 10,),
+                                  ServiceFee(),
                                   widgetforszbox(4),
                                   TotalPrice(),
                                   RaisedButton(
@@ -407,6 +415,7 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
         else shiftBitstr3 += "0";
         print(shiftBitstr1);
       }
+    //total_cost *= 0.15;
     return;
   }
 
@@ -554,6 +563,51 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
         Text("d")
       ],);
     }
+  }
+  Widget VAT(){
+    return Row(
+      children: <Widget>[
+        // SizedBox(height: 50),
+        SizedBox(width: 140),
+        Container(
+            child:  Text("VAT",
+                style: TextStyle(color: Colors.black, fontSize: 16.0,))
+        ),
+
+        SizedBox(width: 93),
+        Container(
+          child: new Column(
+            children: <Widget>[
+              Text("15%",
+                style: TextStyle(color: Colors.black, fontSize: 16.0,),),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+  Widget ServiceFee(){
+    return Row(
+      children: <Widget>[
+        // SizedBox(height: 50),
+        SizedBox(width: 140),
+        Container(
+            child:  Text("Service Fee",
+                style: TextStyle(color: Colors.black, fontSize: 16.0,
+                    fontWeight: FontWeight.bold))
+        ),
+
+        SizedBox(width: 93),
+        Container(
+          child: new Column(
+            children: <Widget>[
+              Text("0" + "\u09F3",
+                style: TextStyle(color: Colors.black, fontSize: 16.0,),),
+            ],
+          ),
+        ),
+      ],
+    );
   }
   Widget TotalPrice(){
     return Row(

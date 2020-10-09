@@ -259,10 +259,20 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
               SizedBox(height: 10.0,),
               new Image.network(image,fit: BoxFit.cover),
               SizedBox(height: 10.0,),
-              new Text(
-                street,
-                style: Theme.of(context).textTheme.subtitle1,
-                textAlign: TextAlign.center,
+              new Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  new Text(
+                    street,
+                    style: Theme.of(context).textTheme.subtitle1,
+                    textAlign: TextAlign.center,
+                  ),
+                  new Text(
+                    convention.mxprice+"\u09F3" + " per shift",
+                    style: Theme.of(context).textTheme.subtitle1,
+                    textAlign: TextAlign.center,
+                  )
+                ],
               ),
             ],
           ),
