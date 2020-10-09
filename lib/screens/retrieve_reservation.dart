@@ -65,7 +65,8 @@ class _RetrieveReservationState extends State<RetrieveReservation> {
     print(response.body);
     //  return fuserData;
 
-
+    final Map<String, dynamic> data = json.decode(response.body);
+    print(data);
   }
   @override
   Widget build(BuildContext context) {
