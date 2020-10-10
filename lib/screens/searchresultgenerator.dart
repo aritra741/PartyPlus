@@ -55,7 +55,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
   Future<List<conventionHall>> postData() async{
 
     var match = {
-      "what" : searchstring
+      "name" : searchstring
     };
     
     print( json.encode(match) );
@@ -78,11 +78,12 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
          encoding: Encoding.getByName("utf-8"));
    }catch(e) {
         print(e.toString());
-    };
+    }
 
     //print("HYSE??");
    // body: json.encode(match),);
-   //  data = json.decode(response.body);
+    data = json.decode(response.body);
+   print("data holo "+data.toString());
    //  debugPrint(fuserData.toString());
    //  setState(() {
    //    fuserData = data['Name'];
@@ -90,7 +91,6 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
    //  debugPrint(fuserData.toString());
 
     hallList.clear();
-
     AllHall.clear();
     var jsonlist = jsonDecode(response.body) as List;
     jsonlist.forEach((e) {
@@ -114,6 +114,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
       builder: ( BuildContext context, AsyncSnapshot snapshot ){
         if( snapshot.data!=null )
           {
+            print("entered");
             Set<conventionHall>hallSet= Set.of(hallList);
             var val;
 

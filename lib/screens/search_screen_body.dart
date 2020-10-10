@@ -8,14 +8,18 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:partyplus/db_test.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../providers/auth.dart';
+import 'package:http/http.dart' as http;
+import 'package:convert/convert.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:partyplus/constants/constants_for_search_screen_top.dart';
 import 'package:partyplus/screens/login_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:async/async.dart';
 import 'package:flutter/services.dart';
 //import 'package:flutterModule/navigation_drawer.dart';
 import 'searchresultgenerator.dart';
+import 'dart:convert';
 import 'package:fluttertoast/fluttertoast.dart';
 class SearchScreenBody extends StatefulWidget {
   @override
@@ -51,6 +55,34 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
     super.dispose();
   }
 
+  Future speedup() async
+  {
+      var match = {
+        "what" : "sylhet"
+      };
+
+      print("HYSE??");
+      // print(SearchScreenBody.numberOfDays);
+      final String apiurl = "http://partyplusapi.herokuapp.com/search";
+      //http.Response response = await http.post(apiurl);
+      /* final response = await http.post(apiurl,body: {
+      "name" : searchstring
+    });*/
+      http.Response response;
+      try{
+        response= await http.post(apiurl,
+            headers: {
+              "Accept": "application/json",
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: match,
+            encoding: Encoding.getByName("utf-8"));
+      }catch(e) {
+        print(e.toString());
+      }
+
+    }
+
   @override
   Widget build(BuildContext context) {
     secDate = new DateTime(selectedDate.year, selectedDate.month, selectedDate.day+1);
@@ -67,7 +99,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
     dayOneShift= List<bool>();
     dayTwoShift= List<bool>();
     dayThreeShift= List<bool>();
-
+    speedup();
 
     for( int i=0;i<3;i++ )
       {

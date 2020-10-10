@@ -27,7 +27,7 @@ class _ModifyReservationState extends State<ModifyReservation> {
   List<bool> dayOneShift = [false,false,false], dayTwoShift = [false,false,false], dayThreeShift = [false,false,false];
   String shiftBitstr1="",shiftBitstr2="",shiftBitstr3="";
   String takatext1,takatext2,takatext3;
-  int total_cost= 0;
+  double total_cost= 0;
 
   @override
   void dispose() {
@@ -119,7 +119,7 @@ class _ModifyReservationState extends State<ModifyReservation> {
         takatext1+=mxprice;
         takatext1 += "\u09F3";
         shiftTextstr1 += shft[i];
-        total_cost += int.parse(mxprice);
+        total_cost += double.parse(mxprice);
       }
       else shiftBitstr1 +=  "0";
       if(dayTwoShift[i]==true)
@@ -130,7 +130,7 @@ class _ModifyReservationState extends State<ModifyReservation> {
         takatext2+=mxprice;
         takatext2 += "\u09F3";
         shiftTextstr2 += shft[i];
-        total_cost += int.parse(mxprice);
+        total_cost += double.parse(mxprice);
       }
       else shiftBitstr2 += "0'";
       if(dayThreeShift[i]==true)
@@ -141,7 +141,7 @@ class _ModifyReservationState extends State<ModifyReservation> {
         takatext3+=mxprice;
         takatext3 += "\u09F3";
         shiftTextstr3 += shft[i];
-        total_cost += int.parse(mxprice);
+        total_cost += double.parse(mxprice);
       }
       else shiftBitstr3 += "0";
       print(shiftBitstr1);

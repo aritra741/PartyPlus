@@ -48,7 +48,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
   String shiftTextstr1,shiftTextstr2,shiftTextstr3;
   String takatext1,takatext2,takatext3;
   String date1,date2,date3;
-  int total_cost= 0;
+  double total_cost= 0;
 
   GoogleMapController mapController;
   List<Marker> locations = <Marker>[];
@@ -413,7 +413,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
         takatext1+=convention.mxprice.toString();
         takatext1 += "\u09F3";
         shiftTextstr1 += shft[i];
-        total_cost += int.parse(convention.mxprice);
+        total_cost += double.parse(convention.mxprice);
       }
       else shiftBitstr1 +=  "0";
       if(dayTwoShift[i]==true)
@@ -424,7 +424,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
         takatext2+=convention.mxprice.toString();
         takatext2 += "\u09F3";
         shiftTextstr2 += shft[i];
-        total_cost += int.parse(convention.mxprice);
+        total_cost += double.parse(convention.mxprice);
       }
       else shiftBitstr2 += "0'";
       if(dayThreeShift[i]==true)
@@ -435,7 +435,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
         takatext3+=convention.mxprice.toString();
         takatext3 += "\u09F3";
         shiftTextstr3 += shft[i];
-        total_cost += int.parse(convention.mxprice);
+        total_cost += double.parse(convention.mxprice);
       }
       else shiftBitstr3 += "0";
       print(shiftBitstr1);
