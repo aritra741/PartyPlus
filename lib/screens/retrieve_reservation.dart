@@ -65,10 +65,8 @@ class _RetrieveReservationState extends State<RetrieveReservation> {
     //  debugPrint(fuserData.toString());
     print(response.body);
     //  return fuserData;
-
     data = json.decode(response.body);
     print(data);
-    print(data['convname'] + " ha thik ache");
   }
   @override
   Widget build(BuildContext context) {

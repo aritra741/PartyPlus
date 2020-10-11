@@ -5,6 +5,9 @@ import 'package:partyplus/screens/login_screen.dart';
 import 'package:partyplus/screens/register_screen.dart';
 import 'package:partyplus/screens/search_screen_body.dart';
 import 'package:partyplus/constants/constants_for_search_screen_top.dart';
+import 'dart:async';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class ModifyReservation extends StatefulWidget {
   Map<String, dynamic> data;
@@ -29,6 +32,42 @@ class _ModifyReservationState extends State<ModifyReservation> {
   String takatext1,takatext2,takatext3;
   double total_cost= 0;
 
+  Future <void> updateData() async
+  {
+    print( json.encode(data) );
+
+    print("HYSE??");
+    // print(SearchScreenBody.numberOfDays);
+    final String apiurl = "http://partyplusapi.herokuapp.com/book";
+    //http.Response response = await http.post(apiurl);
+    /* final response = await http.post(apiurl,body: {
+      "name" : searchstring
+    });*/
+    http.Response response;
+    try{
+      response= await http.put(apiurl,
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          body: data,
+          encoding: Encoding.getByName("utf-8"));
+    }catch(e) {
+      print(e.toString());
+    };
+
+    //print("HYSE??");
+    // body: json.encode(match),);
+    //  data = json.decode(response.body);
+    //  debugPrint(fuserData.toString());
+    //  setState(() {
+    //    fuserData = data['Name'];
+    //  });
+    //  debugPrint(fuserData.toString());
+    print(response.body);
+    //  return fuserData;
+  }
+
   @override
   void dispose() {
     userEmail.dispose();
@@ -36,6 +75,7 @@ class _ModifyReservationState extends State<ModifyReservation> {
     userPhone.dispose();
     super.dispose();
   }
+
   @override
   void initState(){
     super.initState();
@@ -314,6 +354,21 @@ class _ModifyReservationState extends State<ModifyReservation> {
                       onPressed: (){
                         setState(() {
                           pressed= true;
+
+                          setState(() {
+                            data['shift1']= shiftBitstr1;
+                            data['shift2']= shiftBitstr2;
+                            data['shift3']= shiftBitstr3;
+                            data['price1']= takatext1;
+                            data['price2']= takatext2;
+                            data['price3']= takatext3;
+                            data['totalCost']= total_cost;
+                            data['email']= userEmail.text;
+                            data['name']= userName.text;
+                            data['phoneNumber']= userPhone.text;
+                          });
+
+                          updateData();
                         });
                       },
                       padding: EdgeInsets.all(15.0),

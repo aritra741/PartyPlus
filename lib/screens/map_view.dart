@@ -5,6 +5,8 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:partyplus/screens/searchresultgenerator.dart';
+
 class MapView extends StatefulWidget {
   String searchString;
   List<Marker>locations= <Marker>[];
@@ -76,66 +78,61 @@ class _MapViewState extends State<MapView> {
     return hallList;
   }
 
+  @override
+  void initState() {
+
+    super.initState();
+
+    hallList.clear();
+    hallList= SearchResultGenerator.globalHallList;
+
+    latlist= new List();
+    longlist= new List();
+    nameList= new List();
+
+    for( int i=0;i<hallList.length;i++ )
+    {
+      print('lat holo'+hallList[i].Name);
+      latlist.add( hallList[i].Lat );
+      longlist.add( hallList[i].Long );
+      nameList.add( hallList[i].Name );
+    }
+
+    for( int i=0;i<latlist.length;i++ )
+    {
+      setState(() {
+        locations.add(
+            Marker(
+                markerId: MarkerId((i+1).toString()),
+                position: LatLng(latlist[i],longlist[i]),
+                infoWindow: InfoWindow(
+                    title: nameList[i]
+                )
+            )
+        );
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
 
     print(searchString);
-    return FutureBuilder(
-      future: postData(),
-      builder: (BuildContext context, AsyncSnapshot snapshot){
-        if( snapshot.data!=null )
-          {
-            Set<conventionHall>hallSet= Set.of(hallList);
-            var val;
+    var val;
 
-            hallList.clear();
-            for( val in hallSet )
-              hallList.add(val);
+    for( val in locations )
+      print(val);
 
-            print("length holo "+snapshot.data.toString());
-
-            latlist= new List();
-            longlist= new List();
-            nameList= new List();
-
-            for( int i=0;i<hallList.length;i++ )
-              {
-                print('lat holo'+hallList[i].Name);
-                latlist.add( hallList[i].Lat );
-                longlist.add( hallList[i].Long );
-                nameList.add( hallList[i].Name );
-              }
-
-            for( int i=0;i<latlist.length;i++ )
-              {
-                locations.add(
-                    Marker(
-                        markerId: MarkerId((i+1).toString()),
-                        position: LatLng(latlist[i],longlist[i]),
-                        infoWindow: InfoWindow(
-                            title: nameList[i]
-                        )
-                    )
-                );
-              }
-
-            return Scaffold(
-              body: GoogleMap(
-                  initialCameraPosition: CameraPosition(
-                    target: latlist.length>0?LatLng(latlist[0],longlist[0]):LatLng(24.887635,91.874310),
-                    zoom: 9.0,
-                  ),
-                  mapType: MapType.normal,
-                  markers: Set<Marker>.of(locations),
-                  onMapCreated: _onMapCreated
-              ),
-            );
-          }
-        else
-        return Center(child:
-        SizedBox( width: 30, height: 30, child: CircularProgressIndicator()));
-      },
+    return Scaffold(
+      body: GoogleMap(
+          initialCameraPosition: CameraPosition(
+            target: latlist.length>0?LatLng(latlist[0],longlist[0]):LatLng(24.887635,91.874310),
+            zoom: 9.0,
+          ),
+          mapType: MapType.normal,
+          markers: Set<Marker>.of(locations),
+          onMapCreated: _onMapCreated
+      ),
     );
   }
 }

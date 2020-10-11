@@ -22,6 +22,8 @@ import 'searchresultgenerator.dart';
 import 'dart:convert';
 import 'package:fluttertoast/fluttertoast.dart';
 class SearchScreenBody extends StatefulWidget {
+
+  static int val= 5;
   @override
   _SearchScreenBodyState createState() => _SearchScreenBodyState();
 }
@@ -57,6 +59,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
 
   Future speedup() async
   {
+
       var match = {
         "what" : "sylhet"
       };
@@ -99,7 +102,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
     dayOneShift= List<bool>();
     dayTwoShift= List<bool>();
     dayThreeShift= List<bool>();
-    speedup();
+    // speedup();
 
     for( int i=0;i<3;i++ )
       {

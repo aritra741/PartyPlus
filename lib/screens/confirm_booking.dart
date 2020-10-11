@@ -28,6 +28,7 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
   int num_of_days= 3, check= 3;
   bool pressed= false;
 
+  Future _future;
   conventionHall convention ;
   String searchstring,dayString;
   DateTime selectedDate,secDate,thDate;
@@ -54,8 +55,10 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
 
   void confirm()
   {
-    booking_id = getRandomString(20)+getLastName();
-    postData();
+    setState(() {
+      booking_id = getRandomString(20)+getLastName();
+    });
+    _future= postData();
   }
 
   Future postData() async{
@@ -74,10 +77,10 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
       "price3" : takatext3,
       "totalCost" : total_cost,
       "email" : userEmail.text,
-      "id" : convention.Id,
+      "id" : booking_id,
       "name" : userName.text,
       "phoneNumber" : userPhone.text,
-
+      "pershiftprice": convention.mxprice.toString()
     };
 
     print( json.encode(match) );
@@ -110,7 +113,7 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
     //    fuserData = data['Name'];
     //  });
     //  debugPrint(fuserData.toString());
-    print(response.body);
+    // print(response.body);
     //  return fuserData;
   }
 

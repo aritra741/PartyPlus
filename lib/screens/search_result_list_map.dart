@@ -14,7 +14,7 @@ class SearchResultListMap extends StatefulWidget {
 class _SearchResultListMapState extends State<SearchResultListMap> with SingleTickerProviderStateMixin {
 
   TabController controller;
-
+  bool type= false;
   String searchstring,dayString;
   DateTime selectedDate,secDate,thDate;
   List<bool> dayOneShift, dayTwoShift, dayThreeShift;
@@ -40,6 +40,11 @@ class _SearchResultListMapState extends State<SearchResultListMap> with SingleTi
         title: Text("PartyPlus"),
         backgroundColor: Color(0xFF005e6a),
         bottom: TabBar(
+          onTap: (e){
+            setState((){
+              type= true;
+            });
+          },
           controller: controller,
           tabs: <Widget>[
             Tab(text: "ListView",
@@ -52,8 +57,8 @@ class _SearchResultListMapState extends State<SearchResultListMap> with SingleTi
       body: TabBarView(
         controller: controller,
         children: <Widget>[
-          SearchResultGenerator(searchstring: searchstring,dayString:dayString,selectedDate:selectedDate,secDate:secDate,thDate:thDate,dayOneShift:dayOneShift,dayTwoShift: dayTwoShift, dayThreeShift: dayThreeShift),
-          MapView(searchString: searchstring,)
+          SearchResultGenerator(searchstring: searchstring,dayString:dayString,selectedDate:selectedDate,secDate:secDate,thDate:thDate,dayOneShift:dayOneShift,dayTwoShift: dayTwoShift, dayThreeShift: dayThreeShift, type: type),
+          MapView(searchString: searchstring)
         ],
       ),
     );

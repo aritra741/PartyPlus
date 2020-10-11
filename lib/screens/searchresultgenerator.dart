@@ -1,4 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'search_screen_body.dart';
 import 'package:partyplus/providers/conventionHall.dart';
@@ -10,33 +11,40 @@ import 'dart:async';
 import 'dart:convert';
 
 class SearchResultGenerator extends StatefulWidget {
+
+  static int globalSelectedRadio;
+  static List<bool> globalFiler= [false,false,false,false,false,false];
+  static List<conventionHall> globalHallList= new List();
+
+  bool type;
   bool cbxval = false;
   String searchstring,dayString;
   DateTime selectedDate,secDate,thDate;
   List<bool> dayOneShift, dayTwoShift, dayThreeShift;
-  SearchResultGenerator({this.searchstring,this.dayString,this.selectedDate,this.secDate,this.thDate,this.dayOneShift, this.dayTwoShift, this.dayThreeShift});
+  SearchResultGenerator({this.searchstring,this.dayString,this.selectedDate,this.secDate,this.thDate,this.dayOneShift, this.dayTwoShift, this.dayThreeShift, this.type});
   @override
-  _SearchResultGeneratorState createState() => _SearchResultGeneratorState(searchstring,dayString,selectedDate,secDate,thDate,dayOneShift, dayTwoShift, dayThreeShift);
+  _SearchResultGeneratorState createState() => _SearchResultGeneratorState(searchstring,dayString,selectedDate,secDate,thDate,dayOneShift, dayTwoShift, dayThreeShift, type);
 }
 
 class _SearchResultGeneratorState extends State<SearchResultGenerator> {
   String UserDemandFacility = "0000000";
   double slid = 1000000.0;
+  bool type;
   double parkslid = 0.0;
   int chosenprice = -1,chosenlot=-1;
   int selectedRadio;
-  bool cbxval = false;
   List<bool>filter = [false,false,false,false,false,false];
   String searchstring,dayString;
   DateTime selectedDate,secDate,thDate;
   List<bool> dayOneShift, dayTwoShift, dayThreeShift;
   List<conventionHall> hallList = new List();
   List<conventionHall> AllHall = new List();
-  _SearchResultGeneratorState(this.searchstring,this.dayString,this.selectedDate,this.secDate,this.thDate,this.dayOneShift, this.dayTwoShift, this.dayThreeShift);
+
+  _SearchResultGeneratorState(this.searchstring,this.dayString,this.selectedDate,this.secDate,this.thDate,this.dayOneShift, this.dayTwoShift, this.dayThreeShift, this.type);
 
   Future _postdata;
 
-  Map data;
+  Map data= new Map();
   List userData,fuserData;
 
   var search = {
@@ -53,6 +61,9 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
   }*/
 
   Future<List<conventionHall>> postData() async{
+
+    if(type==true)
+      return SearchResultGenerator.globalHallList;
 
     var match = {
       "name" : searchstring
@@ -80,10 +91,10 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
         print(e.toString());
     }
 
-    //print("HYSE??");
-   // body: json.encode(match),);
-    data = json.decode(response.body);
-   print("data holo "+data.toString());
+   //  print("done");
+   // // body: json.encode(match),);
+
+   // print("data holo "+data.toString());
    //  debugPrint(fuserData.toString());
    //  setState(() {
    //    fuserData = data['Name'];
@@ -98,6 +109,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
       AllHall.add(conventionHall.fromJson(e));
     });
 
+    // data = json.decode(response.body);
     return hallList;
   }
 
@@ -108,19 +120,31 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
     };
 
    // var response = await post(Uri.parse("https://l.facebook.com/l.php?u=http%3A%2F%2Fpartyplusapi.herokuapp.com%2Fsearch%3Ffbclid%3DIwAR23PMRsfGcZolvbS6OhzHvi7f8M1xh_1IccNuxh0eiT_zKWumesa9JVG3M&h=AT0jBTSIaQpGhvxlZziUwCc3rfRMJyR2HbbxSqCkc3EI3dhd2UI7DTE_sYcivZyrxXSkV1unsAQ6OGHdZCuE1mG3_aa8o2o8Dtgd-QKF7EgBsC9uLUQk7LqNTmcZzLBW2dhcyQ"));
-    print(search);
+   //  print(search);
+    print(SearchScreenBody.val);
     return FutureBuilder(
       future: _postdata,
       builder: ( BuildContext context, AsyncSnapshot snapshot ){
         if( snapshot.data!=null )
           {
             print("entered");
-            Set<conventionHall>hallSet= Set.of(hallList);
-            var val;
 
-            hallList.clear();
-            for( val in hallSet )
-              hallList.add(val);
+            if(type==false)
+              {
+                Set<conventionHall>hallSet= Set.of(hallList);
+                var val;
+
+                hallList.clear();
+                SearchResultGenerator.globalHallList.clear();
+
+                for( val in hallSet )
+                {
+                  hallList.add(val);
+                  SearchResultGenerator.globalHallList.add(val);
+                }
+              }
+            else
+              hallList= SearchResultGenerator.globalHallList;
 
             print("got value of size "+hallList.length.toString());
 
@@ -206,6 +230,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
   void initState(){
     super.initState();
     selectedRadio = 0;
+    SearchResultGenerator.globalSelectedRadio= 0;
     DatabaseReference ref = FirebaseDatabase.instance.reference().child("conventionHall");
   //  getData();
     _postdata= postData();
@@ -220,6 +245,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
   setSelectedRadio(int val) {
     setState(() {
       selectedRadio = val;
+      SearchResultGenerator.globalSelectedRadio= val;
     });
   }
 
@@ -307,6 +333,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
                           onChanged: (bool value){
                             setState(() {
                               filter[0] = value;
+                              SearchResultGenerator.globalFiler[0]= value;
                             });
                           },
                         ),
@@ -316,6 +343,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
                           onChanged: (bool value){
                             setState(() {
                               filter[1]= value;
+                              SearchResultGenerator.globalFiler[1]= value;
                             });
                           },
                         ),
@@ -325,6 +353,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
                           onChanged: (bool value){
                             setState(() {
                               filter[2] = value;
+                              SearchResultGenerator.globalFiler[2]= value;
                             });
                           },
                         ),
@@ -339,6 +368,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
                           onChanged: (bool value){
                             setState(() {
                               filter[3] = value;
+                              SearchResultGenerator.globalFiler[3]= value;
                             });
                           },
                         ),
@@ -348,6 +378,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
                           onChanged: (bool value){
                             setState(() {
                               filter[4] = value;
+                              SearchResultGenerator.globalFiler[4]= value;
                             });
                           },
                         ),
@@ -362,6 +393,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
                             setState(() {
                               print(value);
                               filter[5] = value;
+                              SearchResultGenerator.globalFiler[5]= value;
                             });
                           },
                         ),
@@ -388,6 +420,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
                               setState(() {
                                 print("sim $val");
                                 selectedRadio = val;
+                                SearchResultGenerator.globalSelectedRadio= val;
                               });
                             },
                           ),
@@ -401,6 +434,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
                               setState(() {
                                 print("dup $val");
                                 selectedRadio = val;
+                                SearchResultGenerator.globalSelectedRadio= val;
                               });
                             },
                           ),
@@ -555,8 +589,13 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
 
     setState(() {
       hallList.clear();
+      SearchResultGenerator.globalHallList.clear();
+
       for(int i=0;i<filtered_list.length;i++)
-        hallList.add(filtered_list[i]);
+        {
+          hallList.add(filtered_list[i]);
+          SearchResultGenerator.globalHallList.add(filtered_list[i]);
+        }
     });
     return ;
   }
