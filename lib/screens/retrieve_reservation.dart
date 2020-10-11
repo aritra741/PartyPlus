@@ -121,12 +121,11 @@ class _RetrieveReservationState extends State<RetrieveReservation> {
               child: RaisedButton(
                 elevation: 5.0,
                 onPressed: () {
-                  postData();
                   setState(() {
                     pressed = true;
-                   Navigator.push(
+                    postData().then((value) => {Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ModifyReservation(data : data)));
+                        MaterialPageRoute(builder: (context) => ModifyReservation(data : data)))});
                   });
                 },
                 padding: EdgeInsets.all(15.0),

@@ -10,7 +10,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ModifyReservation extends StatefulWidget {
-  Map<String, dynamic> data;
+  Map data= new Map();
   ModifyReservation({this.data});
   @override
   _ModifyReservationState createState() => _ModifyReservationState(data);
@@ -18,7 +18,7 @@ class ModifyReservation extends StatefulWidget {
 
 class _ModifyReservationState extends State<ModifyReservation> {
 
-  Map<String, dynamic> data;
+  Map data= new Map();
   _ModifyReservationState(this.data);
   var userEmail= TextEditingController();
   var userPhone= TextEditingController();
@@ -30,15 +30,17 @@ class _ModifyReservationState extends State<ModifyReservation> {
   List<bool> dayOneShift = [false,false,false], dayTwoShift = [false,false,false], dayThreeShift = [false,false,false];
   String shiftBitstr1="",shiftBitstr2="",shiftBitstr3="";
   String takatext1,takatext2,takatext3;
+  String price1,price2,price3;
+
   double total_cost= 0;
 
-  Future <void> updateData() async
+  Future updateData() async
   {
-    print( json.encode(data) );
+    // print( json.encode(data) );
 
     print("HYSE??");
     // print(SearchScreenBody.numberOfDays);
-    final String apiurl = "http://partyplusapi.herokuapp.com/book";
+    final String apiurl = "http://partyplusapi.herokuapp.com/reservation";
     //http.Response response = await http.post(apiurl);
     /* final response = await http.post(apiurl,body: {
       "name" : searchstring
@@ -53,7 +55,7 @@ class _ModifyReservationState extends State<ModifyReservation> {
           body: data,
           encoding: Encoding.getByName("utf-8"));
     }catch(e) {
-      print(e.toString());
+      print("error holo "+e.toString());
     };
 
     //print("HYSE??");
@@ -64,7 +66,7 @@ class _ModifyReservationState extends State<ModifyReservation> {
     //    fuserData = data['Name'];
     //  });
     //  debugPrint(fuserData.toString());
-    print(response.body);
+    print(data);
     //  return fuserData;
   }
 
@@ -79,13 +81,9 @@ class _ModifyReservationState extends State<ModifyReservation> {
   @override
   void initState(){
     super.initState();
+
     print("eeeeeeeeeeeeeeeeeeehehhhhhhhhhe");
    // ShiftString();
-    if(data['numofdays']=="1") num_of_days=1;
-    else if(data['numofdays']=="2") num_of_days=2;
-    else num_of_days=3;
-    makeshift();
-    ShiftString();
   }
   void makeshift()
   {
@@ -103,20 +101,20 @@ class _ModifyReservationState extends State<ModifyReservation> {
       {
         if(i < data['shift1'].length && data['shift1'][i]=='1')
           {
-            if(shiftTextstr1.length!=0) shiftTextstr1+="\n";
+            if(shiftTextstr1!=null) shiftTextstr1+="\n";
             dayOneShift[i] = true;
             shiftTextstr1 += shft[i];
           }
         if(i < data['shift2'].length && data['shift2'][i]=='1')
         {
           dayTwoShift[i] = true;
-          if(shiftTextstr2.length!=0) shiftTextstr2+="\n";
+          if(shiftTextstr2!=null) shiftTextstr2+="\n";
           shiftTextstr2 += shft[i];
         }
         if( i < data['shift3'].length && data['shift3'][i]=='1')
         {
           dayThreeShift[i] = true;
-          if(shiftTextstr3.length!=0) shiftTextstr3+="\n";
+          if(shiftTextstr3!=null) shiftTextstr3+="\n";
           shiftTextstr3 += shft[i];
         }
 
@@ -172,7 +170,7 @@ class _ModifyReservationState extends State<ModifyReservation> {
         shiftTextstr2 += shft[i];
         total_cost += double.parse(mxprice);
       }
-      else shiftBitstr2 += "0'";
+      else shiftBitstr2 += "0";
       if(dayThreeShift[i]==true)
       {
         shiftBitstr3+= "1";
@@ -194,6 +192,16 @@ class _ModifyReservationState extends State<ModifyReservation> {
     userEmail.text = data['email'];
     userPhone.text = data['phoneNumber'];
     userName.text = data['name'];
+
+    setState(() {
+      if(data['numofdays']=="1") num_of_days=1;
+      else if(data['numofdays']=="2") num_of_days=2;
+      else num_of_days=3;
+      makeshift();
+      ShiftString();
+
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -355,20 +363,28 @@ class _ModifyReservationState extends State<ModifyReservation> {
                         setState(() {
                           pressed= true;
 
-                          setState(() {
-                            data['shift1']= shiftBitstr1;
+                          price1=  takatext1.substring(0, takatext1.length - 1);
+                          price2=  takatext1.substring(0, takatext2.length - 1);
+                          price3=  takatext1.substring(0, takatext3.length - 1);
+
+                          print("price holo"+price1);
+
+                          data['shift1']= shiftBitstr1;
                             data['shift2']= shiftBitstr2;
                             data['shift3']= shiftBitstr3;
-                            data['price1']= takatext1;
-                            data['price2']= takatext2;
-                            data['price3']= takatext3;
-                            data['totalCost']= total_cost;
+                            data['price1']= price1;
+                            data['price2']= price2;
+                            data['price3']= price3;
+                            data['totalCost']= total_cost.toString();
                             data['email']= userEmail.text;
                             data['name']= userName.text;
                             data['phoneNumber']= userPhone.text;
-                          });
 
-                          updateData();
+                          updateData().then((value) => {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => SearchScreenBody()))
+                          });
                         });
                       },
                       padding: EdgeInsets.all(15.0),
