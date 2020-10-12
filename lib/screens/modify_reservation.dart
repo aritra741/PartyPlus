@@ -184,6 +184,8 @@ class _ModifyReservationState extends State<ModifyReservation> {
       else shiftBitstr3 += "0";
       print(shiftBitstr1);
     }
+
+    total_cost*= 1.15;
     return;
   }
 
@@ -375,7 +377,7 @@ class _ModifyReservationState extends State<ModifyReservation> {
                             data['price1']= price1;
                             data['price2']= price2;
                             data['price3']= price3;
-                            data['totalCost']= total_cost.toString();
+                            data['totalCost']= total_cost.ceil().toString();
                             data['email']= userEmail.text;
                             data['name']= userName.text;
                             data['phoneNumber']= userPhone.text;
@@ -593,7 +595,7 @@ class _ModifyReservationState extends State<ModifyReservation> {
         Container(
           child: new Column(
             children: <Widget>[
-              Text((total_cost).toString()+ "\u09F3",
+              Text((total_cost.ceil()).toString()+ "\u09F3",
                 style: TextStyle(color: Colors.black, fontSize: 16.0,
                     fontWeight: FontWeight.bold),),
             ],

@@ -75,7 +75,7 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
       "price1" : takatext1,
       "price2" : takatext2,
       "price3" : takatext3,
-      "totalCost" : total_cost,
+      "totalCost" : total_cost.ceil().toString(),
       "email" : userEmail.text,
       "id" : booking_id,
       "name" : userName.text,
@@ -297,7 +297,7 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
                                 children: <Widget>[
                                   Text("Booking Receipt",style: TextStyle(color: Colors.black, fontSize: 20.0,
                                   fontWeight: FontWeight.bold),),
-                              Text("\nConvention Hall Name : " + convention.Name +"\n" +
+                              SelectableText("\nConvention Hall Name : " + convention.Name +"\n" +
                               "Name : " + userName.text + "\n" +
                               "Email : " + userEmail.text + "\n" +
                               "Phone Number : "  + userPhone.text + "\n" +
@@ -320,7 +320,9 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
                                   TotalPrice(),
                                   RaisedButton(
                                     onPressed: () {
-                                      Navigator.of(context).pop();
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => SearchScreenBody()),);
                                     },
                                     child: Text(
                                       "OK",
@@ -404,7 +406,7 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
           shiftTextstr2 += shft[i];
           total_cost += double.parse(convention.mxprice);
         }
-        else shiftBitstr2 += "0'";
+        else shiftBitstr2 += "0";
         if(dayThreeShift[i]==true)
         {
           shiftBitstr3+= "1";
@@ -418,7 +420,7 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
         else shiftBitstr3 += "0";
         print(shiftBitstr1);
       }
-    //total_cost *= 0.15;
+    total_cost *= 1.15;
     return;
   }
 
@@ -627,7 +629,7 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
         Container(
           child: new Column(
             children: <Widget>[
-              Text((total_cost).toString() + "\u09F3",
+              Text((total_cost.ceil()).toString() + "\u09F3",
                 style: TextStyle(color: Colors.black, fontSize: 16.0,
                     fontWeight: FontWeight.bold),),
             ],

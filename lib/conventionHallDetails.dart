@@ -321,6 +321,8 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
                           if(num_of_days >= 3)
                             AddRemoveButton3(),
                           widgetforszbox(4),
+                          VAT(),
+                          ServiceFee(),
                           TotalPrice(),
                         ],
                       ),
@@ -440,6 +442,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
       else shiftBitstr3 += "0";
       print(shiftBitstr1);
     }
+    total_cost*= 1.15;
     return;
   }
 
@@ -899,7 +902,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
         Container(
           child: new Column(
             children: <Widget>[
-              Text((total_cost).toString() + "\u09F3",
+              Text((total_cost.ceil()).toString() + "\u09F3",
                 style: TextStyle(color: Colors.black, fontSize: 16.0,
                     fontWeight: FontWeight.bold),),
             ],
@@ -935,7 +938,51 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
       ),
     );
   }
+  Widget VAT(){
+    return Row(
+      children: <Widget>[
+        // SizedBox(height: 50),
+        SizedBox(width: 140),
+        Container(
+            child:  Text("VAT",
+                style: TextStyle(color: Colors.black, fontSize: 16.0,))
+        ),
 
+        SizedBox(width: 93),
+        Container(
+          child: new Column(
+            children: <Widget>[
+              Text("15%",
+                style: TextStyle(color: Colors.black, fontSize: 16.0,),),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+  Widget ServiceFee(){
+    return Row(
+      children: <Widget>[
+        // SizedBox(height: 50),
+        SizedBox(width: 140),
+        Container(
+            child:  Text("Service Fee",
+                style: TextStyle(color: Colors.black, fontSize: 16.0,
+                    fontWeight: FontWeight.bold))
+        ),
+
+        SizedBox(width: 93),
+        Container(
+          child: new Column(
+            children: <Widget>[
+              Text("0" + "\u09F3",
+                style: TextStyle(color: Colors.black, fontSize: 16.0,),),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
   Widget Miscellanous() {
     return Container(
       color: Colors.white,
