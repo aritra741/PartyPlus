@@ -365,18 +365,18 @@ class _ModifyReservationState extends State<ModifyReservation> {
                         setState(() {
                           pressed= true;
 
-                          price1=  takatext1.substring(0, takatext1.length - 1);
-                          price2=  takatext1.substring(0, takatext2.length - 1);
-                          price3=  takatext1.substring(0, takatext3.length - 1);
+                          // price1=  takatext1.substring(0, takatext1.length - 1);
+                          // price2=  takatext1.substring(0, takatext2.length - 1);
+                          // price3=  takatext1.substring(0, takatext3.length - 1);
 
-                          print("price holo"+price1);
+                          // print("price holo"+price1);
 
                           data['shift1']= shiftBitstr1;
                             data['shift2']= shiftBitstr2;
                             data['shift3']= shiftBitstr3;
-                            data['price1']= price1;
-                            data['price2']= price2;
-                            data['price3']= price3;
+                            data['price1']= takatext1;
+                            data['price2']= takatext2;
+                            data['price3']= takatext3;
                             data['totalCost']= total_cost.ceil().toString();
                             data['email']= userEmail.text;
                             data['name']= userName.text;
