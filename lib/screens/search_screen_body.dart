@@ -21,8 +21,10 @@ import 'package:flutter/services.dart';
 import 'searchresultgenerator.dart';
 import 'dart:convert';
 import 'package:fluttertoast/fluttertoast.dart';
-class SearchScreenBody extends StatefulWidget {
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 
+
+class SearchScreenBody extends StatefulWidget {
   static int val= 5;
   @override
   _SearchScreenBodyState createState() => _SearchScreenBodyState();
@@ -86,6 +88,54 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
 
     }
 
+    Future <List> getSuggestions(String suggestString) async{
+      
+      List suggestionsList= new List();
+    
+      var match = {
+        "name" : suggestString
+      };
+
+      print( json.encode(match) );
+
+      // print(SearchScreenBody.numberOfDays);
+      final String apiurl = "http://partyplusapi.herokuapp.com/suggestion";
+      //http.Response response = await http.post(apiurl);
+      /* final response = await http.post(apiurl,body: {
+      "name" : searchstring
+    });*/
+      http.Response response;
+      try{
+        response= await http.post(apiurl,
+            headers: {
+              "Accept": "application/json",
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: match,
+            encoding: Encoding.getByName("utf-8"));
+      }catch(e) {
+        print(e.toString());
+      }
+
+      //  print("done");
+      // // body: json.encode(match),);
+
+      // print("data holo "+data.toString());
+      //  debugPrint(fuserData.toString());
+      //  setState(() {
+      //    fuserData = data['Name'];
+      //  });
+      //  debugPrint(fuserData.toString());
+
+      var jsonlist = jsonDecode(response.body) as List;
+      jsonlist.forEach((e) {
+        suggestionsList.add(e);
+      });
+
+      // data = json.decode(response.body);
+      return suggestionsList;
+    }
+    
   @override
   Widget build(BuildContext context) {
     secDate = new DateTime(selectedDate.year, selectedDate.month, selectedDate.day+1);
@@ -841,16 +891,36 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                 children: <Widget>[
                   Container(
                     width: screenwidth*0.7,
-                    child: TextField(
-                      controller: searchText,
-                      decoration: InputDecoration(
-                        hintText: "Destination, property or address",
-                        hintStyle: TextStyle(
-                          color: Color(0xFF003333),
-                        ),
-                        enabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        ),
+                    child: TypeAheadField(
+                      textFieldConfiguration: TextFieldConfiguration(
+                        controller: searchText,
+                        autofocus: false,
+                        decoration: InputDecoration(
+                          hintText: "Destination, property or address",
+                          hintStyle: TextStyle(
+                            color: Color(0xFF003333)
+                          ),
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none
+                        )
+                      ),
+                      suggestionsCallback: (pattern) async{
+                        return await getSuggestions(pattern);
+                      },
+                      itemBuilder: (context, suggestion){
+                        return ListTile(
+                          leading: Icon(Icons.location_on,
+                          color: Color(0xFFEA4335),),
+                          title: Text(suggestion),
+                        );
+                      },
+                      onSuggestionSelected: (suggestion){
+                        setState(() {
+                          searchString= suggestion.toString();
+                          searchText.text= searchString;
+                        });
+                        print("selected item "+searchString);
+                      },
                     ),
                   ),
                   SvgPicture.asset("assets/icons/search.svg"),
