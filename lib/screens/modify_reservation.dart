@@ -8,6 +8,8 @@ import 'package:partyplus/constants/constants_for_search_screen_top.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class ModifyReservation extends StatefulWidget {
   Map data= new Map();
@@ -25,6 +27,7 @@ class _ModifyReservationState extends State<ModifyReservation> {
   var userName= TextEditingController();
   int currentIndex= 1;
   int num_of_days= 3, check= 3;
+  bool _inAsyncCall= false;
   bool pressed= false;
   String shiftTextstr1="",shiftTextstr2="",shiftTextstr3="";
   List<bool> dayOneShift = [false,false,false], dayTwoShift = [false,false,false], dayThreeShift = [false,false,false];
@@ -211,167 +214,168 @@ class _ModifyReservationState extends State<ModifyReservation> {
         ),
         backgroundColor: Color(0xFF005e6a),
       ),
-      body: SingleChildScrollView(
-        // height: MediaQuery.of(context).size.height,
-        child: Column(
-          children: <Widget>[
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              alignment: Alignment.center,
-              decoration: kBoxDecorationStyleDiffColor,
-              height: 60.0,
-              margin: EdgeInsets.all(10),
-              child: TextField(
-                controller: userName,
-                keyboardType: TextInputType.text,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'OpenSans',
-                ),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.only(top: 14.0),
-                  prefixIcon: Icon(
-                    Icons.person,
-                    color: Colors.black,
-                  ),
-                ),
+      body: ModalProgressHUD(
+        child: SingleChildScrollView(
+          // height: MediaQuery.of(context).size.height,
+          child: Column(
+            children: <Widget>[
+              SizedBox(
+                height: 10,
               ),
-            ),
-            Container(
-              alignment: Alignment.center,
-              decoration: kBoxDecorationStyleDiffColor,
-              height: 60.0,
-              margin: EdgeInsets.all(10),
-              child: TextField(
-                controller: userEmail,
-                keyboardType: TextInputType.text,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'OpenSans',
-                ),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.only(top: 14.0),
-                  prefixIcon: Icon(
-                    Icons.email,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              alignment: Alignment.center,
-              decoration: kBoxDecorationStyleDiffColor,
-              height: 60.0,
-              margin: EdgeInsets.all(10),
-              child: TextField(
-                controller: userPhone,
-                keyboardType: TextInputType.text,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'OpenSans',
-                ),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.only(top: 14.0),
-                  prefixIcon: Icon(
-                    Icons.phone,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            ),
-
-            Visibility(
-              visible: true,
-              child: Card(
-                elevation: 30,
-                child: Container(
-                  padding: EdgeInsets.only(top: 20),
-                  height: 320,
-                  child: Column(
-                    children: <Widget>[
-                      if(num_of_days>=1)
-                        PriceDetails(1),
-                      if(num_of_days >= 1)
-                        AddRemoveButton1(),
-                      if(num_of_days>=2)
-                        widgetforszbox(2),
-                      if(num_of_days>=2)
-                        PriceDetails(2),
-                      if(num_of_days >= 2)
-                        AddRemoveButton2(),
-                      if(num_of_days>=3)
-                        widgetforszbox(3),
-                      if(num_of_days>=3)
-                        PriceDetails(3),
-                      if(num_of_days >= 3)
-                        AddRemoveButton3(),
-                      SizedBox(height: 10,),
-                      VAT(),
-                      SizedBox(height: 10,),
-                      ServiceFee(),
-                      widgetforszbox(4),
-                      TotalPrice(),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              child: Row(
-                children: <Widget>[
               Container(
-              margin: EdgeInsets.only(top: kDefaultPadding),
-              width: 150,
-              height: 50,
-              child: RaisedButton(
-                elevation: 5.0,
-                onPressed: (){
-                  setState(() {
-                    pressed= true;
-                   // Navigator.push(context,MaterialPageRoute(builder: (context)=>AddOnDummy()));
-                  });
-                },
-                padding: EdgeInsets.all(15.0),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0),
-                ),
-                color: Color(0xFF005e6a),
-                child: Text(
-                  'Delete',
+                alignment: Alignment.center,
+                decoration: kBoxDecorationStyleDiffColor,
+                height: 60.0,
+                margin: EdgeInsets.all(10),
+                child: TextField(
+                  controller: userName,
+                  keyboardType: TextInputType.text,
                   style: TextStyle(
-                    color: Colors.white,
-                    letterSpacing: 1.5,
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
                     fontFamily: 'OpenSans',
                   ),
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.only(top: 14.0),
+                    prefixIcon: Icon(
+                      Icons.person,
+                      color: Colors.black,
+                    ),
+                  ),
                 ),
               ),
-            ),
-                  SizedBox(width: 10,),
+              Container(
+                alignment: Alignment.center,
+                decoration: kBoxDecorationStyleDiffColor,
+                height: 60.0,
+                margin: EdgeInsets.all(10),
+                child: TextField(
+                  controller: userEmail,
+                  keyboardType: TextInputType.text,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: 'OpenSans',
+                  ),
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.only(top: 14.0),
+                    prefixIcon: Icon(
+                      Icons.email,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                alignment: Alignment.center,
+                decoration: kBoxDecorationStyleDiffColor,
+                height: 60.0,
+                margin: EdgeInsets.all(10),
+                child: TextField(
+                  controller: userPhone,
+                  keyboardType: TextInputType.text,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: 'OpenSans',
+                  ),
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.only(top: 14.0),
+                    prefixIcon: Icon(
+                      Icons.phone,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ),
 
-                  Container(
-                    margin: EdgeInsets.only(top: kDefaultPadding),
-                    width: 200,
-                    height: 50,
-                    child: RaisedButton(
-                      elevation: 5.0,
-                      onPressed: (){
-                        setState(() {
-                          pressed= true;
+              Visibility(
+                visible: true,
+                child: Card(
+                  elevation: 30,
+                  child: Container(
+                    padding: EdgeInsets.only(top: 20),
+                    height: 320,
+                    child: Column(
+                      children: <Widget>[
+                        if(num_of_days>=1)
+                          PriceDetails(1),
+                        if(num_of_days >= 1)
+                          AddRemoveButton1(),
+                        if(num_of_days>=2)
+                          widgetforszbox(2),
+                        if(num_of_days>=2)
+                          PriceDetails(2),
+                        if(num_of_days >= 2)
+                          AddRemoveButton2(),
+                        if(num_of_days>=3)
+                          widgetforszbox(3),
+                        if(num_of_days>=3)
+                          PriceDetails(3),
+                        if(num_of_days >= 3)
+                          AddRemoveButton3(),
+                        SizedBox(height: 10,),
+                        VAT(),
+                        SizedBox(height: 10,),
+                        ServiceFee(),
+                        widgetforszbox(4),
+                        TotalPrice(),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.only(top: kDefaultPadding),
+                      width: 150,
+                      height: 50,
+                      child: RaisedButton(
+                        elevation: 5.0,
+                        onPressed: (){
+                          setState(() {
+                            pressed= true;
+                            // Navigator.push(context,MaterialPageRoute(builder: (context)=>AddOnDummy()));
+                          });
+                        },
+                        padding: EdgeInsets.all(15.0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        color: Color(0xFF005e6a),
+                        child: Text(
+                          'Delete',
+                          style: TextStyle(
+                            color: Colors.white,
+                            letterSpacing: 1.5,
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'OpenSans',
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 10,),
 
-                          // price1=  takatext1.substring(0, takatext1.length - 1);
-                          // price2=  takatext1.substring(0, takatext2.length - 1);
-                          // price3=  takatext1.substring(0, takatext3.length - 1);
+                    Container(
+                      margin: EdgeInsets.only(top: kDefaultPadding),
+                      width: 200,
+                      height: 50,
+                      child: RaisedButton(
+                        elevation: 5.0,
+                        onPressed: (){
+                          setState(() {
+                            pressed= true;
+                            _inAsyncCall= true;
+                            // price1=  takatext1.substring(0, takatext1.length - 1);
+                            // price2=  takatext1.substring(0, takatext2.length - 1);
+                            // price3=  takatext1.substring(0, takatext3.length - 1);
 
-                          // print("price holo"+price1);
+                            // print("price holo"+price1);
 
-                          data['shift1']= shiftBitstr1;
+                            data['shift1']= shiftBitstr1;
                             data['shift2']= shiftBitstr2;
                             data['shift3']= shiftBitstr3;
                             data['price1']= takatext1;
@@ -381,36 +385,47 @@ class _ModifyReservationState extends State<ModifyReservation> {
                             data['email']= userEmail.text;
                             data['name']= userName.text;
                             data['phoneNumber']= userPhone.text;
+                          });
 
                           updateData().then((value) => {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => SearchScreenBody()))
+
+                            setState((){
+                              _inAsyncCall= false;
+                            }),
+
+                            Fluttertoast.showToast(
+                              msg: "Reservation Updated",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.CENTER,
+                              timeInSecForIosWeb: 1,
+                            )
                           });
-                        });
-                      },
-                      padding: EdgeInsets.all(15.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                      ),
-                      color: Color(0xFF005e6a),
-                      child: Text(
-                        'UPDATE',
-                        style: TextStyle(
-                          color: Colors.white,
-                          letterSpacing: 1.5,
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'OpenSans',
+                        },
+                        padding: EdgeInsets.all(15.0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        color: Color(0xFF005e6a),
+                        child: Text(
+                          'UPDATE',
+                          style: TextStyle(
+                            color: Colors.white,
+                            letterSpacing: 1.5,
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'OpenSans',
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            )
-          ],
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
+        inAsyncCall: _inAsyncCall,
+        progressIndicator: CircularProgressIndicator(),
       ),
     );
   }
