@@ -175,7 +175,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            ImageList(convention: convention)));
+                                            ImageList(convention: convention, imageList: imageList,)));
                               },
                             ),
                             decoration: BoxDecoration(
@@ -1017,7 +1017,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => ImageList(convention: convention)));
+                  builder: (context) => ImageList(convention: convention, imageList: imageList)));
         },
       ),
     );
