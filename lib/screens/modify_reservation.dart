@@ -69,8 +69,48 @@ class _ModifyReservationState extends State<ModifyReservation> {
     //    fuserData = data['Name'];
     //  });
     //  debugPrint(fuserData.toString());
-    print(data);
+    // print(data);
     //  return fuserData;
+  }
+
+  Future cancelReservation() async{
+      // print( json.encode(data) );
+
+      var match= {
+        "id": data['key']
+      };
+
+      print("HYSE??");
+      print(match);
+      // print(SearchScreenBody.numberOfDays);
+      final String apiurl = "http://partyplusapi.herokuapp.com/cancel";
+      //http.Response response = await http.post(apiurl);
+      /* final response = await http.post(apiurl,body: {
+      "name" : searchstring
+    });*/
+      http.Response response;
+      try{
+        response= await http.post(apiurl,
+            headers: {
+              "Accept": "application/json",
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: match,
+            encoding: Encoding.getByName("utf-8"));
+      }catch(e) {
+        print("error holo "+e.toString());
+      };
+
+      //print("HYSE??");
+      // body: json.encode(match),);
+      //  data = json.decode(response.body);
+      //  debugPrint(fuserData.toString());
+      //  setState(() {
+      //    fuserData = data['Name'];
+      //  });
+      //  debugPrint(fuserData.toString());
+      // print(data);
+       return response.body;
   }
 
   @override
@@ -337,8 +377,26 @@ class _ModifyReservationState extends State<ModifyReservation> {
                         onPressed: (){
                           setState(() {
                             pressed= true;
+                            _inAsyncCall= true;
                             // Navigator.push(context,MaterialPageRoute(builder: (context)=>AddOnDummy()));
                           });
+
+                          cancelReservation().then((value) => {
+
+                            setState((){
+                              _inAsyncCall= false;
+                            }),
+
+                            Fluttertoast.showToast(
+                              msg: "Reservation Cancelled Successfully ",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.CENTER,
+                              timeInSecForIosWeb: 1,
+                            ),
+
+                          Navigator.pop(context)
+                          });
+
                         },
                         padding: EdgeInsets.all(15.0),
                         shape: RoundedRectangleBorder(
