@@ -5,6 +5,7 @@ import 'package:partyplus/screens/register_screen.dart';
 import 'package:partyplus/screens/search_screen_body.dart';
 import 'package:partyplus/constants/constants_for_search_screen_top.dart';
 import 'modify_reservation.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
@@ -18,6 +19,7 @@ class _RetrieveReservationState extends State<RetrieveReservation> {
   TextEditingController reservationID= new TextEditingController();
   int currentIndex= 1;
   int num_of_days= 3, check= 3;
+  bool _inAsyncCall= false;
   bool pressed= false;
   Map<String, dynamic> data;
 
@@ -77,81 +79,91 @@ class _RetrieveReservationState extends State<RetrieveReservation> {
         ),
         backgroundColor: Color(0xFF005e6a),
       ),
-      body: SingleChildScrollView(
-        // height: MediaQuery.of(context).size.height,
-        child: Column(
-          children: <Widget>[
-            SizedBox(
-              height: 100,
-            ),
-            Container(
-              alignment: Alignment.center,
-              decoration: kBoxDecorationStyleDiffColor,
-              height: 60.0,
-              margin: EdgeInsets.all(10),
-              child: TextField(
-                controller: reservationID,
-                keyboardType: TextInputType.text,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'OpenSans',
-                ),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.only(top: 14.0),
-                  prefixIcon: Icon(
-                    Icons.card_travel,
-                    color: Colors.black,
-                  ),
-                  hintText: 'Enter reservation ID',
-                  hintStyle: TextStyle(
-                    color: Colors.black,
-                    fontFamily: 'OpenSans',
-                  ),
-                ),
+      body: ModalProgressHUD(
+        child: SingleChildScrollView(
+          // height: MediaQuery.of(context).size.height,
+          child: Column(
+            children: <Widget>[
+              SizedBox(
+                height: 100,
               ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-              margin: EdgeInsets.only(top: kDefaultPadding),
-              width: 200,
-              height: 50,
-              child: RaisedButton(
-                elevation: 5.0,
-                onPressed: () {
-                  postData();
-                  setState(() {
-                    pressed = true;
-                   Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ModifyReservation(data : data)));
-                  });
-                },
-                padding: EdgeInsets.all(15.0),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0),
-                ),
-                color: Color(0xFF005e6a),
-                child: Text(
-                  'RETRIEVE',
+              Container(
+                alignment: Alignment.center,
+                decoration: kBoxDecorationStyleDiffColor,
+                height: 60.0,
+                margin: EdgeInsets.all(10),
+                child: TextField(
+                  controller: reservationID,
+                  keyboardType: TextInputType.text,
                   style: TextStyle(
-                    color: Colors.white,
-                    letterSpacing: 1.5,
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
                     fontFamily: 'OpenSans',
+                  ),
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.only(top: 14.0),
+                    prefixIcon: Icon(
+                      Icons.card_travel,
+                      color: Colors.black,
+                    ),
+                    hintText: 'Enter reservation ID',
+                    hintStyle: TextStyle(
+                      color: Colors.black,
+                      fontFamily: 'OpenSans',
+                    ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                margin: EdgeInsets.only(top: kDefaultPadding),
+                width: 200,
+                height: 50,
+                child: RaisedButton(
+                  elevation: 5.0,
+                  onPressed: () {
+                    setState(() {
+                      pressed = true;
+                      _inAsyncCall= true;
+                    });
 
-          ],
+                    postData().then((value) => {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ModifyReservation(data : data))),
+                          setState((){
+                            _inAsyncCall= false;
+                            })
+                    });
+                  },
+                  padding: EdgeInsets.all(15.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  color: Color(0xFF005e6a),
+                  child: Text(
+                    'RETRIEVE',
+                    style: TextStyle(
+                      color: Colors.white,
+                      letterSpacing: 1.5,
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'OpenSans',
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+
+            ],
+          ),
         ),
+        inAsyncCall: _inAsyncCall,
+        progressIndicator: CircularProgressIndicator(),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,

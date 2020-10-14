@@ -175,7 +175,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            ImageList(convention: convention)));
+                                            ImageList(convention: convention, imageList: imageList,)));
                               },
                             ),
                             decoration: BoxDecoration(
@@ -321,6 +321,8 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
                           if(num_of_days >= 3)
                             AddRemoveButton3(),
                           widgetforszbox(4),
+                          VAT(),
+                          ServiceFee(),
                           TotalPrice(),
                         ],
                       ),
@@ -440,6 +442,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
       else shiftBitstr3 += "0";
       print(shiftBitstr1);
     }
+    total_cost*= 1.15;
     return;
   }
 
@@ -511,7 +514,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
                                       children: <Widget>[
                                         CheckboxListTile(
                                           value: dayOneShift[0],
-                                          title: Text("Morning"),
+                                          title: Text("Morning (9am - 3pm)"),
                                           onChanged: (value) {
                                             setState(() {
                                               dayOneShift[0] = value;
@@ -519,7 +522,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
                                             });
                                           },
                                         ),
-                                        CheckboxListTile(
+                                       /* CheckboxListTile(
                                           value: dayOneShift[1],
                                           title: Text("Noon"),
                                           onChanged: (value) {
@@ -528,10 +531,10 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
                                               // getShiftInfoForDayOne(_morning, _evening, _night);
                                             });
                                           },
-                                        ),
+                                        ),*/
                                         CheckboxListTile(
                                           value: dayOneShift[2],
-                                          title: Text("Evening"),
+                                          title: Text("Evening (4pm - 11pm)"),
                                           onChanged: (value) {
                                             setState(() {
                                               dayOneShift[2] = value;
@@ -616,7 +619,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
                                   children: <Widget>[
                                     CheckboxListTile(
                                       value: dayTwoShift[0],
-                                      title: Text("Morning"),
+                                      title: Text("Morning (9am - 3pm)"),
                                       onChanged: (value) {
                                         setState(() {
                                           dayTwoShift[0] = value;
@@ -624,7 +627,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
                                         });
                                       },
                                     ),
-                                    CheckboxListTile(
+                                    /*CheckboxListTile(
                                       value: dayTwoShift[1],
                                       title: Text("Noon"),
                                       onChanged: (value) {
@@ -633,10 +636,10 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
                                           // getShiftInfoForDayOne(_morning, _evening, _night);
                                         });
                                       },
-                                    ),
+                                    ),*/
                                     CheckboxListTile(
                                       value: dayTwoShift[2],
-                                      title: Text("Evening"),
+                                      title: Text("Evening (4pm - 11pm)"),
                                       onChanged: (value) {
                                         setState(() {
                                           dayTwoShift[2] = value;
@@ -720,7 +723,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
                                   children: <Widget>[
                                     CheckboxListTile(
                                       value: dayThreeShift[0],
-                                      title: Text("Morning"),
+                                      title: Text("Morning (9am - 3pm)"),
                                       onChanged: (value) {
                                         setState(() {
                                           dayThreeShift[0] = value;
@@ -728,7 +731,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
                                         });
                                       },
                                     ),
-                                    CheckboxListTile(
+                                  /*  CheckboxListTile(
                                       value: dayThreeShift[1],
                                       title: Text("Noon"),
                                       onChanged: (value) {
@@ -737,10 +740,10 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
                                           // getShiftInfoForDayOne(_morning, _evening, _night);
                                         });
                                       },
-                                    ),
+                                    ),*/
                                     CheckboxListTile(
                                       value: dayThreeShift[2],
-                                      title: Text("Evening"),
+                                      title: Text("Evening (4pm - 11pm)"),
                                       onChanged: (value) {
                                         setState(() {
                                           dayThreeShift[2] = value;
@@ -899,7 +902,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
         Container(
           child: new Column(
             children: <Widget>[
-              Text((total_cost).toString() + "\u09F3",
+              Text((total_cost.ceil()).toString() + "\u09F3",
                 style: TextStyle(color: Colors.black, fontSize: 16.0,
                     fontWeight: FontWeight.bold),),
             ],
@@ -935,7 +938,51 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
       ),
     );
   }
+  Widget VAT(){
+    return Row(
+      children: <Widget>[
+        // SizedBox(height: 50),
+        SizedBox(width: 140),
+        Container(
+            child:  Text("VAT",
+                style: TextStyle(color: Colors.black, fontSize: 16.0,))
+        ),
 
+        SizedBox(width: 93),
+        Container(
+          child: new Column(
+            children: <Widget>[
+              Text("15%",
+                style: TextStyle(color: Colors.black, fontSize: 16.0,),),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+  Widget ServiceFee(){
+    return Row(
+      children: <Widget>[
+        // SizedBox(height: 50),
+        SizedBox(width: 140),
+        Container(
+            child:  Text("Service Fee",
+                style: TextStyle(color: Colors.black, fontSize: 16.0,
+                    fontWeight: FontWeight.bold))
+        ),
+
+        SizedBox(width: 93),
+        Container(
+          child: new Column(
+            children: <Widget>[
+              Text("0" + "\u09F3",
+                style: TextStyle(color: Colors.black, fontSize: 16.0,),),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
   Widget Miscellanous() {
     return Container(
       color: Colors.white,
@@ -970,7 +1017,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => ImageList(convention: convention)));
+                  builder: (context) => ImageList(convention: convention, imageList: imageList)));
         },
       ),
     );

@@ -8,9 +8,11 @@ import 'package:partyplus/constants/constants_for_search_screen_top.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class ModifyReservation extends StatefulWidget {
-  Map<String, dynamic> data;
+  Map data= new Map();
   ModifyReservation({this.data});
   @override
   _ModifyReservationState createState() => _ModifyReservationState(data);
@@ -18,27 +20,30 @@ class ModifyReservation extends StatefulWidget {
 
 class _ModifyReservationState extends State<ModifyReservation> {
 
-  Map<String, dynamic> data;
+  Map data= new Map();
   _ModifyReservationState(this.data);
   var userEmail= TextEditingController();
   var userPhone= TextEditingController();
   var userName= TextEditingController();
   int currentIndex= 1;
   int num_of_days= 3, check= 3;
+  bool _inAsyncCall= false;
   bool pressed= false;
   String shiftTextstr1="",shiftTextstr2="",shiftTextstr3="";
   List<bool> dayOneShift = [false,false,false], dayTwoShift = [false,false,false], dayThreeShift = [false,false,false];
   String shiftBitstr1="",shiftBitstr2="",shiftBitstr3="";
   String takatext1,takatext2,takatext3;
+  String price1,price2,price3;
+
   double total_cost= 0;
 
-  Future <void> updateData() async
+  Future updateData() async
   {
-    print( json.encode(data) );
+    // print( json.encode(data) );
 
     print("HYSE??");
     // print(SearchScreenBody.numberOfDays);
-    final String apiurl = "http://partyplusapi.herokuapp.com/book";
+    final String apiurl = "http://partyplusapi.herokuapp.com/reservation";
     //http.Response response = await http.post(apiurl);
     /* final response = await http.post(apiurl,body: {
       "name" : searchstring
@@ -53,7 +58,7 @@ class _ModifyReservationState extends State<ModifyReservation> {
           body: data,
           encoding: Encoding.getByName("utf-8"));
     }catch(e) {
-      print(e.toString());
+      print("error holo "+e.toString());
     };
 
     //print("HYSE??");
@@ -64,8 +69,48 @@ class _ModifyReservationState extends State<ModifyReservation> {
     //    fuserData = data['Name'];
     //  });
     //  debugPrint(fuserData.toString());
-    print(response.body);
+    // print(data);
     //  return fuserData;
+  }
+
+  Future cancelReservation() async{
+      // print( json.encode(data) );
+
+      var match= {
+        "id": data['key']
+      };
+
+      print("HYSE??");
+      print(match);
+      // print(SearchScreenBody.numberOfDays);
+      final String apiurl = "http://partyplusapi.herokuapp.com/cancel";
+      //http.Response response = await http.post(apiurl);
+      /* final response = await http.post(apiurl,body: {
+      "name" : searchstring
+    });*/
+      http.Response response;
+      try{
+        response= await http.post(apiurl,
+            headers: {
+              "Accept": "application/json",
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: match,
+            encoding: Encoding.getByName("utf-8"));
+      }catch(e) {
+        print("error holo "+e.toString());
+      };
+
+      //print("HYSE??");
+      // body: json.encode(match),);
+      //  data = json.decode(response.body);
+      //  debugPrint(fuserData.toString());
+      //  setState(() {
+      //    fuserData = data['Name'];
+      //  });
+      //  debugPrint(fuserData.toString());
+      // print(data);
+       return response.body;
   }
 
   @override
@@ -79,13 +124,9 @@ class _ModifyReservationState extends State<ModifyReservation> {
   @override
   void initState(){
     super.initState();
+
     print("eeeeeeeeeeeeeeeeeeehehhhhhhhhhe");
    // ShiftString();
-    if(data['numofdays']=="1") num_of_days=1;
-    else if(data['numofdays']=="2") num_of_days=2;
-    else num_of_days=3;
-    makeshift();
-    ShiftString();
   }
   void makeshift()
   {
@@ -103,20 +144,20 @@ class _ModifyReservationState extends State<ModifyReservation> {
       {
         if(i < data['shift1'].length && data['shift1'][i]=='1')
           {
-            if(shiftTextstr1.length!=0) shiftTextstr1+="\n";
+            if(shiftTextstr1!=null) shiftTextstr1+="\n";
             dayOneShift[i] = true;
             shiftTextstr1 += shft[i];
           }
         if(i < data['shift2'].length && data['shift2'][i]=='1')
         {
           dayTwoShift[i] = true;
-          if(shiftTextstr2.length!=0) shiftTextstr2+="\n";
+          if(shiftTextstr2!=null) shiftTextstr2+="\n";
           shiftTextstr2 += shft[i];
         }
         if( i < data['shift3'].length && data['shift3'][i]=='1')
         {
           dayThreeShift[i] = true;
-          if(shiftTextstr3.length!=0) shiftTextstr3+="\n";
+          if(shiftTextstr3!=null) shiftTextstr3+="\n";
           shiftTextstr3 += shft[i];
         }
 
@@ -172,7 +213,7 @@ class _ModifyReservationState extends State<ModifyReservation> {
         shiftTextstr2 += shft[i];
         total_cost += double.parse(mxprice);
       }
-      else shiftBitstr2 += "0'";
+      else shiftBitstr2 += "0";
       if(dayThreeShift[i]==true)
       {
         shiftBitstr3+= "1";
@@ -186,6 +227,8 @@ class _ModifyReservationState extends State<ModifyReservation> {
       else shiftBitstr3 += "0";
       print(shiftBitstr1);
     }
+
+    total_cost*= 1.15;
     return;
   }
 
@@ -194,6 +237,16 @@ class _ModifyReservationState extends State<ModifyReservation> {
     userEmail.text = data['email'];
     userPhone.text = data['phoneNumber'];
     userName.text = data['name'];
+
+    setState(() {
+      if(data['numofdays']=="1") num_of_days=1;
+      else if(data['numofdays']=="2") num_of_days=2;
+      else num_of_days=3;
+      makeshift();
+      ShiftString();
+
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -201,198 +254,236 @@ class _ModifyReservationState extends State<ModifyReservation> {
         ),
         backgroundColor: Color(0xFF005e6a),
       ),
-      body: SingleChildScrollView(
-        // height: MediaQuery.of(context).size.height,
-        child: Column(
-          children: <Widget>[
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              alignment: Alignment.center,
-              decoration: kBoxDecorationStyleDiffColor,
-              height: 60.0,
-              margin: EdgeInsets.all(10),
-              child: TextField(
-                controller: userName,
-                keyboardType: TextInputType.text,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'OpenSans',
-                ),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.only(top: 14.0),
-                  prefixIcon: Icon(
-                    Icons.person,
-                    color: Colors.black,
-                  ),
-                ),
+      body: ModalProgressHUD(
+        child: SingleChildScrollView(
+          // height: MediaQuery.of(context).size.height,
+          child: Column(
+            children: <Widget>[
+              SizedBox(
+                height: 10,
               ),
-            ),
-            Container(
-              alignment: Alignment.center,
-              decoration: kBoxDecorationStyleDiffColor,
-              height: 60.0,
-              margin: EdgeInsets.all(10),
-              child: TextField(
-                controller: userEmail,
-                keyboardType: TextInputType.text,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'OpenSans',
-                ),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.only(top: 14.0),
-                  prefixIcon: Icon(
-                    Icons.email,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              alignment: Alignment.center,
-              decoration: kBoxDecorationStyleDiffColor,
-              height: 60.0,
-              margin: EdgeInsets.all(10),
-              child: TextField(
-                controller: userPhone,
-                keyboardType: TextInputType.text,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'OpenSans',
-                ),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.only(top: 14.0),
-                  prefixIcon: Icon(
-                    Icons.phone,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            ),
-
-            Visibility(
-              visible: true,
-              child: Card(
-                elevation: 30,
-                child: Container(
-                  padding: EdgeInsets.only(top: 20),
-                  height: 320,
-                  child: Column(
-                    children: <Widget>[
-                      if(num_of_days>=1)
-                        PriceDetails(1),
-                      if(num_of_days >= 1)
-                        AddRemoveButton1(),
-                      if(num_of_days>=2)
-                        widgetforszbox(2),
-                      if(num_of_days>=2)
-                        PriceDetails(2),
-                      if(num_of_days >= 2)
-                        AddRemoveButton2(),
-                      if(num_of_days>=3)
-                        widgetforszbox(3),
-                      if(num_of_days>=3)
-                        PriceDetails(3),
-                      if(num_of_days >= 3)
-                        AddRemoveButton3(),
-                      SizedBox(height: 10,),
-                      VAT(),
-                      SizedBox(height: 10,),
-                      ServiceFee(),
-                      widgetforszbox(4),
-                      TotalPrice(),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              child: Row(
-                children: <Widget>[
               Container(
-              margin: EdgeInsets.only(top: kDefaultPadding),
-              width: 150,
-              height: 50,
-              child: RaisedButton(
-                elevation: 5.0,
-                onPressed: (){
-                  setState(() {
-                    pressed= true;
-                   // Navigator.push(context,MaterialPageRoute(builder: (context)=>AddOnDummy()));
-                  });
-                },
-                padding: EdgeInsets.all(15.0),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0),
-                ),
-                color: Color(0xFF005e6a),
-                child: Text(
-                  'Delete',
+                alignment: Alignment.center,
+                decoration: kBoxDecorationStyleDiffColor,
+                height: 60.0,
+                margin: EdgeInsets.all(10),
+                child: TextField(
+                  controller: userName,
+                  keyboardType: TextInputType.text,
                   style: TextStyle(
-                    color: Colors.white,
-                    letterSpacing: 1.5,
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
                     fontFamily: 'OpenSans',
                   ),
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.only(top: 14.0),
+                    prefixIcon: Icon(
+                      Icons.person,
+                      color: Colors.black,
+                    ),
+                  ),
                 ),
               ),
-            ),
-                  SizedBox(width: 10,),
+              Container(
+                alignment: Alignment.center,
+                decoration: kBoxDecorationStyleDiffColor,
+                height: 60.0,
+                margin: EdgeInsets.all(10),
+                child: TextField(
+                  controller: userEmail,
+                  keyboardType: TextInputType.text,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: 'OpenSans',
+                  ),
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.only(top: 14.0),
+                    prefixIcon: Icon(
+                      Icons.email,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                alignment: Alignment.center,
+                decoration: kBoxDecorationStyleDiffColor,
+                height: 60.0,
+                margin: EdgeInsets.all(10),
+                child: TextField(
+                  controller: userPhone,
+                  keyboardType: TextInputType.text,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: 'OpenSans',
+                  ),
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.only(top: 14.0),
+                    prefixIcon: Icon(
+                      Icons.phone,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ),
 
-                  Container(
-                    margin: EdgeInsets.only(top: kDefaultPadding),
-                    width: 200,
-                    height: 50,
-                    child: RaisedButton(
-                      elevation: 5.0,
-                      onPressed: (){
-                        setState(() {
-                          pressed= true;
-
+              Visibility(
+                visible: true,
+                child: Card(
+                  elevation: 30,
+                  child: Container(
+                    padding: EdgeInsets.only(top: 20),
+                    height: 320,
+                    child: Column(
+                      children: <Widget>[
+                        if(num_of_days>=1)
+                          PriceDetails(1),
+                        if(num_of_days >= 1)
+                          AddRemoveButton1(),
+                        if(num_of_days>=2)
+                          widgetforszbox(2),
+                        if(num_of_days>=2)
+                          PriceDetails(2),
+                        if(num_of_days >= 2)
+                          AddRemoveButton2(),
+                        if(num_of_days>=3)
+                          widgetforszbox(3),
+                        if(num_of_days>=3)
+                          PriceDetails(3),
+                        if(num_of_days >= 3)
+                          AddRemoveButton3(),
+                        SizedBox(height: 10,),
+                        VAT(),
+                        SizedBox(height: 10,),
+                        ServiceFee(),
+                        widgetforszbox(4),
+                        TotalPrice(),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.only(top: kDefaultPadding),
+                      width: 150,
+                      height: 50,
+                      child: RaisedButton(
+                        elevation: 5.0,
+                        onPressed: (){
                           setState(() {
+                            pressed= true;
+                            _inAsyncCall= true;
+                            // Navigator.push(context,MaterialPageRoute(builder: (context)=>AddOnDummy()));
+                          });
+
+                          cancelReservation().then((value) => {
+
+                            setState((){
+                              _inAsyncCall= false;
+                            }),
+
+                            Fluttertoast.showToast(
+                              msg: "Reservation Cancelled Successfully ",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.CENTER,
+                              timeInSecForIosWeb: 1,
+                            ),
+
+                          Navigator.pop(context)
+                          });
+
+                        },
+                        padding: EdgeInsets.all(15.0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        color: Color(0xFF005e6a),
+                        child: Text(
+                          'Delete',
+                          style: TextStyle(
+                            color: Colors.white,
+                            letterSpacing: 1.5,
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'OpenSans',
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 10,),
+
+                    Container(
+                      margin: EdgeInsets.only(top: kDefaultPadding),
+                      width: 200,
+                      height: 50,
+                      child: RaisedButton(
+                        elevation: 5.0,
+                        onPressed: (){
+                          setState(() {
+                            pressed= true;
+                            _inAsyncCall= true;
+                            // price1=  takatext1.substring(0, takatext1.length - 1);
+                            // price2=  takatext1.substring(0, takatext2.length - 1);
+                            // price3=  takatext1.substring(0, takatext3.length - 1);
+
+                            // print("price holo"+price1);
+
                             data['shift1']= shiftBitstr1;
                             data['shift2']= shiftBitstr2;
                             data['shift3']= shiftBitstr3;
                             data['price1']= takatext1;
                             data['price2']= takatext2;
                             data['price3']= takatext3;
-                            data['totalCost']= total_cost;
+                            data['totalCost']= total_cost.ceil().toString();
                             data['email']= userEmail.text;
                             data['name']= userName.text;
                             data['phoneNumber']= userPhone.text;
                           });
 
-                          updateData();
-                        });
-                      },
-                      padding: EdgeInsets.all(15.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                      ),
-                      color: Color(0xFF005e6a),
-                      child: Text(
-                        'UPDATE',
-                        style: TextStyle(
-                          color: Colors.white,
-                          letterSpacing: 1.5,
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'OpenSans',
+                          updateData().then((value) => {
+
+                            setState((){
+                              _inAsyncCall= false;
+                            }),
+
+                            Fluttertoast.showToast(
+                              msg: "Reservation Updated",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.CENTER,
+                              timeInSecForIosWeb: 1,
+                            )
+                          });
+                        },
+                        padding: EdgeInsets.all(15.0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        color: Color(0xFF005e6a),
+                        child: Text(
+                          'UPDATE',
+                          style: TextStyle(
+                            color: Colors.white,
+                            letterSpacing: 1.5,
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'OpenSans',
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            )
-          ],
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
+        inAsyncCall: _inAsyncCall,
+        progressIndicator: CircularProgressIndicator(),
       ),
     );
   }
@@ -577,7 +668,7 @@ class _ModifyReservationState extends State<ModifyReservation> {
         Container(
           child: new Column(
             children: <Widget>[
-              Text((total_cost).toString()+ "\u09F3",
+              Text((total_cost.ceil()).toString()+ "\u09F3",
                 style: TextStyle(color: Colors.black, fontSize: 16.0,
                     fontWeight: FontWeight.bold),),
             ],
@@ -640,7 +731,7 @@ class _ModifyReservationState extends State<ModifyReservation> {
                                   children: <Widget>[
                                     CheckboxListTile(
                                       value: dayOneShift[0],
-                                      title: Text("Morning"),
+                                      title: Text("Morning (9am - 3pm)"),
                                       onChanged: (value) {
                                         setState(() {
                                           dayOneShift[0] = value;
@@ -648,7 +739,7 @@ class _ModifyReservationState extends State<ModifyReservation> {
                                         });
                                       },
                                     ),
-                                    CheckboxListTile(
+                                    /*CheckboxListTile(
                                       value: dayOneShift[1],
                                       title: Text("Noon"),
                                       onChanged: (value) {
@@ -657,10 +748,10 @@ class _ModifyReservationState extends State<ModifyReservation> {
                                           // getShiftInfoForDayOne(_morning, _evening, _night);
                                         });
                                       },
-                                    ),
+                                    ),*/
                                     CheckboxListTile(
                                       value: dayOneShift[2],
-                                      title: Text("Evening"),
+                                      title: Text("Evening (4pm - 11pm)"),
                                       onChanged: (value) {
                                         setState(() {
                                           dayOneShift[2] = value;
@@ -745,7 +836,7 @@ class _ModifyReservationState extends State<ModifyReservation> {
                                   children: <Widget>[
                                     CheckboxListTile(
                                       value: dayTwoShift[0],
-                                      title: Text("Morning"),
+                                      title: Text("Morning (9am - 3pm)"),
                                       onChanged: (value) {
                                         setState(() {
                                           dayTwoShift[0] = value;
@@ -753,7 +844,7 @@ class _ModifyReservationState extends State<ModifyReservation> {
                                         });
                                       },
                                     ),
-                                    CheckboxListTile(
+                                    /*CheckboxListTile(
                                       value: dayTwoShift[1],
                                       title: Text("Noon"),
                                       onChanged: (value) {
@@ -762,10 +853,10 @@ class _ModifyReservationState extends State<ModifyReservation> {
                                           // getShiftInfoForDayOne(_morning, _evening, _night);
                                         });
                                       },
-                                    ),
+                                    ),*/
                                     CheckboxListTile(
                                       value: dayTwoShift[2],
-                                      title: Text("Evening"),
+                                      title: Text("Evening (4pm - 11pm)"),
                                       onChanged: (value) {
                                         setState(() {
                                           dayTwoShift[2] = value;
@@ -849,7 +940,7 @@ class _ModifyReservationState extends State<ModifyReservation> {
                                   children: <Widget>[
                                     CheckboxListTile(
                                       value: dayThreeShift[0],
-                                      title: Text("Morning"),
+                                      title: Text("Morning (9am - 3pm)"),
                                       onChanged: (value) {
                                         setState(() {
                                           dayThreeShift[0] = value;
@@ -857,7 +948,7 @@ class _ModifyReservationState extends State<ModifyReservation> {
                                         });
                                       },
                                     ),
-                                    CheckboxListTile(
+                                    /*CheckboxListTile(
                                       value: dayThreeShift[1],
                                       title: Text("Noon"),
                                       onChanged: (value) {
@@ -866,10 +957,10 @@ class _ModifyReservationState extends State<ModifyReservation> {
                                           // getShiftInfoForDayOne(_morning, _evening, _night);
                                         });
                                       },
-                                    ),
+                                    ),*/
                                     CheckboxListTile(
                                       value: dayThreeShift[2],
-                                      title: Text("Evening"),
+                                      title: Text("Evening (4pm - 11pm)"),
                                       onChanged: (value) {
                                         setState(() {
                                           dayThreeShift[2] = value;

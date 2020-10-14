@@ -13,7 +13,7 @@ import 'dart:convert';
 class SearchResultGenerator extends StatefulWidget {
 
   static int globalSelectedRadio;
-  static List<bool> globalFiler= [false,false,false,false,false,false];
+  static List<bool> globalFiler= [false,false,false,false,false,false,false];
   static List<conventionHall> globalHallList= new List();
 
   bool type;
@@ -27,13 +27,14 @@ class SearchResultGenerator extends StatefulWidget {
 }
 
 class _SearchResultGeneratorState extends State<SearchResultGenerator> {
-  String UserDemandFacility = "0000000";
   double slid = 1000000.0;
   bool type;
   double parkslid = 0.0;
+  double sittingslid = 0.0;
   int chosenprice = -1,chosenlot=-1;
+  int chosensittingcap = -1;
   int selectedRadio;
-  List<bool>filter = [false,false,false,false,false,false];
+  List<bool>filter = [false,false,false,false,false,false,false];
   String searchstring,dayString;
   DateTime selectedDate,secDate,thDate;
   List<bool> dayOneShift, dayTwoShift, dayThreeShift;
@@ -155,8 +156,9 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
         ),
       ),*/
               body: new Container(
-                child: (hallList.length==1 && hallList[0].Name=='null' )?new Text("No result found",textAlign: TextAlign.center,) : new Column(
+                child: ((hallList.length==1 && hallList[0].Name=='null'))?new Text("No result found",textAlign: TextAlign.center,) : new Column(
                   children: <Widget>[
+                    if(hallList.length==0) Text("No result found",textAlign: TextAlign.center,),
                     new Expanded(child:
                     ListView.builder(
                         itemCount: hallList.length,
@@ -222,8 +224,8 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
     );
   }
   List<conventionHall> list = [];
-  conventionHall test = new conventionHall("Sylhet", "cc", "Shubidh Bazar", "Khan's Palace", "1", "1110111", "1234", "1234", "1335", "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/khan.jpg?alt=media&token=267e9cc7-6646-4df0-bceb-a99e1b88360f", 12.3, 12.55);
-  conventionHall test2 = new conventionHall("Chittagong", "cc", "Main Road", "King of Chittagong", "1", "1110111", "1234", "1234", "1335", "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/king%20of%20chittagong.jpg?alt=media&token=003e5c26-53bc-47b8-ab29-654cb9f97028", 12.3, 12.55);
+ // conventionHall test = new conventionHall("Sylhet", "cc", "Shubidh Bazar", "Khan's Palace", "1", "1110111", "1234", "1234", "1335", "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/khan.jpg?alt=media&token=267e9cc7-6646-4df0-bceb-a99e1b88360f", 12.3, 12.55);
+ // conventionHall test2 = new conventionHall("Chittagong", "cc", "Main Road", "King of Chittagong", "1", "1110111", "1234", "1234", "1335", "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/king%20of%20chittagong.jpg?alt=media&token=003e5c26-53bc-47b8-ab29-654cb9f97028", 12.3, 12.55);
   //list.add(test);
 
   @override
@@ -398,9 +400,19 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
                           },
                         ),
                         Text("Fire Control"),
+                        Checkbox(
+                          value: filter[6],
+                          onChanged: (bool value){
+                            setState(() {
+                              print(value);
+                              filter[6] = value;
+                              SearchResultGenerator.globalFiler[6]= value;
+                            });
+                          },
+                        ),
+                        Text("Kitchen"),
                       ],
                     ),
-
                     Row(
                       children: <Widget> [
                         Text("   Structure",style: TextStyle(color: Colors.black,
@@ -512,6 +524,42 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
                             chosenlot = (val).toInt();
                             print(parkslid);});},),
                     ),
+                    Row(
+                      children: <Widget>  [
+                        Text("   Sitting Capacity",style: TextStyle(color: Colors.black,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold),),
+                      ],
+                    ),
+
+                    SliderTheme(
+                      data: SliderTheme.of(context).copyWith(
+                        valueIndicatorColor:  Color(0xFF005e6a),
+                        inactiveTrackColor: Colors.blueGrey,
+                        activeTrackColor: Color(0xFF005e6a),
+                        thumbColor: Colors.black,
+                        trackHeight: 5,
+                        overlayColor: Colors.transparent,
+                        minThumbSeparation: 1000,
+
+                        // accentTextTheme: TextTheme(bodyText2: TextStyle(color: Colors.white)),
+                        rangeThumbShape: RoundRangeSliderThumbShape(
+
+                          enabledThumbRadius: 100,
+                          disabledThumbRadius: 100,),),
+                      child: Slider(
+
+                        min: 0.0,
+                        max: 20000.0,
+                        value: sittingslid,
+                        divisions: 10000,
+                        label: (sittingslid.toInt()).toString(),
+                        onChanged: (val) {
+                          setState(() {
+                            sittingslid = ((val).toInt()).toDouble();
+                            chosensittingcap = (val).toInt();
+                            print(sittingslid);});},),
+                    ),
                     Container(
                       child: RaisedButton(
                         elevation: 5.0,
@@ -568,14 +616,14 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
       {
         int f = 1;
         int cnt = 0;
-        for(int j=0;j<7;j++)
+        for(int j=0;j<8;j++)
           {
-            if(j<6)
+            if(j<7)
               {
                 if(filter[j]==false) cnt++;
                 if(AllHall[i].facility[j]=='0' && filter[j]==true) f = 0;
-                else if(AllHall[i].facility[j]=='1' && filter[j]==false) f = 0;
-                if(cnt==6) f = 1;
+               // else if(AllHall[i].facility[j]=='1' && filter[j]==false) f = 0;
+                if(cnt==7) f = 1;
               }
             else if(selectedRadio==2 && AllHall[i].facility[j]=='0') f = 0;
 
@@ -584,6 +632,8 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
         if(chosenprice!=-1 && val>chosenprice) f =0 ;
         val = int.parse(AllHall[i].parking);
         if(chosenlot!=-1 && val<chosenlot) f = 0;
+        val = int.parse(AllHall[i].Sitting_cap);
+        if(chosensittingcap!=-1 && val<chosensittingcap) f = 0;
         if(f==1) filtered_list.add(AllHall[i]);
       }
 
