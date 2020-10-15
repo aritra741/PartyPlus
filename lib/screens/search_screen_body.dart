@@ -162,14 +162,35 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
       }
 
     return new Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: Colors.white12,
-        iconTheme: new IconThemeData(color: Color(0xFF005e6a)),
+      appBar: PreferredSize(
+          preferredSize: Size(double.infinity,50),
+          child: AppBar(
+            elevation: 0.0,
+            backgroundColor: Colors.white12,
+            iconTheme: new IconThemeData(color: Color(0xFF005e6a)),
+            centerTitle: true,
+            title: Container(
+              child: Row(
+                // mainAxisAlignment: MainAxisAlignment.center,
+                // crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(width: 30,),
+                  Text(
+                    "Party",
+                    style: GoogleFonts.overpass(color: Colors.black, fontSize: 32, fontWeight: FontWeight.w200 ),
+                  ),
+                  Text(
+                    "Plus",
+                    style: GoogleFonts.overpass(color: Color(0xFF008A8C), fontSize: 32, fontWeight: FontWeight.bold ),
+                  )
+                ],
+              ),
+            ),
+          ),
       ),
       drawer: NavigationDrawer(),
       body: SingleChildScrollView(
-        physics: NeverScrollableScrollPhysics(),
+        // physics: NeverScrollableScrollPhysics(),
         child: Container(
           height: MediaQuery.of(context).size.height,
           child: Column(
@@ -857,23 +878,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    "Party",
-                    style: GoogleFonts.overpass(color: Colors.black, fontSize: 32, fontWeight: FontWeight.w200 ),
-                  ),
-                  Text(
-                    "Plus",
-                    style: GoogleFonts.overpass(color: Color(0xFF008A8C), fontSize: 32, fontWeight: FontWeight.bold ),
-                  )
-                ],
-              ),
-            ),
-            Spacer(),
+            // Spacer(),
             Container(
               alignment: Alignment.center,
               margin: EdgeInsets.symmetric(horizontal: kDefaultPadding),

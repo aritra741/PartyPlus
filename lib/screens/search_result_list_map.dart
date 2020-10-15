@@ -24,6 +24,14 @@ class _SearchResultListMapState extends State<SearchResultListMap> with SingleTi
     // TODO: implement initState
     super.initState();
     controller= new TabController(vsync: this, length: 2);
+    controller.addListener(handleTabSwipe);
+}
+
+  void handleTabSwipe()
+  {
+    setState(() {
+      type= true;
+    });
   }
 
   @override
