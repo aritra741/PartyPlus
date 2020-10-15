@@ -464,7 +464,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
   Widget AddRemoveButton1() {
     return Row(
       children: <Widget>[
-        SizedBox(width: 145),
+        SizedBox(width: 115),
         InkWell(
           // onTap: doSomething,
           child: SizedBox(
@@ -569,7 +569,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
   Widget AddRemoveButton2() {
     return Row(
       children: <Widget>[
-        SizedBox(width: 145),
+        SizedBox(width: 115),
         InkWell(
           // onTap: doSomething,
           child: SizedBox(
@@ -674,7 +674,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
   Widget AddRemoveButton3() {
     return Row(
       children: <Widget>[
-        SizedBox(width: 145),
+        SizedBox(width: 115),
         InkWell(
           // onTap: doSomething,
           child: SizedBox(
@@ -787,7 +787,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
             child:  Text(date1,
               style: TextStyle(color: Colors.black, fontSize: 16.0),),
           ),
-          SizedBox(width: 80),
+          SizedBox(width: 50),
           Container(
             child: new Column(
               children: <Widget>[
@@ -821,7 +821,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
             child:  Text(date2,
               style: TextStyle(color: Colors.black, fontSize: 16.0),),
           ),
-          SizedBox(width: 80),
+          SizedBox(width: 50),
           Container(
             child: new Column(
               children: <Widget>[
@@ -855,7 +855,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
             child:  Text(date3,
               style: TextStyle(color: Colors.black, fontSize: 16.0),),
           ),
-          SizedBox(width: 80),
+          SizedBox(width: 50),
           Container(
             child: new Column(
               children: <Widget>[
@@ -891,14 +891,14 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
     return Row(
       children: <Widget>[
         // SizedBox(height: 50),
-        SizedBox(width: 180),
+        SizedBox(width: 145),
         Container(
             child:  Text("Total",
                 style: TextStyle(color: Colors.black, fontSize: 16.0,
                     fontWeight: FontWeight.bold))
         ),
 
-        SizedBox(width: 73),
+        SizedBox(width: 90),
         Container(
           child: new Column(
             children: <Widget>[
@@ -942,7 +942,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
     return Row(
       children: <Widget>[
         // SizedBox(height: 50),
-        SizedBox(width: 180),
+        SizedBox(width: 150),
         Container(
             child:  Text("VAT",
                 style: TextStyle(color: Colors.black, fontSize: 16.0,))
@@ -964,14 +964,14 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
     return Row(
       children: <Widget>[
         // SizedBox(height: 50),
-        SizedBox(width: 160),
+        SizedBox(width: 125),
         Container(
             child:  Text("Service Fee",
                 style: TextStyle(color: Colors.black, fontSize: 16.0,
                     fontWeight: FontWeight.bold))
         ),
 
-        SizedBox(width: 93),
+        SizedBox(width: 97),
         Container(
           child: new Column(
             children: <Widget>[

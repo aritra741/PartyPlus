@@ -285,13 +285,14 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
                           child: Container(
 
                             width: MediaQuery.of(context).size.width - 0,
-                            height: MediaQuery.of(context).size.height -  200,
+                            height: MediaQuery.of(context).size.height-150,
                             padding: EdgeInsets.all(20),
                             color: Colors.white,
                             child : Card(
                             elevation: 0,
                             child: Container(
                               //padding: EdgeInsets.only(top: 20),
+                              height: 400,
                               width: MediaQuery.of(context).size.width,
                               child: Column(
                                 children: <Widget>[
@@ -470,7 +471,7 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
             child:  Text(date1,
               style: TextStyle(color: Colors.black, fontSize: 16.0),),
           ),
-          SizedBox(width: 60),
+          SizedBox(width: 35),
           Container(
             child: new Column(
               children: <Widget>[
@@ -504,7 +505,7 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
             child:  Text(date2,
               style: TextStyle(color: Colors.black, fontSize: 16.0),),
           ),
-          SizedBox(width: 60),
+          SizedBox(width: 35),
           Container(
             child: new Column(
               children: <Widget>[
@@ -538,7 +539,7 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
             child:  Text(date3,
               style: TextStyle(color: Colors.black, fontSize: 16.0),),
           ),
-          SizedBox(width: 60),
+          SizedBox(width: 35),
           Container(
             child: new Column(
               children: <Widget>[
@@ -573,13 +574,13 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
     return Row(
       children: <Widget>[
         // SizedBox(height: 50),
-        SizedBox(width: 150),
+        SizedBox(width: 130),
         Container(
             child:  Text("VAT",
                 style: TextStyle(color: Colors.black, fontSize: 16.0,))
         ),
 
-        SizedBox(width: 105),
+        SizedBox(width: 95),
         Container(
           child: new Column(
             children: <Widget>[
@@ -595,14 +596,14 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
     return Row(
       children: <Widget>[
         // SizedBox(height: 50),
-        SizedBox(width: 130),
+        SizedBox(width: 110),
         Container(
             child:  Text("Service Fee",
                 style: TextStyle(color: Colors.black, fontSize: 16.0,
                     fontWeight: FontWeight.bold))
         ),
 
-        SizedBox(width: 73),
+        SizedBox(width: 70),
         Container(
           child: new Column(
             children: <Widget>[
@@ -618,14 +619,14 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
     return Row(
       children: <Widget>[
         // SizedBox(height: 50),
-        SizedBox(width: 150),
+        SizedBox(width: 130),
         Container(
             child:  Text("Total",
                 style: TextStyle(color: Colors.black, fontSize: 16.0,
                     fontWeight: FontWeight.bold))
         ),
 
-        SizedBox(width: 73),
+        SizedBox(width: 70),
         Container(
           child: new Column(
             children: <Widget>[

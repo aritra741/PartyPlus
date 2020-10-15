@@ -169,6 +169,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
       ),
       drawer: NavigationDrawer(),
       body: SingleChildScrollView(
+        physics: NeverScrollableScrollPhysics(),
         child: Container(
           height: MediaQuery.of(context).size.height,
           child: Column(
@@ -196,7 +197,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                             child: FlatButton(
                               color: Colors.white,
                               padding: EdgeInsets.symmetric(
-                                  horizontal: 24, vertical: 12),
+                                  horizontal: 24),
                               onPressed: () => _selectDate(context),
                               child: reserVationDateSelector(
                                   "Number of days", DateTime.now()),
@@ -292,14 +293,14 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                       Visibility(
                         visible: true,
                         child: Container(
-                          height: 75,
-                          padding: EdgeInsets.only(top:10),
+                          height: 50,
+                          // padding: EdgeInsets.only(top:10),
                           child: Container(
 //                            color: Color(0xFFF4F0DB),
 //                            elevation: 20,
                               height: 30,
                             child: ListView(
-                              padding: EdgeInsets.only(top: 10, ),
+                              // padding: EdgeInsets.only(top: 10, ),
                               children: <Widget>[
                                 Row(
                                   children: <Widget>[
@@ -308,7 +309,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                                     ),
                                     Text(
                                       " "+formatted,
-                                      style: GoogleFonts.overpass(fontSize: 22, color: Colors.black),
+                                      style: GoogleFonts.overpass(fontSize: 20, color: Colors.black),
                                     ),
                                     SizedBox(
                                       width: 95,
@@ -394,7 +395,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                                       child: Text(
                                         "Select shift",
                                         style: TextStyle(
-                                            fontSize: 20,
+                                            fontSize: 18,
                                             color: Colors.teal,
                                             decoration: TextDecoration.underline
                                         ),
@@ -405,9 +406,9 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                                 Visibility(
                                   visible: true,
                                   child: Text(
-                                      (dayOneMorning?"     Morning":"")+(dayOneEvening?"     Noon":"")+(dayOneNight?"    Evening":""),
+                                      (dayOneMorning?"     Morning":"")+(dayOneEvening?"     Noon":"")+(dayOneNight?"      Evening":""),
                                     style: TextStyle(
-                                      fontSize: 22,
+                                      fontSize: 20,
                                       color: Color(0xFF005e6a)
                                     ),
                                   ),
@@ -423,14 +424,14 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                       Visibility(
                         visible: dayGroup>=1,
                         child: Container(
-                          height: 75,
-                          padding: EdgeInsets.only(top:10),
+                          height: 50,
+                          // padding: EdgeInsets.only(top:10),
                           child: SizedBox(
 //                              color: Color(0xFFF4F0DB),
 //                              elevation: 20,
                               height: 30,
                               child: ListView(
-                                padding: EdgeInsets.only(top: 10, ),
+                                // padding: EdgeInsets.only(top: 10, ),
                                 children: <Widget>[
                                   Row(
                                     children: <Widget>[
@@ -439,7 +440,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                                       ),
                                       Text(
                                         " "+formatted2,
-                                        style: GoogleFonts.overpass(fontSize: 22, color: Colors.black),
+                                        style: GoogleFonts.overpass(fontSize: 20, color: Colors.black),
                                       ),
                                       SizedBox(
                                         width: 100,
@@ -525,7 +526,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                                         child: Text(
                                           "Select shift",
                                           style: TextStyle(
-                                              fontSize: 20,
+                                              fontSize: 18,
                                               color: Colors.teal,
                                               decoration: TextDecoration.underline
                                           ),
@@ -538,7 +539,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                                     child: Text(
                                       (dayTwoMorning?"     Morning":"")+(dayTwoEvening?"     Noon":"")+(dayTwoNight?"      Evening":""),
                                       style: TextStyle(
-                                          fontSize: 22,
+                                          fontSize: 20,
                                           color: Color(0xFF005e6a)
                                       ),
                                     ),
@@ -557,14 +558,14 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                       Visibility(
                         visible: dayGroup>=2,
                         child: Container(
-                          height: 75,
-                          padding: EdgeInsets.only(top:10),
+                          height: 50,
+                          // padding: EdgeInsets.only(top:10),
                           child: Container(
 //                              color: Color(0xFFF4F0DB),
 //                              elevation: 20,
-                              height: 30,
+                              height: 20,
                               child: ListView(
-                                padding: EdgeInsets.only(top: 10, ),
+                                // padding: EdgeInsets.only(top: 10, ),
                                 children: <Widget>[
                                   Row(
                                     children: <Widget>[
@@ -573,7 +574,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                                       ),
                                       Text(
                                         " "+formatted3,
-                                        style: GoogleFonts.overpass(fontSize: 22, color: Colors.black),
+                                        style: GoogleFonts.overpass(fontSize: 20, color: Colors.black),
                                       ),
                                       SizedBox(
                                         width: 95,
@@ -659,7 +660,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                                         child: Text(
                                           "Select shift",
                                           style: TextStyle(
-                                              fontSize: 20,
+                                              fontSize: 18,
                                               color: Colors.teal,
                                               decoration: TextDecoration.underline
                                           ),
@@ -670,9 +671,9 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                                   Visibility(
                                     visible: true,
                                     child: Text(
-                                      (dayThreeMorning?"     Morning":"")+(dayThreeEvening?"     Noon":"")+(dayThreeNight?"     Evening":""),
+                                      (dayThreeMorning?"     Morning":"")+(dayThreeEvening?"     Noon":"")+(dayThreeNight?"      Evening":""),
                                       style: TextStyle(
-                                          fontSize: 22,
+                                          fontSize: 20,
                                           color: Color(0xFF005e6a)
                                       ),
                                     ),
@@ -801,7 +802,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
           children: <Widget>[
             Text(
               selectedDate.day.toString().padLeft(2, '0'),
-              style: GoogleFonts.overpass(fontSize: 48),
+              style: GoogleFonts.overpass(fontSize: 40),
             ),
 //            SizedBox(width: 8),
             Column(
@@ -833,9 +834,12 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
           textAlign: TextAlign.center,
           style: GoogleFonts.overpass(fontSize: 18, color: Colors.grey),
         ),
+        SizedBox(
+          height: 10,
+        ),
         Text(
           dayString,
-          style: GoogleFonts.overpass(fontSize: 48),
+          style: GoogleFonts.overpass(fontSize: 40),
         ),
       ],
     );
@@ -846,8 +850,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
     double size= MediaQuery.of(context).size.height;
     double screenHeight= MediaQuery.of(context).size.height;
     double screenwidth= MediaQuery.of(context).size.width;
-    return new Scaffold(
-      body: new Container(
+    return Container(
         margin: EdgeInsets.only(bottom: kDefaultPadding, top: kDefaultPadding * .25),
         height: size*0.15,
         child: Column(
@@ -929,8 +932,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
             ),
           ],
         ),
-      ),
-    );
+      );
   }
 
   Future<Null> _selectDate(BuildContext context) async {
