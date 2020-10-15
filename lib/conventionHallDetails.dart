@@ -891,14 +891,14 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
     return Row(
       children: <Widget>[
         // SizedBox(height: 50),
-        SizedBox(width: 170),
+        SizedBox(width: 180),
         Container(
             child:  Text("Total",
                 style: TextStyle(color: Colors.black, fontSize: 16.0,
                     fontWeight: FontWeight.bold))
         ),
 
-        SizedBox(width: 93),
+        SizedBox(width: 73),
         Container(
           child: new Column(
             children: <Widget>[
@@ -942,13 +942,13 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
     return Row(
       children: <Widget>[
         // SizedBox(height: 50),
-        SizedBox(width: 140),
+        SizedBox(width: 180),
         Container(
             child:  Text("VAT",
                 style: TextStyle(color: Colors.black, fontSize: 16.0,))
         ),
 
-        SizedBox(width: 93),
+        SizedBox(width: 120),
         Container(
           child: new Column(
             children: <Widget>[
@@ -964,7 +964,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
     return Row(
       children: <Widget>[
         // SizedBox(height: 50),
-        SizedBox(width: 140),
+        SizedBox(width: 160),
         Container(
             child:  Text("Service Fee",
                 style: TextStyle(color: Colors.black, fontSize: 16.0,
