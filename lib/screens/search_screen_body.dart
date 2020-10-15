@@ -757,18 +757,18 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
           }
           else if( index==1 )
           {
-            setState(() {
-              currentIndex= 1;
-            });
+            // setState(() {
+            //   currentIndex= 1;
+            // });
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => RetrieveReservation()),);
             }
           else if( index==2 )
           {
-            setState(() {
-              currentIndex= 2;
-            });
+            // setState(() {
+            //   currentIndex= 2;
+            // });
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => LoginScreen()),);
@@ -776,9 +776,9 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
           }
           else
           {
-            setState(() {
-              currentIndex= 3;
-            });
+            // setState(() {
+            //   currentIndex= 3;
+            // });
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => RegisterScreen()),);

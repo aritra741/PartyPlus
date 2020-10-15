@@ -1,6 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'search_screen_body.dart';
 import 'package:partyplus/providers/conventionHall.dart';
 import 'package:partyplus/conventionHallDetails.dart';
@@ -275,7 +276,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
                 children: <Widget>[
                   new Text(
                     name,
-                    style: Theme.of(context).textTheme.subtitle1,
+                    style: Theme.of(context).textTheme.headline6,
                     textAlign: TextAlign.center,
                   ),
                   new Text(
@@ -296,10 +297,18 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
                     style: Theme.of(context).textTheme.subtitle1,
                     textAlign: TextAlign.center,
                   ),
-                  new Text(
-                    convention.mxprice+"\u09F3" + " per shift",
-                    style: Theme.of(context).textTheme.subtitle1,
-                    textAlign: TextAlign.center,
+                  Container(
+                    width: 100,
+                    height: 40,
+                    decoration: BoxDecoration(
+                        color: Color(0xFF32C809),
+                      borderRadius: BorderRadius.circular(20)
+                    ),
+                    child: new Text(
+                      convention.mxprice+"\u09F3" + " per shift",
+                      style: GoogleFonts.barlow(fontSize: 15, color: Colors.white),
+                      textAlign: TextAlign.center,
+                    ),
                   )
                 ],
               ),
@@ -375,6 +384,10 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
                           },
                         ),
                         Text("Firework Place"),
+                      ],
+                    ),
+                    Row(
+                      children: <Widget>[
                         Checkbox(
                           value: filter[4],
                           onChanged: (bool value){
@@ -490,7 +503,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
 
                     Row(
                       children: <Widget>  [
-                        Text("   Parking lot",style: TextStyle(color: Colors.black,
+                        Text("   Minimum Parking lot",style: TextStyle(color: Colors.black,
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold),),
                       ],
@@ -526,7 +539,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
                     ),
                     Row(
                       children: <Widget>  [
-                        Text("   Sitting Capacity",style: TextStyle(color: Colors.black,
+                        Text("   Minimum Sitting Capacity",style: TextStyle(color: Colors.black,
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold),),
                       ],
