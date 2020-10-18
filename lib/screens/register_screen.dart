@@ -7,7 +7,10 @@ import 'search_screen_body.dart';
 import 'package:firebase_database/firebase_database.dart';
 import '../constants/constants_for_login.dart';
 import '../providers/auth.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter_svg/svg.dart';
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -18,9 +21,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool _rememberMe = false;
   int currentIndex= 3;
 
-  final dbRef= FirebaseDatabase.instance.reference();
-
-  var authHandler= new Auth();
   var userEmail= TextEditingController();
   var userPassword= TextEditingController();
   var userPhone= TextEditingController();
@@ -32,6 +32,51 @@ class _RegisterScreenState extends State<RegisterScreen> {
     userEmail.dispose();
     userPassword.dispose();
     super.dispose();
+  }
+
+  Future <String> handleRegistration( String email, String password ) async {
+
+    var userInfo = {
+      "email" : email,
+      "password": password
+    };
+
+    // print( json.encode(match) );
+
+    // print("HYSE??");
+    // print(SearchScreenBody.numberOfDays);
+    final String apiurl = "http://partyplusapi.herokuapp.com/register";
+    //http.Response response = await http.post(apiurl);
+    /* final response = await http.post(apiurl,body: {
+      "name" : searchstring
+    });*/
+    http.Response response;
+    try{
+      response= await http.post(apiurl,
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          body: userInfo,
+          encoding: Encoding.getByName("utf-8"));
+    }catch(e) {
+      print(e.toString());
+    }
+
+    //  print("done");
+    // // body: json.encode(match),);
+
+    // print("data holo "+data.toString());
+    //  debugPrint(fuserData.toString());
+    //  setState(() {
+    //    fuserData = data['Name'];
+    //  });
+    //  debugPrint(fuserData.toString());
+
+    final SharedPreferences userData= await SharedPreferences.getInstance();
+    userData.setString('token', response.body);
+
+    return response.body;
   }
 
   Widget _buildFirstNameTF() {
@@ -220,15 +265,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
       child: RaisedButton(
         elevation: 5.0,
         onPressed: () {
-          authHandler.handleSignUp(userEmail.text, userPassword.text)
-              .then((FirebaseUser user) {
-                print("Registration Susccessful");
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SearchScreenBody()),);
-
-                writeUserData(user.uid);
-          }).catchError((e) => print(e));
+            handleRegistration(userEmail.text, userPassword.text)
+                .then( (token) =>{
+                print("token ta holo "+ token.toString())
+            } );
         } ,
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
@@ -425,14 +465,5 @@ class _RegisterScreenState extends State<RegisterScreen> {
           firstName+= ' ';
         firstName+= nameList[i];
     }
-
-    dbRef.child("Users").child(uid).set(
-      {
-        'email': userEmail.text,
-        'firstName': firstName,
-        'lastName': nameList[nameList.length-1],
-        'phone': userPhone.text,
-      }
-    );
   }
 }

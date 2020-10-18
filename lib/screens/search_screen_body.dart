@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:partyplus/providers/User.dart';
 import 'package:partyplus/screens/retrieve_reservation.dart';
 import 'package:partyplus/screens/search_result_list_map.dart';
 import 'package:partyplus/widgets/navigation_drawer.dart';
@@ -22,7 +23,7 @@ import 'searchresultgenerator.dart';
 import 'dart:convert';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SearchScreenBody extends StatefulWidget {
   static int val= 5;
@@ -53,10 +54,37 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
   static DateTime thDate;//= new DateTime(secDate.year, secDate.month, secDate.day+1);
   static DateFormat formatter3 ;//= DateFormat('dd-MM-yyyy');
   String formatted3; //= formatter3.format(thDate);
+  User _authenticatedUser;
+  String userToken;
 
+  @override
   void dispose() {
     searchText.dispose();
     super.dispose();
+  }
+
+  Future<String> checkIfLoggedIn () async
+  {
+    final SharedPreferences userPref= await SharedPreferences.getInstance();
+    userToken= userPref.getString('token');
+
+    return userToken;
+  }
+
+  @override
+  void initState()
+  {
+    checkIfLoggedIn().then( (token)=>{
+      if(token!=null)
+        {
+          print("hoise")
+        }
+      else
+        {
+          print("hoynai")
+        }
+    } );
+    super.initState();
   }
 
   Future speedup() async
