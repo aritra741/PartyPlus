@@ -245,6 +245,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
                             markers: Set<Marker>.of(locations),
                             onMapCreated: _onMapCreated)),
                   ),
+
                   Row(children: <Widget>[
                     //Text("Hi"),
                     Icon(
@@ -781,13 +782,14 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
     {
       return Row(
 
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           // SizedBox(height: 80),
           Container(
             child:  Text(date1,
               style: TextStyle(color: Colors.black, fontSize: 16.0),),
           ),
-          SizedBox(width: 50),
+         // SizedBox(width: 50),//eta
           Container(
             child: new Column(
               children: <Widget>[
@@ -796,7 +798,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
               ],
             ),
           ),
-          SizedBox(width: 80),
+          //SizedBox(width: 80), //eta
           Container(
             child: new Column(
 
@@ -816,12 +818,13 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
     {
 
       return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Container(
             child:  Text(date2,
               style: TextStyle(color: Colors.black, fontSize: 16.0),),
           ),
-          SizedBox(width: 50),
+          //SizedBox(width: 50), //eta
           Container(
             child: new Column(
               children: <Widget>[
@@ -830,7 +833,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
               ],
             ),
           ),
-          SizedBox(width: 80),
+          //SizedBox(width: 80), //eta
           Container(
             child: new Column(
 
@@ -849,13 +852,15 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
     else if(num_of_days>=3 && check==3)
     {
       return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           // SizedBox(height: 80),
+
           Container(
             child:  Text(date3,
               style: TextStyle(color: Colors.black, fontSize: 16.0),),
           ),
-          SizedBox(width: 50),
+         // SizedBox(width: 50), //eta
           Container(
             child: new Column(
               children: <Widget>[
@@ -864,7 +869,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
               ],
             ),
           ),
-          SizedBox(width: 80),
+         // SizedBox(width: 80), //eta
           Container(
             child: new Column(
 
@@ -889,16 +894,23 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
 
   Widget TotalPrice(){
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         // SizedBox(height: 50),
-        SizedBox(width: 145),
+        //SizedBox(width: 145), //eta
+        Container(
+            child:  Text("",
+              style: TextStyle(color: Colors.white, fontSize: 16.0,
+                  fontWeight: FontWeight.bold),textAlign: TextAlign.center,)
+        ),
         Container(
             child:  Text("Total",
                 style: TextStyle(color: Colors.black, fontSize: 16.0,
-                    fontWeight: FontWeight.bold))
+                    fontWeight: FontWeight.bold),textAlign: TextAlign.center,)
         ),
 
-        SizedBox(width: 90),
+       // SizedBox(width: 90), //eta
+
         Container(
           child: new Column(
             children: <Widget>[
@@ -940,15 +952,20 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
   }
   Widget VAT(){
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         // SizedBox(height: 50),
-        SizedBox(width: 150),
+       // SizedBox(width: 150), //eta
+        Container(
+            child:  Text("",
+              style: TextStyle(color: Colors.white, fontSize: 16.0,),textAlign: TextAlign.center,)
+        ),
         Container(
             child:  Text("VAT",
-                style: TextStyle(color: Colors.black, fontSize: 16.0,))
+                style: TextStyle(color: Colors.black, fontSize: 16.0,),textAlign: TextAlign.center,)
         ),
 
-        SizedBox(width: 120),
+        //SizedBox(width: 120), //eta
         Container(
           child: new Column(
             children: <Widget>[
@@ -961,17 +978,24 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
     );
   }
   Widget ServiceFee(){
+
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         // SizedBox(height: 50),
-        SizedBox(width: 125),
+       // SizedBox(width: 125), //eta
+        Container(
+            child:  Text("",
+              style: TextStyle(color: Colors.white, fontSize: 16.0,
+                  fontWeight: FontWeight.bold),textAlign: TextAlign.center,)
+        ),
         Container(
             child:  Text("Service Fee",
                 style: TextStyle(color: Colors.black, fontSize: 16.0,
-                    fontWeight: FontWeight.bold))
+                    fontWeight: FontWeight.bold),textAlign: TextAlign.center,)
         ),
 
-        SizedBox(width: 97),
+       // SizedBox(width: 97), //eta
         Container(
           child: new Column(
             children: <Widget>[

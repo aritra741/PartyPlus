@@ -7,6 +7,11 @@ import 'search_screen_body.dart';
 import '../providers/auth.dart';
 import '../constants/constants_for_login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:async';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
 
@@ -28,6 +33,53 @@ class _LoginScreenState extends State<LoginScreen> {
     userEmail.dispose();
     userpassword.dispose();
     super.dispose();
+  }
+
+  Future <String> handleLogin( String email, String password ) async {
+
+    var userInfo = {
+      "email" : email,
+      "password": password
+    };
+
+    // print( json.encode(match) );
+
+    // print("HYSE??");
+    // print(SearchScreenBody.numberOfDays);
+    final String apiurl = "http://partyplusapi.herokuapp.com/login";
+    //http.Response response = await http.post(apiurl);
+    /* final response = await http.post(apiurl,body: {
+      "name" : searchstring
+    });*/
+    http.Response response;
+    try{
+      response= await http.post(apiurl,
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          body: userInfo,
+          encoding: Encoding.getByName("utf-8"));
+    }catch(e) {
+      print(e.toString());
+    }
+
+    //  print("done");
+    // // body: json.encode(match),);
+
+    // print("data holo "+data.toString());
+    //  debugPrint(fuserData.toString());
+    //  setState(() {
+    //    fuserData = data['Name'];
+    //  });
+    //  debugPrint(fuserData.toString());
+
+    final SharedPreferences userData= await SharedPreferences.getInstance();
+
+    if( !(response.body.toString().contains('error')) )
+      userData.setString('token', response.body);
+
+    return response.body;
   }
 
   Widget _buildEmailTF() {
@@ -150,13 +202,37 @@ class _LoginScreenState extends State<LoginScreen> {
       child: RaisedButton(
         elevation: 5.0,
         onPressed: () {
-          authHandler.handleSignInEmail(userEmail.text, userpassword.text)
-              .then((FirebaseUser user) {
-            print("Login SuccessFull");
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => SearchScreenBody()),);
-          }).catchError((e) => print(e));
+          handleLogin(userEmail.text, userpassword.text)
+              .then((val) {
+            print("response holo "+val);
+                if(val.contains("error"))
+                  {
+                    Fluttertoast.showToast(
+                        msg: "Something went wrong. Please Try again",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.CENTER,
+                        timeInSecForIosWeb: 3);
+                  }
+                else
+                  {
+                    Fluttertoast.showToast(
+                        msg: "Login Successful",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.CENTER,
+                        timeInSecForIosWeb: 3);
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SearchScreenBody()),);
+
+                  }
+
+            }).catchError((e) =>  Fluttertoast.showToast(
+            msg: "Something went wrong. Please Try again",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 3,
+          ));
         },
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(

@@ -320,10 +320,60 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
                                   widgetforszbox(4),
                                   TotalPrice(),
                                   RaisedButton(
+
                                     onPressed: () {
-                                      Navigator.push(
+                                      showGeneralDialog(
+
+                                          context: context,
+                                          barrierDismissible: true,
+                                          barrierLabel: MaterialLocalizations.of(context)
+                                              .modalBarrierDismissLabel,
+                                          barrierColor: Colors.black45,
+                                          transitionDuration: const Duration(milliseconds: 200),
+                                          pageBuilder: (BuildContext buildContext,
+                                              Animation animation,
+                                              Animation secondaryAnimation) {
+                                            return Center(
+
+
+                                              child: Container(
+
+                                                width: MediaQuery.of(context).size.width - 0,
+                                                height: MediaQuery.of(context).size.height-150,
+                                                padding: EdgeInsets.all(20),
+                                                color: Colors.white,
+                                                child : Card(
+                                                  elevation: 0,
+                                                  child: Container(
+                                                    //padding: EdgeInsets.only(top: 20),
+                                                    height: 400,
+                                                    width: MediaQuery.of(context).size.width,
+                                                    child: Column(
+                                                      children: <Widget>[
+                                                        SelectableText("Please make sure that you have copied the Booking Id : " + booking_id + "\n",style: TextStyle(color: Colors.black, fontSize: 15.0,
+                                                            fontWeight: FontWeight.bold),),
+                                                        RaisedButton(
+                                                          onPressed: () {
+                                                            Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(builder: (context) => SearchScreenBody()),);
+                                                          },
+                                                          child: Text(
+                                                            "OK",
+                                                            style: TextStyle(color: Colors.white),
+                                                          ),
+                                                          color: const Color(0xFF1BC0C5),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),//card
+                                              ),
+                                            );
+                                          });
+                                    /*  Navigator.push(
                                         context,
-                                        MaterialPageRoute(builder: (context) => SearchScreenBody()),);
+                                        MaterialPageRoute(builder: (context) => SearchScreenBody()),);*/
                                     },
                                     child: Text(
                                       "OK",
@@ -338,7 +388,7 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
                           ),
                         );
                       });
-                  showGeneralDialog(
+                  /*showGeneralDialog(
 
                       context: context,
                       barrierDismissible: true,
@@ -366,7 +416,7 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
                                 width: MediaQuery.of(context).size.width,
                                 child: Column(
                                   children: <Widget>[
-                                    SelectableText("Please make sure that you have copied the Booking Id : " + booking_id + "\n",style: TextStyle(color: Colors.black, fontSize: 20.0,
+                                    SelectableText("Please make sure that you have copied the Booking Id : " + booking_id + "\n",style: TextStyle(color: Colors.black, fontSize: 15.0,
                                         fontWeight: FontWeight.bold),),
                                     RaisedButton(
                                       onPressed: () {
@@ -386,7 +436,7 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
                             ),//card
                           ),
                         );
-                      });
+                      });*/
                 },
                 padding: EdgeInsets.all(15.0),
                 shape: RoundedRectangleBorder(

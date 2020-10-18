@@ -281,11 +281,11 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
                     style: Theme.of(context).textTheme.headline6,
                     textAlign: TextAlign.center,
                   ),
-                  new Text(
+                 /* new Text(
                     city,
                     style: Theme.of(context).textTheme.subtitle1,
                     textAlign: TextAlign.center,
-                  )
+                  )*/
                 ],
               ),
               SizedBox(height: 10.0,),
@@ -294,11 +294,25 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
               new Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  new Text(
-                    street,
-                    style: Theme.of(context).textTheme.subtitle1,
-                    textAlign: TextAlign.center,
+
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        WidgetSpan(
+                          child: Icon(
+                            Icons.location_on,
+                            size: 20,
+                            color: Color(0xFFEA4335),
+                          ),
+                        ),
+                        TextSpan(
+                          text: street + "," + city,
+                          style: Theme.of(context).textTheme.subtitle1,
+                        ),
+                      ],
+                    ),
                   ),
+
                   Container(
                     width: 100,
                     height: 40,
