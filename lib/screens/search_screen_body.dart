@@ -160,7 +160,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
         suggestionsList.add(e);
       });
 
-      // data = json.decode(response.body);
+      print(suggestionsList);
       return suggestionsList;
     }
     
@@ -944,15 +944,17 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                         return await getSuggestions(pattern);
                       },
                       itemBuilder: (context, suggestion){
+                        print(suggestion);
                         return ListTile(
-                          leading: Icon(Icons.location_on,
-                          color: Color(0xFFEA4335),),
-                          title: Text(suggestion),
+                          leading: (suggestion['type']=='location')?Icon(Icons.location_on,
+                            color: Color(0xFFEA4335),):Icon(Icons.home,
+                            color: Colors.blue,),
+                          title: Text(suggestion['name']),
                         );
                       },
                       onSuggestionSelected: (suggestion){
                         setState(() {
-                          searchString= suggestion.toString();
+                          searchString= suggestion['name'].toString();
                           searchText.text= searchString;
                         });
                         print("selected item "+searchString);
