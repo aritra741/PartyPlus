@@ -34,6 +34,7 @@ class _ModifyReservationState extends State<ModifyReservation> {
   String shiftBitstr1="",shiftBitstr2="",shiftBitstr3="";
   String takatext1,takatext2,takatext3;
   String price1,price2,price3;
+  String imgurl;
 
   double total_cost= 0;
 
@@ -71,6 +72,29 @@ class _ModifyReservationState extends State<ModifyReservation> {
     //  debugPrint(fuserData.toString());
     // print(data);
     //  return fuserData;
+  }
+
+  Future postData() async{
+    var match = {
+      "id" : data['id']
+    };
+    print( json.encode(match) );
+    final String apiurl = "http://partyplusapi.herokuapp.com/imageforconv";
+    print("yes hsye");
+    http.Response response;
+    try{
+      response= await http.post(apiurl,
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          body: match,
+          encoding: Encoding.getByName("utf-8"));
+    }catch(e) {
+      print(e.toString());
+    };
+    imgurl = response.body;
+    print(imgurl);
   }
 
   Future cancelReservation() async{
@@ -124,6 +148,9 @@ class _ModifyReservationState extends State<ModifyReservation> {
   @override
   void initState(){
     super.initState();
+    imgurl = "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/khan.jpg?alt=media&token=267e9cc7-6646-4df0-bceb-a99e1b88360f";
+    postData();
+    print(imgurl);
 
     print("eeeeeeeeeeeeeeeeeeehehhhhhhhhhe");
    // ShiftString();
@@ -259,14 +286,27 @@ class _ModifyReservationState extends State<ModifyReservation> {
           // height: MediaQuery.of(context).size.height,
           child: Column(
             children: <Widget>[
-              SizedBox(
-                height: 10,
+
+              Image.network(imgurl,fit: BoxFit.cover),
+              SizedBox(height: 10.0),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Container(
+                  child: Text(
+                    data['convname'],
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
               ),
               Container(
                 alignment: Alignment.center,
                 decoration: kBoxDecorationStyleDiffColor,
                 height: 60.0,
                 margin: EdgeInsets.all(10),
+
                 child: TextField(
                   controller: userName,
                   keyboardType: TextInputType.text,

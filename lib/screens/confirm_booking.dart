@@ -80,7 +80,8 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
       "id" : booking_id,
       "name" : userName.text,
       "phoneNumber" : userPhone.text,
-      "pershiftprice": convention.mxprice.toString()
+      "pershiftprice": convention.mxprice.toString(),
+      "convID" : convention.Id,
     };
 
     print( json.encode(match) );
@@ -346,7 +347,7 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
                                                   elevation: 0,
                                                   child: Container(
                                                     //padding: EdgeInsets.only(top: 20),
-                                                    height: 400,
+                                                    //height: 400,
                                                     width: MediaQuery.of(context).size.width,
                                                     child: Column(
                                                       children: <Widget>[
