@@ -13,21 +13,22 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class ModifyReservation extends StatefulWidget {
   Map data= new Map();
-  ModifyReservation({this.data});
+  String imgurl;
+  ModifyReservation({this.data, this.imgurl });
   @override
-  _ModifyReservationState createState() => _ModifyReservationState(data);
+  _ModifyReservationState createState() => _ModifyReservationState(data, imgurl);
 }
 
 class _ModifyReservationState extends State<ModifyReservation> {
 
   Map data= new Map();
-  _ModifyReservationState(this.data);
+  _ModifyReservationState(this.data, this.imgurl);
   var userEmail= TextEditingController();
   var userPhone= TextEditingController();
   var userName= TextEditingController();
   int currentIndex= 1;
   int num_of_days= 3, check= 3;
-  bool _inAsyncCall= true;
+  bool _inAsyncCall= false;
   bool pressed= false;
   String shiftTextstr1="",shiftTextstr2="",shiftTextstr3="";
   List<bool> dayOneShift = [false,false,false], dayTwoShift = [false,false,false], dayThreeShift = [false,false,false];
@@ -72,29 +73,6 @@ class _ModifyReservationState extends State<ModifyReservation> {
     //  debugPrint(fuserData.toString());
     // print(data);
     //  return fuserData;
-  }
-
-  Future postData() async{
-    var match = {
-      "id" : data['id']
-    };
-    print( json.encode(match) );
-    final String apiurl = "http://partyplusapi.herokuapp.com/imageforconv";
-    print("yes hsye");
-    http.Response response;
-    try{
-      response= await http.post(apiurl,
-          headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/x-www-form-urlencoded"
-          },
-          body: match,
-          encoding: Encoding.getByName("utf-8"));
-    }catch(e) {
-      print(e.toString());
-    };
-
-    return response.body;
   }
 
   Future cancelReservation() async{
@@ -148,8 +126,17 @@ class _ModifyReservationState extends State<ModifyReservation> {
   @override
   void initState(){
     super.initState();
-    imgurl = "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/khan.jpg?alt=media&token=267e9cc7-6646-4df0-bceb-a99e1b88360f";
-    print(imgurl);
+
+    setState((){
+      userEmail.text = data['email'];
+      userPhone.text = data['phoneNumber'];
+      userName.text = data['name'];
+      if(data['numofdays']=="1") num_of_days=1;
+      else if(data['numofdays']=="2") num_of_days=2;
+      else num_of_days=3;
+      makeshift();
+      ShiftString();
+    });
 
     print("eeeeeeeeeeeeeeeeeeehehhhhhhhhhe");
    // ShiftString();
@@ -260,25 +247,6 @@ class _ModifyReservationState extends State<ModifyReservation> {
 
   @override
   Widget build(BuildContext context) {
-    userEmail.text = data['email'];
-    userPhone.text = data['phoneNumber'];
-    userName.text = data['name'];
-
-    postData().then( (url)=>{
-      setState((){
-        _inAsyncCall= false;
-        imgurl= url;
-      })
-    });
-
-    setState(() {
-      if(data['numofdays']=="1") num_of_days=1;
-      else if(data['numofdays']=="2") num_of_days=2;
-      else num_of_days=3;
-      makeshift();
-      ShiftString();
-
-    });
 
     return Scaffold(
       appBar: AppBar(
@@ -450,7 +418,7 @@ class _ModifyReservationState extends State<ModifyReservation> {
                         ),
                         color: Color(0xFF005e6a),
                         child: Text(
-                          'Delete',
+                          'Cancel',
                           style: TextStyle(
                             color: Colors.white,
                             letterSpacing: 1.5,
