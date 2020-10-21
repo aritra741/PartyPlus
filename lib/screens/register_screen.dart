@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:partyplus/screens/retrieve_reservation.dart';
 import 'login_screen.dart';
 import 'search_screen_body.dart';
@@ -10,6 +11,7 @@ import '../providers/auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_svg/svg.dart';
 import 'dart:convert';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -20,7 +22,7 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   bool _rememberMe = false;
   int currentIndex= 3;
-
+  bool _inAsyncCall= false;
   var userEmail= TextEditingController();
   var userPassword= TextEditingController();
   var userPhone= TextEditingController();
@@ -265,8 +267,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
       child: RaisedButton(
         elevation: 5.0,
         onPressed: () {
+          setState( (){
+            _inAsyncCall= true;
+          } );
             handleRegistration(userEmail.text, userPassword.text)
                 .then( (token) =>{
+                  setState( (){
+                    _inAsyncCall= false;
+                  } ),
+            Fluttertoast.showToast(
+            msg: "Login Successful",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 3),
+            Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SearchScreenBody()),),
                 print("token ta holo "+ token.toString())
             } );
         } ,
@@ -322,68 +338,72 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle.light,
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Stack(
-            children: <Widget>[
-              Container(
-                height: double.infinity,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Color(0xFF005A5A),
-                      Color(0xFF004D4D),
-                      Color(0xFF004040),
-                      Color(0xFF003333),
-                    ],
-                    stops: [0.1, 0.4, 0.7, 0.9],
+      body: ModalProgressHUD(
+        child: AnnotatedRegion<SystemUiOverlayStyle>(
+          value: SystemUiOverlayStyle.light,
+          child: GestureDetector(
+            onTap: () => FocusScope.of(context).unfocus(),
+            child: Stack(
+              children: <Widget>[
+                Container(
+                  height: double.infinity,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Color(0xFF005A5A),
+                        Color(0xFF004D4D),
+                        Color(0xFF004040),
+                        Color(0xFF003333),
+                      ],
+                      stops: [0.1, 0.4, 0.7, 0.9],
+                    ),
                   ),
                 ),
-              ),
-              Container(
-                height: double.infinity,
-                child: SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 40.0,
-                    vertical: 60.0,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'Sign Up',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'OpenSans',
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.bold,
+                Container(
+                  height: double.infinity,
+                  child: SingleChildScrollView(
+                    physics: AlwaysScrollableScrollPhysics(),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 40.0,
+                      vertical: 60.0,
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'Sign Up',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'OpenSans',
+                            fontSize: 30.0,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 8.0),
-                      _buildFirstNameTF(),
-                      SizedBox(height: 8.0),
-                      _buildEmailTF(),
-                      SizedBox(height: 8.0),
-                      _buildPhoneNumberTF(),
-                      SizedBox(
-                        height: 8.0,
-                      ),
-                      _buildPasswordTF(),
-                      _buildRegitserBtn(),
-                      _buildSignupBtn(),
-                    ],
+                        SizedBox(height: 8.0),
+                        _buildFirstNameTF(),
+                        SizedBox(height: 8.0),
+                        _buildEmailTF(),
+                        SizedBox(height: 8.0),
+                        _buildPhoneNumberTF(),
+                        SizedBox(
+                          height: 8.0,
+                        ),
+                        _buildPasswordTF(),
+                        _buildRegitserBtn(),
+                        _buildSignupBtn(),
+                      ],
+                    ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
+        inAsyncCall: _inAsyncCall,
+        progressIndicator: CircularProgressIndicator(),
       ),
 
       bottomNavigationBar: BottomNavigationBar(

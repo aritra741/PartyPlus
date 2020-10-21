@@ -27,7 +27,7 @@ class _ModifyReservationState extends State<ModifyReservation> {
   var userName= TextEditingController();
   int currentIndex= 1;
   int num_of_days= 3, check= 3;
-  bool _inAsyncCall= false;
+  bool _inAsyncCall= true;
   bool pressed= false;
   String shiftTextstr1="",shiftTextstr2="",shiftTextstr3="";
   List<bool> dayOneShift = [false,false,false], dayTwoShift = [false,false,false], dayThreeShift = [false,false,false];
@@ -93,8 +93,8 @@ class _ModifyReservationState extends State<ModifyReservation> {
     }catch(e) {
       print(e.toString());
     };
-    imgurl = response.body;
-    print(imgurl);
+
+    return response.body;
   }
 
   Future cancelReservation() async{
@@ -149,7 +149,6 @@ class _ModifyReservationState extends State<ModifyReservation> {
   void initState(){
     super.initState();
     imgurl = "https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/khan.jpg?alt=media&token=267e9cc7-6646-4df0-bceb-a99e1b88360f";
-    postData();
     print(imgurl);
 
     print("eeeeeeeeeeeeeeeeeeehehhhhhhhhhe");
@@ -264,6 +263,13 @@ class _ModifyReservationState extends State<ModifyReservation> {
     userEmail.text = data['email'];
     userPhone.text = data['phoneNumber'];
     userName.text = data['name'];
+
+    postData().then( (url)=>{
+      setState((){
+        _inAsyncCall= false;
+        imgurl= url;
+      })
+    });
 
     setState(() {
       if(data['numofdays']=="1") num_of_days=1;
