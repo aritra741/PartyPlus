@@ -36,6 +36,37 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
+  Future <String> resetPassword( String email ) async
+  {
+    var userInfo = {
+      "email" : email
+    };
+
+    // print( json.encode(match) );
+
+    // print("HYSE??");
+    // print(SearchScreenBody.numberOfDays);
+    final String apiurl = "http://partyplusapi.herokuapp.com/reset";
+    //http.Response response = await http.post(apiurl);
+    /* final response = await http.post(apiurl,body: {
+      "name" : searchstring
+    });*/
+    http.Response response;
+    try{
+      response= await http.post(apiurl,
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          body: userInfo,
+          encoding: Encoding.getByName("utf-8"));
+    }catch(e) {
+      print(e.toString());
+    }
+
+    return response.body;
+  }
+
   Future <String> handleLogin( String email, String password ) async {
 
     var userInfo = {
@@ -159,7 +190,15 @@ class _LoginScreenState extends State<LoginScreen> {
     return Container(
       alignment: Alignment.centerRight,
       child: FlatButton(
-        onPressed: () => print('Forgot Password Button Pressed'),
+        onPressed: () => {
+          // resetPassword(emailTaEikhane).then( (val)=>{
+          //   Fluttertoast.showToast(msg: "Please check your email",
+          //       toastLength: Toast.LENGTH_SHORT,
+          //       gravity: ToastGravity.CENTER,
+          //       timeInSecForIosWeb: 3,
+          //   )
+          // } )
+        },
         padding: EdgeInsets.only(right: 0.0),
         child: Text(
           'Forgot Password?',
