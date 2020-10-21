@@ -46,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     // print("HYSE??");
     // print(SearchScreenBody.numberOfDays);
-    final String apiurl = "http://partyplusapi.herokuapp.com/login";
+    final String apiurl = "http://partyplusapi.herokuapp.com/reset";
     //http.Response response = await http.post(apiurl);
     /* final response = await http.post(apiurl,body: {
       "name" : searchstring
