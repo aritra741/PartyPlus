@@ -70,6 +70,31 @@ class _RetrieveReservationState extends State<RetrieveReservation> {
     data = json.decode(response.body);
     print(data);
   }
+
+  Future getImage() async{
+    var match = {
+      "id" : data['convID']
+    };
+    print( json.encode(match) );
+    final String apiurl = "http://partyplusapi.herokuapp.com/imageforconv";
+    print("yes hsye");
+    http.Response response;
+    try{
+      response= await http.post(apiurl,
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          body: match,
+          encoding: Encoding.getByName("utf-8"));
+    }catch(e) {
+      print(e.toString());
+    };
+
+    return response.body;
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -130,9 +155,11 @@ class _RetrieveReservationState extends State<RetrieveReservation> {
                     });
 
                     postData().then((value) => {
-                      Navigator.push(
+
+                      getImage().then((value) => Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => ModifyReservation(data : data))),
+                          MaterialPageRoute(builder: (context) => ModifyReservation(data : data, imgurl: value,))),),
+
                           setState((){
                             _inAsyncCall= false;
                             })

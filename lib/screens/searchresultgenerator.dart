@@ -43,6 +43,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
   List<bool> dayOneShift, dayTwoShift, dayThreeShift;
   List<conventionHall> hallList = new List();
   List<conventionHall> AllHall = new List();
+  int currentIndex= 0;
 
   _SearchResultGeneratorState(this.searchstring,this.dayString,this.selectedDate,this.secDate,this.thDate,this.dayOneShift, this.dayTwoShift, this.dayThreeShift, this.type);
 
@@ -159,6 +160,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
         ),
       ),*/
               body: new Container(
+
                 child: ((hallList.length==1 && hallList[0].Name=='null'))?new Text("No result found",textAlign: TextAlign.center,) : new Column(
                   children: <Widget>[
                     if(hallList.length==0) Text("No result found",textAlign: TextAlign.center,),
@@ -172,7 +174,9 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
                     ),
                     ),
 
-                    Row(
+
+                    //BottomNavigationBar: BottomNavigationBar()
+                  /*  Row(
                       children: <Widget>[
                         FlatButton(
                           // elevation: 5.0,
@@ -213,10 +217,54 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
                           ),
                         ),
                       ],
-                    ),
+                    ),*/
                   ],
                 ),
 
+              ),
+              bottomNavigationBar: new Theme(
+                data: Theme.of(context).copyWith(
+                  // sets the background color of the `BottomNavigationBar`
+                    canvasColor: Color( 0xFF004b55 ),
+                    // sets the active color of the `BottomNavigationBar` if `Brightness` is light
+                    primaryColor: Colors.white,
+                    textTheme: Theme
+                        .of(context)
+                        .textTheme
+                        .copyWith(caption: new TextStyle(color: Colors.white))), // sets the inactive color of the `BottomNavigationBar`
+                child: new BottomNavigationBar(
+                  currentIndex: currentIndex,
+                  items: [
+                    BottomNavigationBarItem(
+                        icon: Icon(Icons.sort),
+                        title: Text("Sort"),
+                        backgroundColor: Colors.white
+                    ),
+                    BottomNavigationBarItem(
+                        icon: Icon(Icons.filter),
+                        title: Text("Filter"),
+                        backgroundColor: Colors.white
+                    ),
+                  ],
+               //   fixedColor: Color( 0xFF004b55 ),
+                  onTap: (index){
+                    if( index==0 ){
+                      setState(() {
+                        currentIndex= 0;
+                      });
+                      showSortOptions();
+                    }
+                    else if( index==1 )
+                    {
+                      setState(() {
+                        currentIndex= 1;
+                      });
+                      showFilterDialog();
+                    }
+
+
+                  },
+                ),
               ),
             );
           }
