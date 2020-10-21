@@ -186,11 +186,43 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildForgotPasswordBtn() {
+  createAlert(BuildContext context)
+  {
+    TextEditingController email = TextEditingController();
+    return showDialog(context: context,builder: (context){
+      return AlertDialog(
+        title: Text('Email'),
+        content: TextField(
+          controller: email,
+        ),
+        actions: [
+          MaterialButton(
+              elevation: 5.0,
+            child: Text('Submit'),
+            onPressed: (){
+               resetPassword(email.text.toString()).then( (val)=>{
+                Fluttertoast.showToast(msg: "Please check your email",
+                   toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.CENTER,
+                   timeInSecForIosWeb: 3,
+                )
+               } );
+               Navigator.of(context, rootNavigator: true)
+                   .pop();
+            },
+          )
+        ],
+      );
+    });
+  }
+  Widget _buildForgotPasswordBtn(BuildContext context) {
     return Container(
       alignment: Alignment.centerRight,
       child: FlatButton(
         onPressed: () => {
+
+
+        createAlert(context),
           // resetPassword(emailTaEikhane).then( (val)=>{
           //   Fluttertoast.showToast(msg: "Please check your email",
           //       toastLength: Toast.LENGTH_SHORT,
@@ -381,7 +413,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: 30.0,
                         ),
                         _buildPasswordTF(),
-                        _buildForgotPasswordBtn(),
+                        _buildForgotPasswordBtn(context),
                         _buildRememberMeCheckbox(),
                         _buildLoginBtn(),
                         _buildSignupBtn(),

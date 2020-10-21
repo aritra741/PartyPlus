@@ -347,7 +347,7 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
                                                   elevation: 0,
                                                   child: Container(
                                                     //padding: EdgeInsets.only(top: 20),
-                                                    //height: 400,
+                                                    height: 200,
                                                     width: MediaQuery.of(context).size.width,
                                                     child: Column(
                                                       children: <Widget>[
