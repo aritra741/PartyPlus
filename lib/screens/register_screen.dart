@@ -275,14 +275,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   setState( (){
                     _inAsyncCall= false;
                   } ),
-            Fluttertoast.showToast(
-            msg: "Login Successful",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 3),
-            Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => SearchScreenBody()),),
+
+              if( token.contains("email") || token.contains("password") )
+                {
+                  Fluttertoast.showToast(
+                      msg: "Something went wrong. Please check your credentials.",
+                      toastLength: Toast.LENGTH_LONG,
+                      gravity: ToastGravity.CENTER,
+                      timeInSecForIosWeb: 5)
+                }
+              else
+                {
+                  Fluttertoast.showToast(
+                      msg: "Registration Successful",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.CENTER,
+                      timeInSecForIosWeb: 3),
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SearchScreenBody()),),
+
+                },
+
                 print("token ta holo "+ token.toString())
             } );
         } ,

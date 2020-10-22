@@ -202,7 +202,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                 // mainAxisAlignment: MainAxisAlignment.center,
                 // crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  SizedBox(width: 30,),
+                  SizedBox(width: 45,),
                   Text(
                     "Party",
                     style: GoogleFonts.overpass(color: Colors.black, fontSize: 32, fontWeight: FontWeight.w200 ),
