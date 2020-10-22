@@ -276,10 +276,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     _inAsyncCall= false;
                   } ),
 
-              if( token.contains("email") || token.contains("password") )
+              if( token.contains("email") || token.contains("Password") )
                 {
                   Fluttertoast.showToast(
-                      msg: "Something went wrong. Please check your credentials.",
+                      msg: token.toString(),
                       toastLength: Toast.LENGTH_LONG,
                       gravity: ToastGravity.CENTER,
                       timeInSecForIosWeb: 5)
@@ -287,7 +287,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               else
                 {
                   Fluttertoast.showToast(
-                      msg: "Registration Successful",
+                      msg: token.toString(),
                       toastLength: Toast.LENGTH_SHORT,
                       gravity: ToastGravity.CENTER,
                       timeInSecForIosWeb: 3),

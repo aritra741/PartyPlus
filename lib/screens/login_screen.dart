@@ -259,8 +259,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 if(val.contains("error"))
                   {
                     Fluttertoast.showToast(
-                        msg: "Something went wrong. Please Try again",
-                        toastLength: Toast.LENGTH_SHORT,
+                        msg: "Something went wrong. Please check your credentials",
+                        toastLength: Toast.LENGTH_LONG,
                         gravity: ToastGravity.CENTER,
                         timeInSecForIosWeb: 3);
                   }
