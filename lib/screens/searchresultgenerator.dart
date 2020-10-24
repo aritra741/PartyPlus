@@ -603,7 +603,7 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
                     ),
                     Row(
                       children: <Widget>  [
-                        Text("   Minimum Sitting Capacity",style: TextStyle(color: Colors.black,
+                        Text("   Minimum Seating Capacity",style: TextStyle(color: Colors.black,
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold),),
                       ],

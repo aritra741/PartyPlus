@@ -10,19 +10,21 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class ModifyReservation extends StatefulWidget {
   Map data= new Map();
-  String imgurl;
-  ModifyReservation({this.data, this.imgurl });
+  Map halldata= new Map();
+  ModifyReservation({this.data, this.halldata });
   @override
-  _ModifyReservationState createState() => _ModifyReservationState(data, imgurl);
+  _ModifyReservationState createState() => _ModifyReservationState(data, halldata);
 }
 
 class _ModifyReservationState extends State<ModifyReservation> {
 
   Map data= new Map();
-  _ModifyReservationState(this.data, this.imgurl);
+  Map halldata= new Map();
+  _ModifyReservationState(this.data, this.halldata);
   var userEmail= TextEditingController();
   var userPhone= TextEditingController();
   var userName= TextEditingController();
@@ -35,9 +37,14 @@ class _ModifyReservationState extends State<ModifyReservation> {
   String shiftBitstr1="",shiftBitstr2="",shiftBitstr3="";
   String takatext1,takatext2,takatext3;
   String price1,price2,price3;
-  String imgurl;
 
-  double total_cost= 0;
+  GoogleMapController mapController;
+  List<Marker> locations = <Marker>[];
+
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
+  }
+  double total_cost= 0,vat=0;
 
   Future updateData() async
   {
@@ -241,6 +248,7 @@ class _ModifyReservationState extends State<ModifyReservation> {
       print(shiftBitstr1);
     }
 
+    vat = total_cost*0.15;
     total_cost*= 1.15;
     return;
   }
@@ -248,6 +256,12 @@ class _ModifyReservationState extends State<ModifyReservation> {
   @override
   Widget build(BuildContext context) {
 
+    setState(() {
+      locations.add(Marker(
+          markerId: MarkerId('1'),
+          position: LatLng(24.887635, 91.874310),
+          infoWindow: InfoWindow(title: 'International Convention City')));
+    });
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -261,7 +275,7 @@ class _ModifyReservationState extends State<ModifyReservation> {
           child: Column(
             children: <Widget>[
 
-              Image.network(imgurl,fit: BoxFit.cover),
+              Image.network(halldata['Image'],fit: BoxFit.cover),
               SizedBox(height: 10.0),
               Align(
                 alignment: Alignment.centerLeft,
@@ -272,6 +286,73 @@ class _ModifyReservationState extends State<ModifyReservation> {
                         color: Colors.black,
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+              SizedBox(height: 5.0),
+              Align(
+                alignment: Alignment.center,
+                child: SizedBox(
+                    height: 300,
+                    width: 400,
+                    child: GoogleMap(
+                        initialCameraPosition: CameraPosition(
+                          target: LatLng(24.887635, 91.874310),
+                          zoom: 11.0,
+                        ),
+                        mapType: MapType.normal,
+                        markers: Set<Marker>.of(locations),
+                        onMapCreated: _onMapCreated)),
+              ),
+              Row(children: <Widget>[
+                //Text("Hi"),
+                Icon(
+                  Icons.location_on,
+                  size: 40,
+                  color: Color(0xFFEA4335),
+                ),
+                Text(
+                  halldata['Street'] + "," + halldata['City'],
+                  style: TextStyle(color: Colors.black, fontSize: 20.0),
+                ),
+              ]),
+              Card(
+                  elevation: 20,
+                  child: Container(
+                    // margin: new EdgeInsets.symmetric(vertical: 10.0),
+                    height: 200,
+                    child: Column(
+                      children: <Widget>[
+                        Text("\nFacilities",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 25.0,
+                                fontWeight: FontWeight.bold)),
+                        AC(),
+                        WiFi(),
+                        CC(),
+                        PhotoShoots(),
+                        Parkinglot(),
+                        Seating_cap(),
+                      ],
+                    ),
+                  )),
+              SizedBox(height: 20),
+              Card(
+                elevation: 20,
+                child: Container(
+                  height: 150,
+                  child: Column(
+                    children: <Widget>[
+                      Text("\nMiscellaneous",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 25.0,
+                              fontWeight: FontWeight.bold)),
+                      Structure(),
+                      FireWorks(),
+                      FireExting(),
+                    ],
                   ),
                 ),
               ),
@@ -505,17 +586,17 @@ class _ModifyReservationState extends State<ModifyReservation> {
     return Row(
       children: <Widget>[
         // SizedBox(height: 50),
-        SizedBox(width: 150),
+        SizedBox(width: 115),
         Container(
-            child:  Text("VAT",
+            child:  Text("VAT(15%)",
                 style: TextStyle(color: Colors.black, fontSize: 16.0,))
         ),
 
-        SizedBox(width: 100),
+        SizedBox(width: 60),
         Container(
           child: new Column(
             children: <Widget>[
-              Text("15%",
+              Text(vat.ceil().toString()+ "\u09F3",
                 style: TextStyle(color: Colors.black, fontSize: 16.0,),),
             ],
           ),
@@ -527,13 +608,13 @@ class _ModifyReservationState extends State<ModifyReservation> {
     return Row(
       children: <Widget>[
         // SizedBox(height: 50),
-        SizedBox(width: 150),
+        SizedBox(width: 110),
         Container(
             child:  Text("Service Fee",
                 style: TextStyle(color: Colors.black, fontSize: 16.0,))
         ),
 
-        SizedBox(width: 65),
+        SizedBox(width: 70),
         Container(
           child: new Column(
             children: <Widget>[
@@ -568,7 +649,7 @@ class _ModifyReservationState extends State<ModifyReservation> {
             child:  Text(data['date1'],
               style: TextStyle(color: Colors.black, fontSize: 16.0),),
           ),
-          SizedBox(width: 80),
+          SizedBox(width: 35),
           Container(
             child: new Column(
               children: <Widget>[
@@ -577,7 +658,7 @@ class _ModifyReservationState extends State<ModifyReservation> {
               ],
             ),
           ),
-          SizedBox(width: 50),
+          SizedBox(width: 60),
           Container(
             child: new Column(
 
@@ -602,7 +683,7 @@ class _ModifyReservationState extends State<ModifyReservation> {
             child:  Text(data['date2'],
               style: TextStyle(color: Colors.black, fontSize: 16.0),),
           ),
-          SizedBox(width: 80),
+          SizedBox(width: 35),
           Container(
             child: new Column(
               children: <Widget>[
@@ -611,7 +692,7 @@ class _ModifyReservationState extends State<ModifyReservation> {
               ],
             ),
           ),
-          SizedBox(width: 80),
+          SizedBox(width: 60),
           Container(
             child: new Column(
 
@@ -636,7 +717,7 @@ class _ModifyReservationState extends State<ModifyReservation> {
             child:  Text(data['date3'],
               style: TextStyle(color: Colors.black, fontSize: 16.0),),
           ),
-          SizedBox(width: 80),
+          SizedBox(width: 35),
           Container(
             child: new Column(
               children: <Widget>[
@@ -645,7 +726,7 @@ class _ModifyReservationState extends State<ModifyReservation> {
               ],
             ),
           ),
-          SizedBox(width: 80),
+          SizedBox(width: 60),
           Container(
             child: new Column(
 
@@ -671,14 +752,14 @@ class _ModifyReservationState extends State<ModifyReservation> {
     return Row(
       children: <Widget>[
         // SizedBox(height: 50),
-        SizedBox(width: 150),
+        SizedBox(width: 130),
         Container(
             child:  Text("Total",
                 style: TextStyle(color: Colors.black, fontSize: 16.0,
                     fontWeight: FontWeight.bold))
         ),
 
-        SizedBox(width: 83),
+        SizedBox(width: 70),
         Container(
           child: new Column(
             children: <Widget>[
@@ -695,7 +776,7 @@ class _ModifyReservationState extends State<ModifyReservation> {
   Widget AddRemoveButton1() {
     return Row(
       children: <Widget>[
-        SizedBox(width: 145),
+        SizedBox(width: 100),
         InkWell(
           // onTap: doSomething,
           child: SizedBox(
@@ -800,7 +881,7 @@ class _ModifyReservationState extends State<ModifyReservation> {
   Widget AddRemoveButton2() {
     return Row(
       children: <Widget>[
-        SizedBox(width: 145),
+        SizedBox(width: 100),
         InkWell(
           // onTap: doSomething,
           child: SizedBox(
@@ -905,7 +986,7 @@ class _ModifyReservationState extends State<ModifyReservation> {
   Widget AddRemoveButton3() {
     return Row(
       children: <Widget>[
-        SizedBox(width: 145),
+        SizedBox(width: 100),
         InkWell(
           // onTap: doSomething,
           child: SizedBox(
@@ -1004,6 +1085,146 @@ class _ModifyReservationState extends State<ModifyReservation> {
         ),
       ],
     );
+  }
+
+  Widget AC() {
+    if (halldata['Facility'][0] == '1') {
+      return Row(children: <Widget>[
+        Icon(Icons.check, color: Color(0xFF00ff00)),
+        Text(
+          "Air Conditioning",
+          style: TextStyle(color: Colors.black, fontSize: 16.0),
+        ),
+      ]);
+    } else {
+      return Row(children: <Widget>[]);
+    }
+  }
+
+  Widget WiFi() {
+    if (halldata['Facility'][1] == '1') {
+      return Row(children: <Widget>[
+        Icon(Icons.check, color: Color(0xFF00ff00)),
+        Text(
+          "Free Wifi",
+          style: TextStyle(color: Colors.black, fontSize: 16.0),
+        ),
+      ]);
+    } else {
+      return Row(children: <Widget>[]);
+    }
+  }
+
+  Widget CC() {
+    if (halldata['Facility'][2] == '1') {
+      return Row(children: <Widget>[
+        Icon(Icons.check, color: Color(0xFF00ff00)),
+        Text(
+          "Surveilled by CC camera",
+          style: TextStyle(color: Colors.black, fontSize: 16.0),
+        ),
+      ]);
+    } else {
+      return Row(children: <Widget>[]);
+    }
+  }
+
+  Widget PhotoShoots() {
+    if (halldata['Facility'][3] == '1') {
+      return Row(children: <Widget>[
+        Icon(Icons.check, color: Color(0xFF00ff00)),
+        Text(
+          "Special corner for photoshoots",
+          style: TextStyle(color: Colors.black, fontSize: 16.0),
+        ),
+      ]);
+    } else {
+      return Row(children: <Widget>[]);
+    }
+  }
+
+  Widget Parkinglot() {
+    return Row(children: <Widget>[
+      Icon(Icons.check, color: Color(0xFF00ff00)),
+      Text(
+        halldata['Parking'] + " square feet parking lot",
+        style: TextStyle(color: Colors.black, fontSize: 16.0),
+      ),
+    ]);
+  }
+  Widget Seating_cap() {
+    return Row(children: <Widget>[
+      Icon(Icons.check, color: Color(0xFF00ff00)),
+      Text(
+        halldata['Sitting_cap'] + " seating capacity",
+        style: TextStyle(color: Colors.black, fontSize: 16.0),
+      ),
+    ]);
+  }
+
+  Widget Structure() {
+    if (halldata['Facility'][4] == '1') {
+      return Row(children: <Widget>[
+        Icon(
+          Icons.fiber_manual_record,
+          color: Color(0xFF005e6a),
+          size: 16,
+        ),
+        Text(
+          "Duplex structure",
+          style: TextStyle(color: Colors.black, fontSize: 16.0),
+        ),
+      ]);
+    } else {
+      return Row(children: <Widget>[
+        Icon(
+          Icons.fiber_manual_record,
+          color: Color(0xFF005e6a),
+          size: 16,
+        ),
+        Text(
+          "Simplex structure",
+          style: TextStyle(color: Colors.black, fontSize: 16.0),
+        ),
+      ]);
+    }
+  }
+
+  Widget FireWorks() {
+    if (halldata['Facility'][5] == '1') {
+      return Row(children: <Widget>[
+        Icon(
+          Icons.fiber_manual_record,
+          color: Color(0xFF005e6a),
+          size: 16,
+        ),
+        Text(
+          "Reserved place for fireworks",
+          style: TextStyle(color: Colors.black, fontSize: 16.0),
+        ),
+      ]);
+    } else {
+      return Row(children: <Widget>[]);
+    }
+  }
+
+  Widget FireExting() {
+    if (halldata['Facility'][6] == '1') {
+      return Row(children: <Widget>[
+        //leading: new MyBullet(),
+        Icon(
+          Icons.fiber_manual_record,
+          color: Color(0xFF005e6a),
+          size: 16,
+        ),
+        Text(
+          "Modern fire extinguishing facilities",
+          style: TextStyle(color: Colors.black, fontSize: 16.0),
+        ),
+      ]);
+    } else {
+      return Row(children: <Widget>[]);
+    }
   }
 
 }

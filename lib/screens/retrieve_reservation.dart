@@ -22,6 +22,7 @@ class _RetrieveReservationState extends State<RetrieveReservation> {
   bool _inAsyncCall= false;
   bool pressed= false;
   Map<String, dynamic> data;
+  Map<String, dynamic>halldata ;
 
   @override
   void dispose() {
@@ -71,12 +72,12 @@ class _RetrieveReservationState extends State<RetrieveReservation> {
     print(data);
   }
 
-  Future getImage() async{
+  Future getHalldetails() async{
     var match = {
       "id" : data['convID']
     };
     print( json.encode(match) );
-    final String apiurl = "http://partyplusapi.herokuapp.com/imageforconv";
+    final String apiurl = "http://partyplusapi.herokuapp.com/convDetails";
     print("yes hsye");
     http.Response response;
     try{
@@ -91,6 +92,8 @@ class _RetrieveReservationState extends State<RetrieveReservation> {
       print(e.toString());
     };
 
+    halldata = json.decode(response.body);
+    print(halldata);
     return response.body;
   }
 
@@ -156,9 +159,9 @@ class _RetrieveReservationState extends State<RetrieveReservation> {
 
                     postData().then((value) => {
 
-                      getImage().then((value) => Navigator.push(
+                      getHalldetails().then((value) => Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => ModifyReservation(data : data, imgurl: value,))),),
+                          MaterialPageRoute(builder: (context) => ModifyReservation(data : data, halldata: halldata,))),),
 
                           setState((){
                             _inAsyncCall= false;
