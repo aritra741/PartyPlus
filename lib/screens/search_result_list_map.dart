@@ -45,7 +45,6 @@ class _SearchResultListMapState extends State<SearchResultListMap> with SingleTi
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("PartyPlus"),
         backgroundColor: Color(0xFF005e6a),
         bottom: TabBar(
           onTap: (e){
