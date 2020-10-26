@@ -37,7 +37,7 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
   String shiftBitstr1="",shiftBitstr2="",shiftBitstr3="";
   String shiftTextstr1,shiftTextstr2,shiftTextstr3;
   String takatext1,takatext2,takatext3;
-  double total_cost= 0;
+  double total_cost= 0,vat=0;
   _ConfirmBookingState(this.convention,this.searchstring,this.dayString,this.selectedDate,this.secDate,this.thDate,this.dayOneShift, this.dayTwoShift, this.dayThreeShift);
   @override
   void dispose() {
@@ -524,6 +524,7 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
         else shiftBitstr3 += "0";
         print(shiftBitstr1);
       }
+    vat = 0.15*total_cost;
     total_cost *= 1.15;
     return;
   }
@@ -677,17 +678,17 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
     return Row(
       children: <Widget>[
         // SizedBox(height: 50),
-        SizedBox(width: 130),
+        SizedBox(width: 115),
         Container(
-            child:  Text("VAT",
+            child:  Text("VAT(15%)",
                 style: TextStyle(color: Colors.black, fontSize: 16.0,))
         ),
 
-        SizedBox(width: 95),
+        SizedBox(width: 60),
         Container(
           child: new Column(
             children: <Widget>[
-              Text("15%",
+              Text(vat.ceil().toString()+ "\u09F3",
                 style: TextStyle(color: Colors.black, fontSize: 16.0,),),
             ],
           ),
@@ -702,8 +703,7 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
         SizedBox(width: 110),
         Container(
             child:  Text("Service Fee",
-                style: TextStyle(color: Colors.black, fontSize: 16.0,
-                    fontWeight: FontWeight.bold))
+                style: TextStyle(color: Colors.black, fontSize: 16.0,))
         ),
 
         SizedBox(width: 70),

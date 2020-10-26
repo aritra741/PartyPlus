@@ -48,7 +48,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
   String shiftTextstr1,shiftTextstr2,shiftTextstr3;
   String takatext1,takatext2,takatext3;
   String date1,date2,date3;
-  double total_cost= 0;
+  double total_cost= 0,vat=0;
 
   GoogleMapController mapController;
   List<Marker> locations = <Marker>[];
@@ -275,6 +275,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
                             CC(),
                             PhotoShoots(),
                             Parkinglot(),
+                            Seating_cap(),
                           ],
                         ),
                       )),
@@ -443,6 +444,8 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
       else shiftBitstr3 += "0";
       print(shiftBitstr1);
     }
+    vat = total_cost*0.15;
+    print("vat = $vat");
     total_cost*= 1.15;
     return;
   }
@@ -953,6 +956,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
           CC(),
           PhotoShoots(),
           Parkinglot(),
+          Seating_cap(),
         ],
       ),
     );
@@ -967,18 +971,18 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
             child:  Text("",
               style: TextStyle(color: Colors.white, fontSize: 16.0,),textAlign: TextAlign.center,)
         ),*/
-        SizedBox(width: 130),
+        SizedBox(width: 115),
         Container(
-            child:  Text("VAT",
+            child:  Text("VAT(15%)",
                 style: TextStyle(color: Colors.black, fontSize: 16.0,),textAlign: TextAlign.center,)
         ),
 
         //SizedBox(width: 120), //eta
-        SizedBox(width: 95),
+        SizedBox(width: 60),
         Container(
           child: new Column(
             children: <Widget>[
-              Text("15%",
+              Text((vat.ceil().toString() + "\u09F3"),
                 style: TextStyle(color: Colors.black, fontSize: 16.0,),),
             ],
           ),
@@ -1001,8 +1005,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
         ),*/
         Container(
             child:  Text("Service Fee",
-                style: TextStyle(color: Colors.black, fontSize: 16.0,
-                    fontWeight: FontWeight.bold),textAlign: TextAlign.center,)
+                style: TextStyle(color: Colors.black, fontSize: 16.0,),textAlign: TextAlign.center,)
         ),
 
        // SizedBox(width: 97), //eta
@@ -1119,6 +1122,15 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
       Icon(Icons.check, color: Color(0xFF00ff00)),
       Text(
         convention.parking + " square feet parking lot",
+        style: TextStyle(color: Colors.black, fontSize: 16.0),
+      ),
+    ]);
+  }
+  Widget Seating_cap() {
+    return Row(children: <Widget>[
+      Icon(Icons.check, color: Color(0xFF00ff00)),
+      Text(
+        convention.Sitting_cap + " seating capacity",
         style: TextStyle(color: Colors.black, fontSize: 16.0),
       ),
     ]);
