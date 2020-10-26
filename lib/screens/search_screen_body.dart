@@ -27,6 +27,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SearchScreenBody extends StatefulWidget {
   static int val= 5;
+  static User authenticatedUser;
   @override
   _SearchScreenBodyState createState() => _SearchScreenBodyState();
 }
@@ -54,8 +55,8 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
   static DateTime thDate;//= new DateTime(secDate.year, secDate.month, secDate.day+1);
   static DateFormat formatter3 ;//= DateFormat('dd-MM-yyyy');
   String formatted3; //= formatter3.format(thDate);
-  User _authenticatedUser;
   String userToken;
+  static User authenticatedUser;
 
   @override
   void dispose() {
@@ -77,7 +78,8 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
     checkIfLoggedIn().then( (token)=>{
       if(token!=null)
         {
-          print("hoise")
+          authenticatedUser= User(token),
+          print("token holo "+token.toString())
         }
       else
         {
@@ -176,6 +178,9 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
     showDay = DateFormat('EEEE').format(now);
     showMonth = DateFormat('MMMM').format(now);
     showYear = DateFormat('y').format(now);
+
+    print("user holo");
+    print(authenticatedUser);
 
     dayOneShift= List<bool>();
     dayTwoShift= List<bool>();
@@ -798,13 +803,13 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                 title: Text("Reservation"),
                 backgroundColor: Color( 0xFF004b55 )
             ),
-            if(1==0)
+            if(SearchScreenBody.authenticatedUser==null)
               BottomNavigationBarItem(
                   icon: Icon(Icons.person),
                   title: Text("Login"),
                   backgroundColor: Color( 0xFF004b55 )
               ),
-            if(1==0)
+            if(SearchScreenBody.authenticatedUser==null)
               BottomNavigationBarItem(
                   icon: Icon(Icons.person_add),
                   title: Text("Register"),

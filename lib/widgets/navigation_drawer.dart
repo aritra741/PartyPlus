@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:partyplus/screens/user_profile.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:partyplus/screens/search_screen_body.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:async';
 
 class NavigationDrawer extends StatelessWidget {
+
+  Future<void> clean () async{
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    await preferences.clear();
+  }
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -33,6 +41,7 @@ class NavigationDrawer extends StatelessWidget {
             ),
           ),
           Divider(color: Colors.black),
+          if(SearchScreenBody.authenticatedUser!=null)
           ListTile(
             onTap: ()=> Navigator.push(context,
               MaterialPageRoute(builder: (context) => UserProfile())),
@@ -43,7 +52,15 @@ class NavigationDrawer extends StatelessWidget {
             leading: Icon(Icons.settings),
             title: Text("Settings", style: TextStyle(fontSize: 18),),
           ),
+          if(SearchScreenBody.authenticatedUser!=null)
           ListTile(
+          onTap: () {
+            clean();
+            SearchScreenBody.authenticatedUser = null;
+            Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SearchScreenBody()));
+          },
             leading: Icon(Icons.arrow_back),
             title: Text("Logout", style: TextStyle(fontSize: 18),),
           ),

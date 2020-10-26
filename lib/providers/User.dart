@@ -1,6 +1,6 @@
 class User{
 
-  String email, password, token;
+  String token;
 
-  User( this.email, this.password, this.token );
+  User( this.token );
 }
