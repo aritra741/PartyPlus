@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:partyplus/providers/User.dart';
 import 'package:partyplus/screens/register_screen.dart';
 import 'package:partyplus/screens/retrieve_reservation.dart';
 //import 'package:flutterModule/register_screen.dart';
@@ -111,6 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if( !(response.body.toString().contains('error')) )
       userData.setString('token', response.body);
 
+    print("eikhane respons "+response.body);
     return response.body;
   }
 
@@ -255,7 +257,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 setState(() {
                   _inAsyncCall= false;
                 });
-            print("response holo "+val);
+
                 if(val.contains("error"))
                   {
                     Fluttertoast.showToast(
@@ -266,6 +268,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   }
                 else
                   {
+                    SearchScreenBody.authenticatedUser= User( val.toString() );
+                    print("response holo "+val.toString());
+
                     Fluttertoast.showToast(
                         msg: "Login Successful",
                         toastLength: Toast.LENGTH_SHORT,
