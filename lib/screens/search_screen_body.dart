@@ -775,7 +775,80 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: new Theme(
+        data: Theme.of(context).copyWith(
+          // sets the background color of the `BottomNavigationBar`
+            canvasColor: Color( 0xFF004b55 ),
+            // sets the active color of the `BottomNavigationBar` if `Brightness` is light
+            primaryColor: Colors.white,
+            textTheme: Theme
+                .of(context)
+                .textTheme
+                .copyWith(caption: new TextStyle(color: Colors.white))), // sets the inactive color of the `BottomNavigationBar`
+        child: new BottomNavigationBar(
+          currentIndex: currentIndex,
+          items: [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.search),
+                title: Text("Search"),
+                backgroundColor: Color( 0xFF004b55 )
+            ),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.card_travel),
+                title: Text("Reservation"),
+                backgroundColor: Color( 0xFF004b55 )
+            ),
+            if(1==0)
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.person),
+                  title: Text("Login"),
+                  backgroundColor: Color( 0xFF004b55 )
+              ),
+            if(1==0)
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.person_add),
+                  title: Text("Register"),
+                  backgroundColor: Color( 0xFF004b55 )
+              ),
+          ],
+          onTap: (index){
+            if( index==0 ){
+              setState(() {
+                currentIndex= 0;
+              });
+            }
+            else if( index==1 )
+            {
+              // setState(() {
+              //   currentIndex= 1;
+              // });
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => RetrieveReservation()),);
+            }
+            else if( index==2 )
+            {
+              // setState(() {
+              //   currentIndex= 2;
+              // });
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LoginScreen()),);
+
+            }
+            else
+            {
+              // setState(() {
+              //   currentIndex= 3;
+              // });
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => RegisterScreen()),);
+            }
+          },
+        ),
+      ),
+     /* bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
         items: [
           BottomNavigationBarItem(
@@ -788,11 +861,13 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
               title: Text("Reservation"),
               backgroundColor: Color( 0xFF004b55 )
           ),
+          if(1==0)
           BottomNavigationBarItem(
               icon: Icon(Icons.person),
               title: Text("Login"),
               backgroundColor: Color( 0xFF004b55 )
           ),
+          if(1==0)
           BottomNavigationBarItem(
               icon: Icon(Icons.person_add),
               title: Text("Register"),
@@ -834,7 +909,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
               MaterialPageRoute(builder: (context) => RegisterScreen()),);
           }
         },
-      ),
+      ),*/
     );
   }
 

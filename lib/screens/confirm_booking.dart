@@ -9,6 +9,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 import 'package:partyplus/providers/conventionHall.dart';
+import 'package:sslcommerz/sslcommerz.dart';
 
 class ConfirmBooking extends StatefulWidget {
   conventionHall convention ;
@@ -323,6 +324,7 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
                                   RaisedButton(
 
                                     onPressed: () {
+                                     // final SSLCommerzInitialization sslCommerzInitialization = new SSLCommerzInitialization ("yourStoreID","yourPassword", amount, SSLCCurrencyType.BDT,"123456789098765", "yourProductType", SSLCSdkType.TESTBOX);
                                       showGeneralDialog(
 
                                           context: context,
@@ -741,3 +743,4 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
   }
 
 }
+
