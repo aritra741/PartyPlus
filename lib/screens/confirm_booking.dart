@@ -82,6 +82,9 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
       "phoneNumber" : userPhone.text,
       "pershiftprice": convention.mxprice.toString(),
       "convID" : convention.Id,
+      "convStreet": convention.street,
+      "convCity": convention.City,
+      "convName": convention.Name
     };
 
     print( json.encode(match) );
