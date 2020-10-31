@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:partyplus/screens/addon_dummy_page.dart';
 import 'package:partyplus/screens/search_screen_body.dart';
 import 'package:partyplus/screens/user_profile.dart';
-
+import 'package:provider/provider.dart';
+import 'package:partyplus/providers/payment_provider.dart';
+import 'package:partyplus/screens/payment_statust_screen.dart';
+import 'package:partyplus/screens/webview_screen.dart';
 void main() {
-  runApp(MyApp());
+  runApp(MyHomePage());
 }
 
-class MyApp extends StatelessWidget {
+/*class MyApp extends StatelessWidget {
   // This widget is the root of your application.
 
   @override
@@ -34,7 +37,7 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
+*/
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
@@ -77,16 +80,19 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(value: PaymentProvider()),
+      ],
+     /* appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
-      ),
-      body: Center(
+      ),*/
+     // body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: Column(
+        child: MaterialApp(
           // Column is also a layout widget. It takes a list of children and
           // arranges them vertically. By default, it sizes itself to fit its
           // children horizontally, and tries to be as tall as its parent.
@@ -101,8 +107,13 @@ class _MyHomePageState extends State<MyHomePage> {
           // center the children vertically; the main axis here is the vertical
           // axis because Columns are vertical (the cross axis would be
           // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
+          //mainAxisAlignment: MainAxisAlignment.center,
+          home: SearchScreenBody(),
+          routes: {
+            WebviewScreen.routeName: (ctx) => WebviewScreen(),
+            PaymentStatusScreen.routeName: (ctx) => PaymentStatusScreen(),
+          },
+        /* children: <Widget>[
             Text(
               'You have pushed the button this many times:',
             ),
@@ -110,14 +121,14 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
-          ],
+          ],*/
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
+     // ),
+     /* floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ), */// This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

@@ -9,6 +9,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 import 'package:partyplus/providers/conventionHall.dart';
+import 'package:partyplus/screens/webview_screen.dart';
 import 'package:sslcommerz/sslcommerz.dart';
 
 class ConfirmBooking extends StatefulWidget {
@@ -273,7 +274,10 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
                 onPressed: (){
                 //  ShiftString();
                   confirm();
-                  showGeneralDialog(
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => WebviewScreen()),);
+                 /* showGeneralDialog(
 
                       context: context,
                       barrierDismissible: true,
@@ -327,6 +331,7 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
                                   RaisedButton(
 
                                     onPressed: () {
+
                                      // final SSLCommerzInitialization sslCommerzInitialization = new SSLCommerzInitialization ("yourStoreID","yourPassword", amount, SSLCCurrencyType.BDT,"123456789098765", "yourProductType", SSLCSdkType.TESTBOX);
                                       showGeneralDialog(
 
@@ -393,7 +398,7 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
                          ),//card
                           ),
                         );
-                      });
+                      });*/
                   /*showGeneralDialog(
 
                       context: context,
