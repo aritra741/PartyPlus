@@ -276,7 +276,7 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
                   confirm();
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => WebviewScreen()),);
+                    MaterialPageRoute(builder: (context) => WebviewScreen(total_cost: total_cost.ceil().toString())),);
                  /* showGeneralDialog(
 
                       context: context,

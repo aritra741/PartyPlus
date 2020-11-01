@@ -9,11 +9,15 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 class WebviewScreen extends StatefulWidget {
   static String routeName = '/webview';
+  String total_cost;
+  WebviewScreen({this.total_cost});
   @override
-  _WebviewScreenState createState() => _WebviewScreenState();
+  _WebviewScreenState createState() => _WebviewScreenState(total_cost);
 }
 
 class _WebviewScreenState extends State<WebviewScreen> {
+  String total_cost;
+  _WebviewScreenState(this.total_cost);
   bool _isLoading = true;
   @override
   void initState() {
@@ -22,11 +26,10 @@ class _WebviewScreenState extends State<WebviewScreen> {
 
   @override
   Widget build(BuildContext context) {
-   // AppointmentRequest request = ModalRoute.of(context).settings.arguments;
     try {
       Future.wait([
         Provider.of<PaymentProvider>(context, listen: false)
-            .chackPayment(/*request.paidAmount*/"5000"),
+            .chackPayment(total_cost),
       ]).then((value) {
         setState(() {
           _isLoading = false;
