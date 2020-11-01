@@ -24,6 +24,7 @@ import 'dart:convert';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class SearchScreenBody extends StatefulWidget {
   static int val= 5;
@@ -57,12 +58,30 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
   String formatted3; //= formatter3.format(thDate);
   String userToken;
   static User authenticatedUser;
-
+  String whichconventionimg = "";
   @override
   void dispose() {
     searchText.dispose();
     super.dispose();
   }
+
+
+  List imgList = [
+    'https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/khan.jpg?alt=media&token=267e9cc7-6646-4df0-bceb-a99e1b88360f',
+    'https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/amanullah.jpg?alt=media&token=b7772da6-42aa-4d06-9552-582ff926882d',
+    'https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/king%20of%20chittagong.jpg?alt=media&token=003e5c26-53bc-47b8-ab29-654cb9f97028',
+
+    'https://firebasestorage.googleapis.com/v0/b/fireapp-3d1c4.appspot.com/o/Hall24.jpg?alt=media&token=73e3786f-9a37-45f7-bd66-7dc3ff212c4d',
+   // 'https://images.unsplash.com/photo-1502943693086-33b5b1cfdf2f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80'
+  ];
+  List<T> map<T>(List list, Function handler) {
+    List<T> result = [];
+    for (var i = 0; i < list.length; i++) {
+      result.add(handler(i, list[i]));
+    }
+    return result;
+  }
+
 
   Future<String> checkIfLoggedIn () async
   {
@@ -88,6 +107,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
     } );
     super.initState();
   }
+
 
   Future speedup() async
   {
@@ -228,9 +248,74 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
           height: MediaQuery.of(context).size.height,
           child: Column(
             children: <Widget>[
-              Expanded(
-                child: searchScreenTop(),
+
+
+              searchScreenTop(),
+              Container(
+                child: CarouselSlider(
+                  viewportFraction: 0.9,
+                  aspectRatio: 2.0,
+                  autoPlay: true,
+                  enlargeCenterPage: true,
+                  onPageChanged: (index) {
+                    setState(() {
+                      print("here index $index");
+                      if(index==0)  whichconventionimg = "Khan's Palace Convention Hall";
+                      else if(index==1) whichconventionimg = "Amanullah Convention Hall";
+                      else if(index==2) whichconventionimg = "King of Chittagong";
+                      else whichconventionimg = "Hall 24";
+                    });
+                  },
+                  items: imgList.map(
+                        (url) {
+                      return Container(
+                        margin: EdgeInsets.all(5.0),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                          child: Stack(children: <Widget>[
+                            Image.network(url, fit: BoxFit.cover, width: 1000.0),
+                            Positioned(
+                              bottom: 0.0,
+                              left: 0.0,
+                              right: 0.0,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [Color.fromARGB(200, 0, 0, 0), Color.fromARGB(0, 0, 0, 0)],
+                                    begin: Alignment.bottomCenter,
+                                    end: Alignment.topCenter,
+                                  ),
+                                ),
+                                padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                                child: Text(
+                                  whichconventionimg,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ]),
+                          /*child: Image.network(
+                            url,
+                            fit: BoxFit.cover,
+                            width: 1000.0,
+                          ),*/
+                        ),
+                      );
+                    },
+                  ).toList(),
+                ),
               ),
+
+            //Container(),
+           /* Expanded(
+                child: searchScreenTop(),
+              ),*/
+              SizedBox(height: 30.0),
+
               Container(
                   height: MediaQuery.of(context).size.height * 0.82,
                   decoration: BoxDecoration(
