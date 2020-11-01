@@ -185,6 +185,23 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
       print(suggestionsList);
       return suggestionsList;
     }
+
+    String getMonth(String str)
+    {
+      if(str=="1") return "January";
+      else if(str=="2") return "February";
+      else if(str=="3") return "March";
+      else if(str=="4") return "April";
+      else if(str=="5") return "May";
+      else if(str=="6") return "June";
+      else if(str=="7") return "July";
+      else if(str=="8") return "August";
+      else if(str=="9") return "September";
+      else if(str=="10") return "October";
+      else if(str=="11") return "November";
+      else if(str=="12") return "December";
+
+    }
     
   @override
   Widget build(BuildContext context) {
@@ -447,8 +464,8 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                                       width: 20,
                                     ),
                                     Text(
-                                      " "+formatted,
-                                      style: GoogleFonts.overpass(fontSize: 20, color: Colors.black),
+                                      " "+getMonth(selectedDate.month.toString()) + " " + selectedDate.day.toString()  + ", "+selectedDate.year.toString(),
+                                      style: GoogleFonts.overpass(fontSize: 15, color: Colors.black),
                                     ),
                                     SizedBox(
                                       width: 95,
@@ -534,7 +551,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                                       child: Text(
                                         "Select shift",
                                         style: TextStyle(
-                                            fontSize: 18,
+                                            fontSize: 15,
                                             color: Colors.teal,
                                             decoration: TextDecoration.underline
                                         ),
@@ -547,7 +564,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                                   child: Text(
                                       (dayOneMorning?"     Morning":"")+(dayOneEvening?"     Noon":"")+(dayOneNight?"      Evening":""),
                                     style: TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 15,
                                       color: Color(0xFF005e6a)
                                     ),
                                   ),
@@ -578,11 +595,11 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                                         width: 20,
                                       ),
                                       Text(
-                                        " "+formatted2,
-                                        style: GoogleFonts.overpass(fontSize: 20, color: Colors.black),
+                                          " "+getMonth(secDate.month.toString()) + " " + secDate.day.toString()  + ", "+secDate.year.toString(),
+                                        style: GoogleFonts.overpass(fontSize: 15, color: Colors.black),
                                       ),
                                       SizedBox(
-                                        width: 100,
+                                        width: 95,
                                       ),
                                       InkWell(
                                         onTap: ()
@@ -665,7 +682,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                                         child: Text(
                                           "Select shift",
                                           style: TextStyle(
-                                              fontSize: 18,
+                                              fontSize: 15,
                                               color: Colors.teal,
                                               decoration: TextDecoration.underline
                                           ),
@@ -678,7 +695,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                                     child: Text(
                                       (dayTwoMorning?"     Morning":"")+(dayTwoEvening?"     Noon":"")+(dayTwoNight?"      Evening":""),
                                       style: TextStyle(
-                                          fontSize: 20,
+                                          fontSize: 15,
                                           color: Color(0xFF005e6a)
                                       ),
                                     ),
@@ -712,8 +729,8 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                                         width: 20,
                                       ),
                                       Text(
-                                        " "+formatted3,
-                                        style: GoogleFonts.overpass(fontSize: 20, color: Colors.black),
+                                          " "+getMonth(thDate.month.toString()) + " " + thDate.day.toString()  + ", "+thDate.year.toString(),
+                                        style: GoogleFonts.overpass(fontSize: 15, color: Colors.black),
                                       ),
                                       SizedBox(
                                         width: 95,
@@ -799,7 +816,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                                         child: Text(
                                           "Select shift",
                                           style: TextStyle(
-                                              fontSize: 18,
+                                              fontSize: 15,
                                               color: Colors.teal,
                                               decoration: TextDecoration.underline
                                           ),
@@ -812,7 +829,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                                     child: Text(
                                       (dayThreeMorning?"     Morning":"")+(dayThreeEvening?"     Noon":"")+(dayThreeNight?"      Evening":""),
                                       style: TextStyle(
-                                          fontSize: 20,
+                                          fontSize: 15,
                                           color: Color(0xFF005e6a)
                                       ),
                                     ),
@@ -839,7 +856,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
                             searchQuery();
                         //    Navigator.push(context,MaterialPageRoute(builder: (context)=>SearchResultListMap()));
                           },
-                          padding: EdgeInsets.all(15.0),
+                          padding: EdgeInsets.all(10.0),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30.0),
                           ),
@@ -1019,6 +1036,7 @@ class _SearchScreenBodyState extends State<SearchScreenBody> {
               style: GoogleFonts.overpass(fontSize: 40),
             ),
 //            SizedBox(width: 8),
+
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
