@@ -414,8 +414,8 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
         shiftBitstr1 += "1";
         if(shiftTextstr1!="") shiftTextstr1+="\n";
         if(takatext1!="") takatext1+="\n";
-        takatext1+=convention.mxprice.toString();
         takatext1 += "\u09F3";
+        takatext1+=convention.mxprice.toString();
         shiftTextstr1 += shft[i];
         total_cost += double.parse(convention.mxprice);
       }
@@ -425,8 +425,9 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
         shiftBitstr2+="1";
         if(shiftTextstr2!="") shiftTextstr2+="\n";
         if(takatext2!="") takatext2+="\n";
-        takatext2+=convention.mxprice.toString();
         takatext2 += "\u09F3";
+        takatext2+=convention.mxprice.toString();
+      //  takatext2 += "\u09F3";
         shiftTextstr2 += shft[i];
         total_cost += double.parse(convention.mxprice);
       }
@@ -436,8 +437,9 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
         shiftBitstr3+= "1";
         if(shiftTextstr3!="") shiftTextstr3+="\n";
         if(takatext3!="") takatext3+="\n";
-        takatext3+=convention.mxprice.toString();
         takatext3 += "\u09F3";
+        takatext3+=convention.mxprice.toString();
+        //takatext3 += "\u09F3";
         shiftTextstr3 += shft[i];
         total_cost += double.parse(convention.mxprice);
       }
@@ -924,7 +926,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
         Container(
           child: new Column(
             children: <Widget>[
-              Text((total_cost.ceil()).toString() + "\u09F3",
+              Text("\u09F3" + (total_cost.ceil()).toString(),
                 style: TextStyle(color: Colors.black, fontSize: 16.0,
                     fontWeight: FontWeight.bold),),
             ],
@@ -982,7 +984,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
         Container(
           child: new Column(
             children: <Widget>[
-              Text((vat.ceil().toString() + "\u09F3"),
+              Text("\u09F3" + (vat.ceil().toString() ),
                 style: TextStyle(color: Colors.black, fontSize: 16.0,),),
             ],
           ),
@@ -1013,7 +1015,7 @@ class _conventionHallDetailsState extends State<conventionHallDetails> {
         Container(
           child: new Column(
             children: <Widget>[
-              Text("0" + "\u09F3",
+              Text("\u09F3" + "0" ,
                 style: TextStyle(color: Colors.black, fontSize: 16.0,),),
             ],
           ),

@@ -217,8 +217,9 @@ class _ModifyReservationState extends State<ModifyReservation> {
         shiftBitstr1 += "1";
         if(shiftTextstr1!="") shiftTextstr1+="\n";
         if(takatext1!="") takatext1+="\n";
-        takatext1+=mxprice;
         takatext1 += "\u09F3";
+        takatext1+=mxprice;
+    //    takatext1 += "\u09F3";
         shiftTextstr1 += shft[i];
         total_cost += double.parse(mxprice);
       }
@@ -228,8 +229,9 @@ class _ModifyReservationState extends State<ModifyReservation> {
         shiftBitstr2+="1";
         if(shiftTextstr2!="") shiftTextstr2+="\n";
         if(takatext2!="") takatext2+="\n";
-        takatext2+=mxprice;
         takatext2 += "\u09F3";
+        takatext2+=mxprice;
+        //takatext2 += "\u09F3";
         shiftTextstr2 += shft[i];
         total_cost += double.parse(mxprice);
       }
@@ -239,8 +241,9 @@ class _ModifyReservationState extends State<ModifyReservation> {
         shiftBitstr3+= "1";
         if(shiftTextstr3!="") shiftTextstr3+="\n";
         if(takatext3!="") takatext3+="\n";
-        takatext3+=mxprice;
         takatext3 += "\u09F3";
+        takatext3+=mxprice;
+        //takatext3 += "\u09F3";
         shiftTextstr3 += shft[i];
         total_cost += double.parse(mxprice);
       }
@@ -596,7 +599,7 @@ class _ModifyReservationState extends State<ModifyReservation> {
         Container(
           child: new Column(
             children: <Widget>[
-              Text(vat.ceil().toString()+ "\u09F3",
+              Text("\u09F3" +vat.ceil().toString(),
                 style: TextStyle(color: Colors.black, fontSize: 16.0,),),
             ],
           ),
@@ -618,7 +621,7 @@ class _ModifyReservationState extends State<ModifyReservation> {
         Container(
           child: new Column(
             children: <Widget>[
-              Text("0" + "\u09F3",
+              Text("\u09F3" + "0",
                 style: TextStyle(color: Colors.black, fontSize: 16.0,),),
             ],
           ),
@@ -763,7 +766,7 @@ class _ModifyReservationState extends State<ModifyReservation> {
         Container(
           child: new Column(
             children: <Widget>[
-              Text((total_cost.ceil()).toString()+ "\u09F3",
+              Text("\u09F3" + (total_cost.ceil()).toString(),
                 style: TextStyle(color: Colors.black, fontSize: 16.0,
                     fontWeight: FontWeight.bold),),
             ],

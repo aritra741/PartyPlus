@@ -361,19 +361,25 @@ class _SearchResultGeneratorState extends State<SearchResultGenerator> {
                     ),
                   ),
 
-                  Container(
+                  Text(
+                    "\u09F3" + convention.mxprice + "/shift",
+                    style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),
+                    // style: GoogleFonts.barlow(fontSize: 15, color: Colors.white),
+                    textAlign: TextAlign.center,
+                  ),
+                  /*Container(
                     width: 100,
                     height: 40,
-                    decoration: BoxDecoration(
+                    /*decoration: BoxDecoration(
                         color: Color(0xFF32C809),
                       borderRadius: BorderRadius.circular(20)
-                    ),
+                    ),*/
                     child: new Text(
-                      convention.mxprice+"\u09F3" + " per shift",
-                      style: GoogleFonts.barlow(fontSize: 15, color: Colors.white),
+                      "\u09F3" + convention.mxprice + "/shift",
+                     // style: GoogleFonts.barlow(fontSize: 15, color: Colors.white),
                       textAlign: TextAlign.center,
                     ),
-                  )
+                  )*/
                 ],
               ),
             ],
